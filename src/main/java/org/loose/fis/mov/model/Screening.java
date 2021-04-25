@@ -83,11 +83,11 @@ public class Screening {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Screening screening = (Screening) o;
-        return Objects.equals(date, screening.date) && Objects.equals(movieTitle, screening.movieTitle) && Objects.equals(cinemaName, screening.cinemaName);
+        return Objects.equals(id, screening.id) && Objects.equals(date, screening.date) && Objects.equals(movieTitle, screening.movieTitle) && Objects.equals(cinemaName, screening.cinemaName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(date, movieTitle, cinemaName);
+        return Objects.hash(id, date, movieTitle, cinemaName);
     }
 }
