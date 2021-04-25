@@ -9,16 +9,33 @@ import java.util.Objects;
 public class Screening {
     @Id
     private NitriteId id;
-    private final Date date;
-    private final Movie movie;
-    private final Cinema cinema;
+    private Date date;
+    private String movieTitle;
+    private String cinemaName;
     private int remainingCapacity;
 
-    public Screening(Date date, Movie movie, Cinema cinema) {
+    /*
+     * this constructor will only be used when adding screenings from the screening service class
+     * when querying, nitrite will probably use one of the two other constructors
+     * that is because this constructor initializes the remainingCapacity field with the maximum capacity for a given cinema
+     */
+
+    public Screening(Date date, String movieTitle, Cinema cinema) {
         this.date = date;
-        this.movie = movie;
-        this.cinema = cinema;
+        this.movieTitle = movieTitle;
+        this.cinemaName = cinema.getName();
         this.remainingCapacity = cinema.getCapacity();
+    }
+
+    public Screening(NitriteId id, Date date, String movieTitle, String cinemaName, int remainingCapacity) {
+        this.id = id;
+        this.date = date;
+        this.movieTitle = movieTitle;
+        this.cinemaName = cinemaName;
+        this.remainingCapacity = remainingCapacity;
+    }
+
+    public Screening() {
     }
 
     public NitriteId getId() {
@@ -33,12 +50,24 @@ public class Screening {
         return date;
     }
 
-    public Movie getMovie() {
-        return movie;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public Cinema getCinema() {
-        return cinema;
+    public String getMovieTitle() {
+        return movieTitle;
+    }
+
+    public void setMovieTitle(String movieTitle) {
+        this.movieTitle = movieTitle;
+    }
+
+    public String getCinemaName() {
+        return cinemaName;
+    }
+
+    public void setCinemaName(String cinemaName) {
+        this.cinemaName = cinemaName;
     }
 
     public int getRemainingCapacity() {
@@ -54,11 +83,11 @@ public class Screening {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Screening screening = (Screening) o;
-        return Objects.equals(date, screening.date) && Objects.equals(movie, screening.movie) && Objects.equals(cinema, screening.cinema);
+        return Objects.equals(date, screening.date) && Objects.equals(movieTitle, screening.movieTitle) && Objects.equals(cinemaName, screening.cinemaName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(date, movie, cinema);
+        return Objects.hash(date, movieTitle, cinemaName);
     }
 }
