@@ -7,13 +7,13 @@ import java.util.Objects;
 public class Cinema {
     @Id
     private String name;
-    private String adminName;
+    private String adminUsername;
     private String address;
     private int capacity;
 
-    public Cinema(String name, String adminName, String address, int capacity) {
+    public Cinema(String name, String adminUsername, String address, int capacity) {
         this.name = name;
-        this.adminName = adminName;
+        this.adminUsername = adminUsername;
         this.address = address;
         this.capacity = capacity;
     }
@@ -29,12 +29,12 @@ public class Cinema {
         this.name = name;
     }
 
-    public String getAdminName() {
-        return adminName;
+    public String getAdminUsername() {
+        return adminUsername;
     }
 
-    public void setAdminName(String adminName) {
-        this.adminName = adminName;
+    public void setAdminUsername(String adminUsername) {
+        this.adminUsername = adminUsername;
     }
 
     public String getAddress() {
