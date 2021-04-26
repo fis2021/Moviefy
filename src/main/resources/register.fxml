@@ -41,13 +41,17 @@
 
     <TextField fx:id="cinemaAddressField" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
 
-    <Label text="Role:" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+    <Label text="Cinema capacity:" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
 
-    <ChoiceBox fx:id="role" onAction="#handleUserTypeChange" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+    <TextField fx:id="cinemaCapacityField" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+
+    <Label text="Role:" GridPane.columnIndex="0" GridPane.rowIndex="9"/>
+
+    <ChoiceBox fx:id="role" onAction="#handleUserTypeChange" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
     </ChoiceBox>
 
-    <Text fx:id="registrationMessage" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
-    <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="7" GridPane.rowIndex="9">
+    <Text fx:id="registrationMessage" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
+    <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="7" GridPane.rowIndex="10">
         <Button onAction="#handleRegisterAction" text="Register"/>
     </HBox>
 </GridPane>
