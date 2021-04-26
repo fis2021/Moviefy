@@ -10,15 +10,13 @@ public class Booking {
     @Id
     private NitriteId id;
     private String clientName;
-    private Date screeningDate;
-    private String cinemaName;
+    private NitriteId screeningId;
     private int numberOfSeats;
 
-    public Booking(NitriteId id, String clientName, Date screeningDate, String cinemaName, int numberOfSeats) {
+    public Booking(NitriteId id, String clientName, NitriteId screeningId, int numberOfSeats) {
         this.id = id;
         this.clientName = clientName;
-        this.screeningDate = screeningDate;
-        this.cinemaName = cinemaName;
+        this.screeningId = screeningId;
         this.numberOfSeats = numberOfSeats;
     }
 
@@ -41,22 +39,6 @@ public class Booking {
         this.clientName = clientName;
     }
 
-    public Date getScreeningDate() {
-        return screeningDate;
-    }
-
-    public void setScreeningDate(Date screeningDate) {
-        this.screeningDate = screeningDate;
-    }
-
-    public String getCinemaName() {
-        return cinemaName;
-    }
-
-    public void setCinemaName(String cinemaName) {
-        this.cinemaName = cinemaName;
-    }
-
     public int getNumberOfSeats() {
         return numberOfSeats;
     }
@@ -65,16 +47,24 @@ public class Booking {
         this.numberOfSeats = numberOfSeats;
     }
 
+    public NitriteId getScreeningId() {
+        return screeningId;
+    }
+
+    public void setScreeningId(NitriteId screeningId) {
+        this.screeningId = screeningId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-        return Objects.equals(id, booking.id) && Objects.equals(clientName, booking.clientName) && Objects.equals(screeningDate, booking.screeningDate) && Objects.equals(cinemaName, booking.cinemaName);
+        return Objects.equals(clientName, booking.clientName) && Objects.equals(screeningId, booking.screeningId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, clientName, screeningDate, cinemaName);
+        return Objects.hash(clientName, screeningId);
     }
 }
