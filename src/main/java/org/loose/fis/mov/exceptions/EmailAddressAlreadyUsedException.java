@@ -1,6 +1,6 @@
 package org.loose.fis.mov.exceptions;
 
-public class EmailAddressAlreadyUsedException extends Exception{
+public class EmailAddressAlreadyUsedException extends Exception {
     private final String email;
 
     public EmailAddressAlreadyUsedException(String email) {

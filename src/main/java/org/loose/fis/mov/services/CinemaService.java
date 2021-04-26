@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class CinemaService {
     public static void addCinema(String name, String adminUsername, String address, int capacity)
-            throws CinemaAlreadyExistsException{
+            throws CinemaAlreadyExistsException {
         CinemaService.checkCinemaAlreadyExists(name);
         DatabaseService.getCinemaRepo().insert(new Cinema(name, adminUsername, address, capacity));
     }

@@ -56,8 +56,12 @@ public class Booking {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Booking booking = (Booking) o;
         return Objects.equals(clientName, booking.clientName) && Objects.equals(screeningId, booking.screeningId);
     }

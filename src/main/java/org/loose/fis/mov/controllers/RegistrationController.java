@@ -93,12 +93,12 @@ public class RegistrationController {
     }
 
     private void checkFieldsForNull() throws EmptyFieldException {
-        if (usernameField.getText().isEmpty() || firstnameField.getText().isEmpty() || lastnameField.getText().isEmpty() ||
-            emailField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+        if (usernameField.getText().isEmpty() || firstnameField.getText().isEmpty() || lastnameField.getText().isEmpty()
+                || emailField.getText().isEmpty() || passwordField.getText().isEmpty()) {
             throw new EmptyFieldException();
         }
-        if (Objects.equals(role.getValue(), "Admin") &&
-                (cinemaNameField.getText().isEmpty() || cinemaCapacityField.getText().isEmpty() || cinemaAddressField.getText().isEmpty())) {
+        if (Objects.equals(role.getValue(), "Admin")
+                && (cinemaNameField.getText().isEmpty() || cinemaCapacityField.getText().isEmpty() || cinemaAddressField.getText().isEmpty())) {
             throw new EmptyFieldException();
         }
     }
