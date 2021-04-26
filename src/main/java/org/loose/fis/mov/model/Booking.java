@@ -3,7 +3,6 @@ package org.loose.fis.mov.model;
 import org.dizitart.no2.NitriteId;
 import org.dizitart.no2.objects.Id;
 
-import java.util.Date;
 import java.util.Objects;
 
 public class Booking {
