@@ -5,15 +5,14 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import org.loose.fis.mov.exceptions.CinemaAlreadyExistsException;
-import org.loose.fis.mov.exceptions.EmailAddressAlreadyUsedException;
-import org.loose.fis.mov.exceptions.PasswordTooWeakException;
-import org.loose.fis.mov.exceptions.UserAlreadyExistsException;
+import org.loose.fis.mov.exceptions.*;
 import org.loose.fis.mov.services.UserService;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class RegistrationController {
+    private static final int MIN_PASSWORD_LENGTH = 8;
     @FXML
     private TextField usernameField;
     @FXML
@@ -45,17 +44,18 @@ public class RegistrationController {
     @FXML
     public void handleRegisterAction() {
         try {
-            if (Objects.equals(role.getValue(), "Client")) {
-                UserService.addUser(usernameField.getText(), firstnameField.getText(), lastnameField.getText(),
-                        passwordField.getText(), emailField.getText(), role.getValue());
-            } else {
-                UserService.addUser(usernameField.getText(), firstnameField.getText(), lastnameField.getText(),
-                        passwordField.getText(), emailField.getText(), role.getValue(),
-                        cinemaNameField.getText(), cinemaAddressField.getText(),
-                        Integer.parseInt(cinemaCapacityField.getText()));
+            checkFieldsForNull();
+            checkEmailFormatValid();
+            checkMinimumPasswordStrength();
+            if (Objects.equals(role.getValue(), "Admin")) {
+                checkCinemaCapacityNumeric();
             }
+            UserService.addUser(usernameField.getText(), firstnameField.getText(), lastnameField.getText(),
+                    passwordField.getText(), emailField.getText(), role.getValue(),
+                    cinemaNameField.getText(), cinemaAddressField.getText(),
+                    cinemaCapacityField.getText());
             registrationMessage.setText("Account created successfully!");
-        } catch (Exception e) {
+    } catch (Exception e) {
             registrationMessage.setText(e.getMessage());
         }
     }
@@ -69,6 +69,37 @@ public class RegistrationController {
             cinemaNameField.clear();
             cinemaAddressField.clear();
             cinemaCapacityField.clear();
+        }
+    }
+
+    private void checkMinimumPasswordStrength() throws PasswordTooWeakException {
+        if (passwordField.getText().length() < MIN_PASSWORD_LENGTH) {
+            throw new PasswordTooWeakException();
+        }
+    }
+
+    private void checkEmailFormatValid() throws EmailFormatInvalidException {
+        Pattern emailPattern = Pattern.compile("^[A-Za-z1-9.]+@[A-Za-z1-9]+\\.[a-z]+$");
+        if (!emailPattern.matcher(emailField.getText()).find()) {
+            throw new EmailFormatInvalidException();
+        }
+    }
+
+    private void checkCinemaCapacityNumeric() throws CinemaCapacityNotUnsignedIntegerException {
+        Pattern numberPattern = Pattern.compile("^[1-9][0-9]*$");
+        if (!numberPattern.matcher(cinemaCapacityField.getText()).find()) {
+            throw new CinemaCapacityNotUnsignedIntegerException();
+        }
+    }
+
+    private void checkFieldsForNull() throws EmptyFieldException {
+        if (usernameField.getText().isEmpty() || firstnameField.getText().isEmpty() || lastnameField.getText().isEmpty() ||
+            emailField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+            throw new EmptyFieldException();
+        }
+        if (Objects.equals(role.getValue(), "Admin") &&
+                (cinemaNameField.getText().isEmpty() || cinemaCapacityField.getText().isEmpty() || cinemaAddressField.getText().isEmpty())) {
+            throw new EmptyFieldException();
         }
     }
 }
