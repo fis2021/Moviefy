@@ -14,19 +14,6 @@ public class Screening {
     private String cinemaName;
     private int remainingCapacity;
 
-    /*
-     * this constructor will only be used when adding screenings from the screening service class
-     * when querying, nitrite will probably use one of the two other constructors
-     * that is because this constructor initializes the remainingCapacity field with the maximum capacity for a given cinema
-     */
-
-    public Screening(Date date, String movieTitle, Cinema cinema) {
-        this.date = date;
-        this.movieTitle = movieTitle;
-        this.cinemaName = cinema.getName();
-        this.remainingCapacity = cinema.getCapacity();
-    }
-
     public Screening(NitriteId id, Date date, String movieTitle, String cinemaName, int remainingCapacity) {
         this.id = id;
         this.date = date;
@@ -83,11 +70,11 @@ public class Screening {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Screening screening = (Screening) o;
-        return Objects.equals(id, screening.id) && Objects.equals(date, screening.date) && Objects.equals(movieTitle, screening.movieTitle) && Objects.equals(cinemaName, screening.cinemaName);
+        return Objects.equals(movieTitle, screening.movieTitle) && Objects.equals(cinemaName, screening.cinemaName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, date, movieTitle, cinemaName);
+        return Objects.hash(movieTitle, cinemaName);
     }
 }
