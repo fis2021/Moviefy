@@ -5,6 +5,13 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import org.loose.fis.mov.exceptions.CinemaAlreadyExistsException;
+import org.loose.fis.mov.exceptions.EmailAddressAlreadyUsedException;
+import org.loose.fis.mov.exceptions.PasswordTooWeakException;
+import org.loose.fis.mov.exceptions.UserAlreadyExistsException;
+import org.loose.fis.mov.services.UserService;
+
+import java.util.Objects;
 
 public class RegistrationController {
     @FXML
@@ -18,9 +25,11 @@ public class RegistrationController {
     @FXML
     private PasswordField passwordField;
     @FXML
-    public TextField cinemaNameField;
+    private TextField cinemaNameField;
     @FXML
-    public TextField cinemaAddressField;
+    private TextField cinemaAddressField;
+    @FXML
+    private TextField cinemaCapacityField;
     @FXML
     private ChoiceBox<String> role;
     @FXML
@@ -35,17 +44,31 @@ public class RegistrationController {
 
     @FXML
     public void handleRegisterAction() {
-        //UserService.addUser(usernameField.getText(), passwordField.getText(), (String) role.getValue());
-        registrationMessage.setText("Account created successfully!");
+        try {
+            if (Objects.equals(role.getValue(), "Client")) {
+                UserService.addUser(usernameField.getText(), firstnameField.getText(), lastnameField.getText(),
+                        passwordField.getText(), emailField.getText(), role.getValue());
+            } else {
+                UserService.addUser(usernameField.getText(), firstnameField.getText(), lastnameField.getText(),
+                        passwordField.getText(), emailField.getText(), role.getValue(),
+                        cinemaNameField.getText(), cinemaAddressField.getText(),
+                        Integer.parseInt(cinemaCapacityField.getText()));
+            }
+            registrationMessage.setText("Account created successfully!");
+        } catch (Exception e) {
+            registrationMessage.setText(e.getMessage());
+        }
     }
 
     @FXML
     public void handleUserTypeChange() {
-        cinemaNameField.setEditable(role.getValue().equals("Admin"));
-        cinemaAddressField.setEditable(role.getValue().equals("Admin"));
-        if (role.getValue().equals("Client")) {
+        cinemaNameField.setEditable(Objects.equals(role.getValue(), "Admin"));
+        cinemaAddressField.setEditable(Objects.equals(role.getValue(), "Admin"));
+        cinemaCapacityField.setEditable(Objects.equals(role.getValue(), "Admin"));
+        if (Objects.equals(role.getValue(), "Client")) {
             cinemaNameField.clear();
             cinemaAddressField.clear();
+            cinemaCapacityField.clear();
         }
     }
 }

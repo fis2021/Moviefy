@@ -26,4 +26,28 @@ public class DatabaseService {
         bookingRepo = database.getRepository(Booking.class);
         reviewRepo = database.getRepository(Review.class);
     }
+
+    public static ObjectRepository<User> getUserRepo() {
+        return userRepo;
+    }
+
+    public static ObjectRepository<Cinema> getCinemaRepo() {
+        return cinemaRepo;
+    }
+
+    public static ObjectRepository<Movie> getMovieRepo() {
+        return movieRepo;
+    }
+
+    public static ObjectRepository<Screening> getScreeningRepo() {
+        return screeningRepo;
+    }
+
+    public static ObjectRepository<Booking> getBookingRepo() {
+        return bookingRepo;
+    }
+
+    public static ObjectRepository<Review> getReviewRepo() {
+        return reviewRepo;
+    }
 }
