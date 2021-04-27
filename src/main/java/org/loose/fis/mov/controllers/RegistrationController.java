@@ -1,5 +1,6 @@
 package org.loose.fis.mov.controllers;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -14,12 +15,12 @@ import org.jetbrains.annotations.NotNull;
 import org.loose.fis.mov.exceptions.*;
 import org.loose.fis.mov.services.UserService;
 
-import java.awt.event.ActionEvent;
+import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public class RegistrationController {
+public  class RegistrationController implements EventHandler<ActionEvent> {
     private static final int MIN_PASSWORD_LENGTH = 8;
     @FXML
     private TextField usernameField;
@@ -125,4 +126,8 @@ public class RegistrationController {
          stage.show();
     }
 
+    @Override
+    public void handle(ActionEvent event) {
+
+    }
 }

@@ -1,5 +1,6 @@
 package org.loose.fis.mov.controllers;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -7,10 +8,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
+import javafx.event.ActionEvent;
 import java.io.IOException;
 
-public class SceneController {
+public  class SceneController implements EventHandler<ActionEvent> {
 
     private Stage stage;
     private Scene scene;
@@ -19,7 +20,7 @@ public class SceneController {
     @FXML
     public void switchToRegister(ActionEvent event) throws IOException
     {
-        FXMLLoader loader=new FXMLLoader(getClass().getResource("changePasswordPopUp.fxml"));
+        FXMLLoader loader=new FXMLLoader(getClass().getResource("register.fxml"));
         root=loader.load();
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene= new Scene(root);
@@ -29,7 +30,7 @@ public class SceneController {
     @FXML
     public void switchToRegisterWithPassword(ActionEvent event) throws IOException
     {
-        FXMLLoader loader=new FXMLLoader(getClass().getResource("changePasswordPopUp.fxml"));
+        FXMLLoader loader=new FXMLLoader(getClass().getResource("register.fxml"));
         root=loader.load();
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene= new Scene(root);
@@ -37,4 +38,8 @@ public class SceneController {
         stage.show();
     }
 
+    @Override
+    public void handle(ActionEvent event) {
+
+    }
 }
