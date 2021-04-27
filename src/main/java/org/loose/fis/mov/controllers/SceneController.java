@@ -44,7 +44,6 @@ public  class SceneController {
         email = emialtextfield.getText();
         findUserByEmail(email);
         String newPassword=WordGenerator(12);
-        System.out.println(newPassword);
         String host = "smtp.gmail.com";
         Properties properties = System.getProperties();
         properties.put("mail.smtp.host", host);
