@@ -3,16 +3,15 @@ package org.loose.fis.mov.services;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.loose.fis.mov.exceptions.EmailAddressAlreadyUsedException;
-import org.loose.fis.mov.exceptions.EmailFormatInvalidException;
-import org.loose.fis.mov.exceptions.PasswordTooWeakException;
-import org.loose.fis.mov.exceptions.UserAlreadyExistsException;
+import org.loose.fis.mov.exceptions.*;
 
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Disabled
 class UserServiceTest {
     @BeforeEach
     void setUp() throws IOException {
@@ -21,8 +20,9 @@ class UserServiceTest {
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() throws IOException {
         DatabaseService.closeDatabase();
+        FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath().toFile());
     }
 
     @Test
@@ -51,5 +51,17 @@ class UserServiceTest {
                 "Client", "", "", ""));
         assertThrows(EmailAddressAlreadyUsedException.class, () -> UserService.addUser("test2", "test", "test", "test_test", "test@test.test",
                 "Admin", "test", "test", "12"));
+    }
+
+    @Test
+    void loginSuccess() throws Exception {
+        UserService.addUser("test", "test", "test", "test_test", "test@test.test",
+                "Client", "", "", "");
+        assertDoesNotThrow(() -> UserService.login("test", "test_test"));
+    }
+
+    @Test
+    void loginFailure() throws Exception {
+        assertThrows(UserNotRegisteredException.class, () -> UserService.login("test", "test_test"));
     }
 }
