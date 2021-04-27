@@ -1,11 +1,14 @@
 package org.loose.fis.mov.services;
 
+import org.dizitart.no2.objects.Cursor;
+import org.dizitart.no2.objects.ObjectRepository;
 import org.loose.fis.mov.exceptions.*;
 import org.loose.fis.mov.model.User;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Objects;
 
 public class UserService {
@@ -18,6 +21,10 @@ public class UserService {
         }
         DatabaseService.getUserRepo().insert(new User(username, firstname, lastname,
                 UserService.encodePassword(username, password), email, role));
+    }
+
+    public static List<User> getAllUsers() {
+        return DatabaseService.getUserRepo().find().toList();
     }
 
     private static void checkUserAlreadyExists(String username) throws UserAlreadyExistsException {
