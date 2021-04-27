@@ -8,6 +8,7 @@ import javafx.scene.text.Text;
 import org.loose.fis.mov.exceptions.*;
 import org.loose.fis.mov.services.UserService;
 
+import java.awt.event.ActionEvent;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -59,7 +60,10 @@ public class RegistrationController {
             registrationMessage.setText(e.getMessage());
         }
     }
-
+    @FXML
+    public void changePassword(){
+    System.out.println("auch!");
+    }
     @FXML
     public void handleUserTypeChange() {
         cinemaNameField.setEditable(Objects.equals(role.getValue(), "Admin"));
