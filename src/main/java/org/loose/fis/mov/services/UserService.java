@@ -11,6 +11,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Objects;
 
+import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
+
 public class UserService {
     public static void addUser(String username, String firstname, String lastname, String password, String email, String role,
                                String cinemaName, String cinemaAddress, String cinemaCapacity) throws Exception {
@@ -25,6 +27,27 @@ public class UserService {
 
     public static List<User> getAllUsers() {
         return DatabaseService.getUserRepo().find().toList();
+    }
+
+    /* Returns the user as an Object so the app can redirect to the appropiate */
+    public static User login(String username, String password) throws UserNotRegisteredException, PasswordIncorrectException {
+        User user = findUser(username);
+        checkPassword(user, password);
+        return user;
+    }
+
+    private static User findUser(String username) throws UserNotRegisteredException {
+        User user = DatabaseService.getUserRepo().find(eq("username", username)).firstOrDefault();
+        if (user == null) {
+            throw new UserNotRegisteredException(username);
+        }
+        return user;
+    }
+
+    private static void checkPassword(User user, String password) throws PasswordIncorrectException {
+        if (!Objects.equals(encodePassword(user.getUsername(), password), user.getPassword())) {
+            throw new PasswordIncorrectException();
+        }
     }
 
     private static void checkUserAlreadyExists(String username) throws UserAlreadyExistsException {
