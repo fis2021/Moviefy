@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 
-public  class SceneController implements EventHandler<ActionEvent> {
+public  class SceneController {
 
     private Stage stage;
     private Scene scene;
@@ -20,8 +20,7 @@ public  class SceneController implements EventHandler<ActionEvent> {
     @FXML
     public void switchToRegister(ActionEvent event) throws IOException
     {
-        FXMLLoader loader=new FXMLLoader(getClass().getResource("register.fxml"));
-        root=loader.load();
+        root=FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene= new Scene(root);
         stage.setScene(scene);
@@ -30,16 +29,12 @@ public  class SceneController implements EventHandler<ActionEvent> {
     @FXML
     public void switchToRegisterWithPassword(ActionEvent event) throws IOException
     {
-        FXMLLoader loader=new FXMLLoader(getClass().getResource("register.fxml"));
-        root=loader.load();
+        root=FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
-    @Override
-    public void handle(ActionEvent event) {
 
-    }
 }

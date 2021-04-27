@@ -59,7 +59,7 @@
               <Button onAction="#handleRegisterAction" text="Register" />
           </children>
        </HBox>
-      <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToPopUp" prefHeight="25.0" prefWidth="111.0" text="ChangePassword" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+      <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToPopUp" prefHeight="25.0" prefWidth="111.0" text="ChangePassword" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
    </children>
    <columnConstraints>
       <ColumnConstraints />

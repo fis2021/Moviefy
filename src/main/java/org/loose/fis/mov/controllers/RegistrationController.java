@@ -1,5 +1,6 @@
 package org.loose.fis.mov.controllers;
 
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,10 +18,11 @@ import org.loose.fis.mov.services.UserService;
 
 import javafx.event.ActionEvent;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public  class RegistrationController implements EventHandler<ActionEvent> {
+public  class RegistrationController {
     private static final int MIN_PASSWORD_LENGTH = 8;
     @FXML
     private TextField usernameField;
@@ -121,16 +123,12 @@ public  class RegistrationController implements EventHandler<ActionEvent> {
     @FXML
     public void switchToPopUp( ActionEvent event) throws IOException{
 
-         FXMLLoader loader=new FXMLLoader(getClass().getResource("changePasswordPopUp.fxml"));
-         root=loader.load();
+         root=FXMLLoader.load(getClass().getClassLoader().getResource("changePasswordPopUp.fxml"));
          stage=(Stage)((Node)event.getSource()).getScene().getWindow();
          scene= new Scene(root);
          stage.setScene(scene);
          stage.show();
     }
 
-    @Override
-    public void handle(ActionEvent event) {
 
-    }
 }
