@@ -56,8 +56,12 @@ public class Review {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Review review = (Review) o;
         return Objects.equals(clientUsername, review.clientUsername) && Objects.equals(movieTitle, review.movieTitle);
     }

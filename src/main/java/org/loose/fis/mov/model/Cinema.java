@@ -55,8 +55,12 @@ public class Cinema {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Cinema cinema = (Cinema) o;
         return Objects.equals(name, cinema.name) && Objects.equals(address, cinema.address);
     }
