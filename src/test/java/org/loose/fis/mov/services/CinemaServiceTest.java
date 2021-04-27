@@ -19,8 +19,9 @@ class CinemaServiceTest {
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() throws IOException {
         DatabaseService.closeDatabase();
+        FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath().toFile());
     }
 
     @Test
