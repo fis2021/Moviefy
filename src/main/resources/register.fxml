@@ -21,7 +21,7 @@
 
     <TextField fx:id="firstnameField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-    <Label text="First name:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <Label text="Last name:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
 
     <TextField fx:id="lastnameField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
