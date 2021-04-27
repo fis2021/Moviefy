@@ -8,6 +8,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
+import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
+
 public class UserService {
     public static void addUser(String username, String firstname, String lastname, String password, String email, String role,
                                String cinemaName, String cinemaAddress, String cinemaCapacity) throws Exception {
@@ -54,5 +56,12 @@ public class UserService {
             throw new IllegalStateException("SHA-512 does not exist!");
         }
         return md;
+    }
+    public static User findUserByEmail(String email) throws UserNotRegisteredException{
+    User user= DatabaseService.getUserRepo().find(eq("email",email)).firstOrDefault();
+    if (user==null){
+        throw new UserNotRegisteredException();
+    }
+    return user;
     }
 }
