@@ -39,7 +39,7 @@ public class UserService {
     private static User findUser(String username) throws UserNotRegisteredException {
         User user = DatabaseService.getUserRepo().find(eq("username", username)).firstOrDefault();
         if (user == null) {
-            throw new UserNotRegisteredException(username);
+            throw new UserNotRegisteredException();
         }
         return user;
     }
