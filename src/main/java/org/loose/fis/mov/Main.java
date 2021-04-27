@@ -16,7 +16,8 @@ public class Main extends Application {
         DatabaseService.initDatabase();
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
         primaryStage.setTitle("Moviefy");
-        primaryStage.setScene(new Scene(root, 600, 575));
+        primaryStage.setResizable(false);
+        primaryStage.setScene(new Scene(root, 500, 500));
         primaryStage.show();
     }
 
