@@ -8,11 +8,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
+import java.util.Properties;
 import javafx.event.ActionEvent;
 import org.loose.fis.mov.exceptions.UserNotRegisteredException;
-
-
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 
 import static org.loose.fis.mov.services.CommService.WordGenerator;
@@ -40,13 +41,40 @@ public  class SceneController {
     @FXML
     public void switchToRegisterWithPassword(ActionEvent event) throws IOException, UserNotRegisteredException {
 
-
         email = emialtextfield.getText();
-        System.out.println(email);
-        //findUserByEmail(email);
+        findUserByEmail(email);
         String newPassword=WordGenerator(12);
         System.out.println(newPassword);
-
+        String host = "smtp.gmail.com";
+        Properties properties = System.getProperties();
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.port", "465");
+        properties.put("mail.smtp.ssl.enable", "true");
+        properties.put("mail.smtp.auth", "true");
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("geani.gibilan", "mojojojo13");
+            }
+        });
+        session.setDebug(true);
+        try {
+            // Create a default MimeMessage object.
+            MimeMessage message = new MimeMessage(session);
+            // Set From: header field of the header.
+            message.setFrom(new InternetAddress("geani.gibilan@gmail.com"));
+            // Set To: header field of the header.
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+            // Set Subject: header field
+            message.setSubject("Salut, barosane!Parola ta");
+            // Now set the actual message
+            message.setText("Parola  este "+ newPassword+" sa nu zici la nimeni ;)");
+            System.out.println("sending...");
+            // Send message
+            Transport.send(message);
+            System.out.println("Sent message successfully....");
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+        }
         root = FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
