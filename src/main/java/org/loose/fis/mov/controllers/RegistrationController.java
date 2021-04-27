@@ -68,7 +68,10 @@ public  class RegistrationController implements EventHandler<ActionEvent> {
             registrationMessage.setText(e.getMessage());
         }
     }
-
+    @FXML
+    public void changePassword(){
+    System.out.println("auch!");
+    }
     @FXML
     public void handleUserTypeChange() {
         cinemaNameField.setEditable(Objects.equals(role.getValue(), "Admin"));
