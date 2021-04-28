@@ -19,7 +19,7 @@ import org.loose.fis.mov.services.UserService;
 import java.io.IOException;
 import java.util.Objects;
 
-public class LoginController {
+public class LoginController extends AbstractController{
     @FXML
     private TextField usernameField;
     @FXML
@@ -45,12 +45,9 @@ public class LoginController {
 
     @FXML
     public void handleRegisterAction(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        changeScene(event,"register.fxml");
     }
+
 
     private void checkFieldsForNull() throws EmptyFieldException {
         if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) {

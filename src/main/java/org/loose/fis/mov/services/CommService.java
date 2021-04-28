@@ -1,17 +1,28 @@
 package org.loose.fis.mov.services;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
+import javafx.stage.Stage;
 import org.loose.fis.mov.exceptions.EmailFormatInvalidException;
 import org.loose.fis.mov.exceptions.EmptyFieldException;
 import org.loose.fis.mov.exceptions.PasswordTooWeakException;
 import org.loose.fis.mov.exceptions.UserAlreadyExistsException;
 import org.loose.fis.mov.model.User;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.awt.*;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.regex.Pattern;
 
 public class CommService {
@@ -66,6 +77,37 @@ public class CommService {
         String result = sb.toString();
         return result;
     }
+public static void sendMail(String emailRecipient,String setSubject,String setText){
+    String host = "smtp.gmail.com";
+    Properties properties = System.getProperties();
+    properties.put("mail.smtp.host", host);
+    properties.put("mail.smtp.port", "465");
 
+    properties.put("mail.smtp.ssl.enable", "true");
+    properties.put("mail.smtp.auth", "true");
+    Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+        protected PasswordAuthentication getPasswordAuthentication() {
+            return new PasswordAuthentication("geani.gibilan", "mojojojo13");
+        }
+    });
+    try {
+        // Create a default MimeMessage object.
+        MimeMessage message = new MimeMessage(session);
+        // Set From: header field of the header.
+        message.setFrom(new InternetAddress("geani.gibilan@gmail.com"));
+        // Set To: header field of the header.
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailRecipient));
+        // Set Subject: header field
+        message.setSubject(setSubject);
+        // Now set the actual message
+        message.setText(setText);
+       // System.out.println("sending...");
+        // Send message
+        Transport.send(message);
+        //System.out.println("Sent message successfully....");
+    } catch (MessagingException mex) {
+        mex.printStackTrace();
+    }
+}
 
 }
