@@ -17,12 +17,13 @@ import org.loose.fis.mov.exceptions.*;
 import org.loose.fis.mov.services.UserService;
 
 import javafx.event.ActionEvent;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public  class RegistrationController {
+public class RegistrationController {
     private static final int MIN_PASSWORD_LENGTH = 8;
     @FXML
     private TextField usernameField;
@@ -52,6 +53,7 @@ public  class RegistrationController {
         role.setValue("Client");
     }
 
+
     @FXML
     public void handleRegisterAction() {
         try {
@@ -66,14 +68,16 @@ public  class RegistrationController {
                     cinemaNameField.getText(), cinemaAddressField.getText(),
                     cinemaCapacityField.getText());
             registrationMessage.setText("Account created successfully!");
-    } catch (Exception e) {
+        } catch (Exception e) {
             registrationMessage.setText(e.getMessage());
         }
     }
+
     @FXML
-    public void changePassword(){
-    System.out.println("auch!");
+    public void changePassword() {
+        System.out.println("auch!");
     }
+
     @FXML
     public void handleUserTypeChange() {
         cinemaNameField.setEditable(Objects.equals(role.getValue(), "Admin"));
@@ -120,14 +124,15 @@ public  class RegistrationController {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    @FXML
-    public void switchToPopUp( ActionEvent event) throws IOException{
 
-         root=FXMLLoader.load(getClass().getClassLoader().getResource("changePasswordPopUp.fxml"));
-         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-         scene= new Scene(root);
-         stage.setScene(scene);
-         stage.show();
+    @FXML
+    public void switchToPopUp(ActionEvent event) throws IOException {
+
+        root = FXMLLoader.load(getClass().getClassLoader().getResource("changePasswordPopUp.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 

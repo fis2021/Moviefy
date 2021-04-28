@@ -19,7 +19,7 @@ import java.io.IOException;
 import static org.loose.fis.mov.services.CommService.WordGenerator;
 import static org.loose.fis.mov.services.UserService.findUserByEmail;
 
-public  class SceneController {
+public  class ChangePasswordBeforeLogInController {
 
     private Stage stage;
     private Scene scene;
@@ -48,6 +48,7 @@ public  class SceneController {
         Properties properties = System.getProperties();
         properties.put("mail.smtp.host", host);
         properties.put("mail.smtp.port", "465");
+
         properties.put("mail.smtp.ssl.enable", "true");
         properties.put("mail.smtp.auth", "true");
         Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
