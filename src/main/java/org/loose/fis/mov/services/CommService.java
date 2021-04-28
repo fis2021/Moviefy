@@ -90,7 +90,6 @@ public static void sendMail(String emailRecipient,String setSubject,String setTe
             return new PasswordAuthentication("geani.gibilan", "mojojojo13");
         }
     });
-    session.setDebug(true);
     try {
         // Create a default MimeMessage object.
         MimeMessage message = new MimeMessage(session);
