@@ -102,10 +102,10 @@ public static void sendMail(String emailRecipient,String setSubject,String setTe
         message.setSubject(setSubject);
         // Now set the actual message
         message.setText(setText);
-        System.out.println("sending...");
+       // System.out.println("sending...");
         // Send message
         Transport.send(message);
-        System.out.println("Sent message successfully....");
+        //System.out.println("Sent message successfully....");
     } catch (MessagingException mex) {
         mex.printStackTrace();
     }
