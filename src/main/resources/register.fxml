@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.canvas.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-<GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="center" hgap="10" prefHeight="400" prefWidth="600"
-          vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal"
-          fx:controller="org.loose.fis.mov.controllers.RegistrationController">
+
+<GridPane alignment="center" hgap="10" prefHeight="400" prefWidth="600" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.loose.fis.mov.controllers.RegistrationController">
     <padding>
-        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0"/>
+        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
     </padding>
+
     <Text id="title-text" text="Moviefy" GridPane.columnIndex="0" GridPane.columnSpan="2"
           GridPane.rowIndex="0"/>
 
@@ -49,9 +53,35 @@
 
     <ChoiceBox fx:id="role" onAction="#handleUserTypeChange" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
     </ChoiceBox>
-
-    <Text fx:id="registrationMessage" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
-    <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="7" GridPane.rowIndex="10">
-        <Button onAction="#handleRegisterAction" text="Register"/>
-    </HBox>
+   
+       <Text fx:id="registrationMessage" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+       <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="7" GridPane.rowIndex="10">
+          <children>
+              <Button onAction="#handleRegisterAction" text="Register" />
+          </children>
+       </HBox>
+      <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToPopUp" prefHeight="25.0" prefWidth="111.0" text="ChangePassword" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
 </GridPane>
