@@ -41,6 +41,7 @@
               <Button onAction="#handleChangePasswordAction" prefHeight="25.0" prefWidth="110.0" text="Change Password" />
       </children>
        </HBox>
+
    </children>
    <columnConstraints>
       <ColumnConstraints />

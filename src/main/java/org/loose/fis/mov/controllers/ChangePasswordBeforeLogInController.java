@@ -1,6 +1,5 @@
 package org.loose.fis.mov.controllers;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -22,16 +21,12 @@ import static org.loose.fis.mov.services.CommService.WordGenerator;
 import static org.loose.fis.mov.services.UserService.findUserByEmail;
 
 public  class ChangePasswordBeforeLogInController {
-
-
+    @FXML
+    private TextField emailTextField;
 
     @FXML
-    private TextField emialtextfield;
-    private String email;
-
-    @FXML
-    public void switchToRegister(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
+    public void switchToLogin(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -41,7 +36,7 @@ public  class ChangePasswordBeforeLogInController {
     @FXML
     public void switchToRegisterWithPassword(ActionEvent event) throws IOException, UserNotRegisteredException {
 
-        email = emialtextfield.getText();
+        String email = emailTextField.getText();
         User user=findUserByEmail(email);
         String newPassword=WordGenerator(12);
         user.setPassword(newPassword);
@@ -76,7 +71,7 @@ public  class ChangePasswordBeforeLogInController {
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
