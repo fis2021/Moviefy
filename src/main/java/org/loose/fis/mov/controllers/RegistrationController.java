@@ -121,16 +121,12 @@ public class RegistrationController {
         }
     }
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-
     @FXML
     public void switchToPopUp(ActionEvent event) throws IOException {
 
-        root = FXMLLoader.load(getClass().getClassLoader().getResource("changePasswordPopUp.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("changePasswordPopUp.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }

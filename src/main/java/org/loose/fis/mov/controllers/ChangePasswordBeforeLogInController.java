@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 import java.util.Properties;
 import javafx.event.ActionEvent;
 import org.loose.fis.mov.exceptions.UserNotRegisteredException;
+import org.loose.fis.mov.model.User;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -42,8 +44,9 @@ public  class ChangePasswordBeforeLogInController {
     public void switchToRegisterWithPassword(ActionEvent event) throws IOException, UserNotRegisteredException {
 
         email = emialtextfield.getText();
-        findUserByEmail(email);
+        User user=findUserByEmail(email);
         String newPassword=WordGenerator(12);
+        user.setPassword(newPassword);
         String host = "smtp.gmail.com";
         Properties properties = System.getProperties();
         properties.put("mail.smtp.host", host);
@@ -65,7 +68,7 @@ public  class ChangePasswordBeforeLogInController {
             // Set To: header field of the header.
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
             // Set Subject: header field
-            message.setSubject("Salut, barosane!Parola ta");
+            message.setSubject("Kingule, ti-a cazut parola");
             // Now set the actual message
             message.setText("Parola  este "+ newPassword+" sa nu zici la nimeni ;)");
             System.out.println("sending...");
