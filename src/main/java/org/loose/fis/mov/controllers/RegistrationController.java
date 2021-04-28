@@ -77,6 +77,7 @@ public class RegistrationController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
 
     @FXML
     public void handleUserTypeChange() {
