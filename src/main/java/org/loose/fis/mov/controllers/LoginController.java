@@ -57,6 +57,4 @@ public class LoginController {
             throw new EmptyFieldException();
         }
     }
-
-
 }

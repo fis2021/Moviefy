@@ -29,11 +29,16 @@ public class UserService {
         return DatabaseService.getUserRepo().find().toList();
     }
 
-    /* Returns the user as an Object so the app can redirect to the appropiate */
-    public static User login(String username, String password) throws UserNotRegisteredException, PasswordIncorrectException {
+    /* Returns the user as an Object so the app can redirect to the appropriate screen */
+    public static User login(String username, String password) throws Exception {
         User user = findUser(username);
         checkPassword(user, password);
+        SessionService.startSession(user);
         return user;
+    }
+
+    public static void logout() throws SessionDoesNotExistException {
+        SessionService.destroySession();
     }
 
     private static User findUser(String username) throws UserNotRegisteredException {
