@@ -24,6 +24,7 @@ sourceCompatibility = 11
 targetCompatibility = 11
 
 dependencies {
+    implementation 'com.sun.mail:javax.mail:1.6.2'
     implementation 'org.openjfx:javafx-controls:15.0.1'
     implementation 'org.openjfx:javafx-fxml:15.0.1'
     implementation 'org.dizitart:nitrite:3.4.3'

@@ -90,4 +90,12 @@ public class UserService {
         }
         return md;
     }
+
+    public static User findUserByEmail(String email) throws UserNotRegisteredException {
+        User user = DatabaseService.getUserRepo().find(eq("email", email)).firstOrDefault();
+        if (user == null) {
+            throw new UserNotRegisteredException();
+        }
+        return user;
+    }
 }

@@ -11,10 +11,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import org.loose.fis.mov.exceptions.*;
 import org.loose.fis.mov.services.UserService;
-
 import java.io.IOException;
+import java.net.URL;
+
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -48,6 +50,7 @@ public class RegistrationController {
         role.setValue("Client");
     }
 
+
     @FXML
     public void handleRegisterAction() {
         try {
@@ -62,7 +65,7 @@ public class RegistrationController {
                     cinemaNameField.getText(), cinemaAddressField.getText(),
                     cinemaCapacityField.getText());
             registrationMessage.setText("Account created successfully!");
-    } catch (Exception e) {
+        } catch (Exception e) {
             registrationMessage.setText(e.getMessage());
         }
     }
@@ -74,7 +77,6 @@ public class RegistrationController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    }
 
     @FXML
     public void handleUserTypeChange() {
@@ -86,6 +88,21 @@ public class RegistrationController {
             cinemaAddressField.clear();
             cinemaCapacityField.clear();
         }
+    }
+  
+    @FXML
+    public void switchToPopUp(ActionEvent event) throws IOException {
+
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("changePasswordPopUp.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+  
+    @FXML
+    public void changePassword() {
+        System.out.println("auch!");
     }
 
     private void checkMinimumPasswordStrength() throws PasswordTooWeakException {
@@ -118,6 +135,4 @@ public class RegistrationController {
             throw new EmptyFieldException();
         }
     }
-
-
 }
