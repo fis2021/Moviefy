@@ -19,9 +19,10 @@ import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 
 import static org.loose.fis.mov.services.CommService.WordGenerator;
+import static org.loose.fis.mov.services.CommService.sendMail;
 import static org.loose.fis.mov.services.UserService.findUserByEmail;
 
-public  class ChangePasswordBeforeLogInController {
+public  class ChangePasswordBeforeLogInController extends AbstractController{
 
 
 
@@ -31,11 +32,7 @@ public  class ChangePasswordBeforeLogInController {
 
     @FXML
     public void switchToRegister(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        changeScene(event,"register.fxml");
     }
 
     @FXML
@@ -45,41 +42,7 @@ public  class ChangePasswordBeforeLogInController {
         User user=findUserByEmail(email);
         String newPassword=WordGenerator(12);
         user.setPassword(newPassword);
-        String host = "smtp.gmail.com";
-        Properties properties = System.getProperties();
-        properties.put("mail.smtp.host", host);
-        properties.put("mail.smtp.port", "465");
-
-        properties.put("mail.smtp.ssl.enable", "true");
-        properties.put("mail.smtp.auth", "true");
-        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("geani.gibilan", "mojojojo13");
-            }
-        });
-        session.setDebug(true);
-        try {
-            // Create a default MimeMessage object.
-            MimeMessage message = new MimeMessage(session);
-            // Set From: header field of the header.
-            message.setFrom(new InternetAddress("geani.gibilan@gmail.com"));
-            // Set To: header field of the header.
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-            // Set Subject: header field
-            message.setSubject("Kingule, ti-a cazut parola");
-            // Now set the actual message
-            message.setText("Parola  este "+ newPassword+" sa nu zici la nimeni ;)");
-            System.out.println("sending...");
-            // Send message
-            Transport.send(message);
-            System.out.println("Sent message successfully....");
-        } catch (MessagingException mex) {
-            mex.printStackTrace();
-        }
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        sendMail(email,"Kingule ti-o picat parola","Parola ta este: "+newPassword+" Sa nu spui la nimeni;)");
+        changeScene(event,"register.fxml");
     }
 }
