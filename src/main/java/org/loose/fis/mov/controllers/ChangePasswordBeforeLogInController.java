@@ -21,17 +21,17 @@ import static org.loose.fis.mov.services.CommService.WordGenerator;
 import static org.loose.fis.mov.services.CommService.sendMail;
 import static org.loose.fis.mov.services.UserService.findUserByEmail;
 
-public  class ChangePasswordBeforeLogInController {
+public  class ChangePasswordBeforeLogInController extends AbstractController{
     @FXML
     private TextField emailTextField;
 
     @FXML
+    public void switchToLogin(ActionEvent event) throws IOException {
         changeScene(event, "login.fxml");
     }
 
     @FXML
     public void switchToRegisterWithPassword(ActionEvent event) throws IOException, UserNotRegisteredException {
-
         String email = emailTextField.getText();
         User user=findUserByEmail(email);
         String newPassword=WordGenerator(12);

@@ -40,18 +40,13 @@ public class LoginController extends AbstractController{
 
     @FXML
     public void handleChangePasswordAction(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("changePasswordPopUp.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        changeScene(event, "changePasswordPopUp.fxml");
     }
 
     @FXML
     public void handleRegisterAction(ActionEvent event) throws IOException {
         changeScene(event,"register.fxml");
     }
-
 
     private void checkFieldsForNull() throws EmptyFieldException {
         if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) {
