@@ -3,16 +3,15 @@ package org.loose.fis.mov.services;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.loose.fis.mov.exceptions.EmailAddressAlreadyUsedException;
-import org.loose.fis.mov.exceptions.EmailFormatInvalidException;
-import org.loose.fis.mov.exceptions.PasswordTooWeakException;
-import org.loose.fis.mov.exceptions.UserAlreadyExistsException;
+import org.loose.fis.mov.exceptions.*;
 
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Disabled
 class UserServiceTest {
     @BeforeEach
     void setUp() throws IOException {
@@ -40,17 +39,49 @@ class UserServiceTest {
 
     @Test
     void addUserUserDuplicate() {
-        assertDoesNotThrow(() -> UserService.addUser("test", "test", "test", "test_test", "test@test.test",
-                "Client", "", "", ""));
-        assertThrows(UserAlreadyExistsException.class, () -> UserService.addUser("test", "test", "test", "test_test", "test@test.test",
-                "Admin", "test", "test", "12"));
+        assertThrows(UserAlreadyExistsException.class, () -> {
+            UserService.addUser("test", "test", "test", "test_test", "test@test.test",
+                    "Client", "", "", "");
+            UserService.addUser("test", "test", "test", "test_test", "test@test.test",
+                    "Admin", "test", "test", "12");
+        });
     }
 
     @Test
     void addUserEmailDuplicate() {
-        assertDoesNotThrow(() -> UserService.addUser("test", "test", "test", "test_test", "test@test.test",
-                "Client", "", "", ""));
-        assertThrows(EmailAddressAlreadyUsedException.class, () -> UserService.addUser("test2", "test", "test", "test_test", "test@test.test",
-                "Admin", "test", "test", "12"));
+        assertThrows(EmailAddressAlreadyUsedException.class, () -> {
+            UserService.addUser("test", "test", "test", "test_test", "test@test.test",
+                    "Client", "", "", "");
+            UserService.addUser("test2", "test", "test", "test_test", "test@test.test",
+                    "Admin", "test", "test", "12");
+        });
+    }
+
+    @Test
+    void loginSuccess() {
+        assertDoesNotThrow(() -> {
+            UserService.addUser("test", "test", "test", "test_test", "test@test.test",
+                    "Client", "", "", "");
+            UserService.login("test", "test_test");
+        });
+    }
+
+    @Test
+    void loginFailure() {
+        assertThrows(UserNotRegisteredException.class, () -> UserService.login("test", "test_test"));
+        assertThrows(SessionAlreadyExistsException.class, () -> {
+            UserService.addUser("test", "test", "test", "test_test", "test@test.test",
+                    "Client", "", "", "");
+            UserService.login("test", "test_test");
+            UserService.login("test", "test_test");
+        });
+    }
+
+    @Test
+    void logout() {
+        assertThrows(SessionDoesNotExistException.class, () -> {
+            UserService.logout();
+            UserService.logout();
+        });
     }
 }

@@ -1,7 +1,6 @@
 package org.loose.fis.mov.controllers;
 
-
-import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -12,14 +11,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.jetbrains.annotations.NotNull;
+
 import org.loose.fis.mov.exceptions.*;
 import org.loose.fis.mov.services.UserService;
-
-import javafx.event.ActionEvent;
-
 import java.io.IOException;
 import java.net.URL;
+
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -74,9 +71,12 @@ public class RegistrationController {
     }
 
     @FXML
-    public void changePassword() {
-        System.out.println("auch!");
-    }
+    public void handleLoginAction(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
     @FXML
     public void handleUserTypeChange() {
@@ -88,6 +88,21 @@ public class RegistrationController {
             cinemaAddressField.clear();
             cinemaCapacityField.clear();
         }
+    }
+  
+    @FXML
+    public void switchToPopUp(ActionEvent event) throws IOException {
+
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("changePasswordPopUp.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+  
+    @FXML
+    public void changePassword() {
+        System.out.println("auch!");
     }
 
     private void checkMinimumPasswordStrength() throws PasswordTooWeakException {
@@ -120,16 +135,4 @@ public class RegistrationController {
             throw new EmptyFieldException();
         }
     }
-
-    @FXML
-    public void switchToPopUp(ActionEvent event) throws IOException {
-
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("changePasswordPopUp.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-
 }

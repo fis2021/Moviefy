@@ -29,6 +29,32 @@ public class UserService {
         return DatabaseService.getUserRepo().find().toList();
     }
 
+    /* Returns the user as an Object so the app can redirect to the appropriate screen */
+    public static User login(String username, String password) throws Exception {
+        User user = findUser(username);
+        checkPassword(user, password);
+        SessionService.startSession(user);
+        return user;
+    }
+
+    public static void logout() throws SessionDoesNotExistException {
+        SessionService.destroySession();
+    }
+
+    private static User findUser(String username) throws UserNotRegisteredException {
+        User user = DatabaseService.getUserRepo().find(eq("username", username)).firstOrDefault();
+        if (user == null) {
+            throw new UserNotRegisteredException();
+        }
+        return user;
+    }
+
+    private static void checkPassword(User user, String password) throws PasswordIncorrectException {
+        if (!Objects.equals(encodePassword(user.getUsername(), password), user.getPassword())) {
+            throw new PasswordIncorrectException();
+        }
+    }
+
     private static void checkUserAlreadyExists(String username) throws UserAlreadyExistsException {
         for (User user : DatabaseService.getUserRepo().find()) {
             if (Objects.equals(username, user.getUsername())) {
