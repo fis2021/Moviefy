@@ -1,6 +1,5 @@
 package org.loose.fis.mov.controllers;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -23,26 +22,21 @@ import static org.loose.fis.mov.services.CommService.sendMail;
 import static org.loose.fis.mov.services.UserService.findUserByEmail;
 
 public  class ChangePasswordBeforeLogInController extends AbstractController{
-
-
+    @FXML
+    private TextField emailTextField;
 
     @FXML
-    private TextField emialtextfield;
-    private String email;
-
-    @FXML
-    public void switchToRegister(ActionEvent event) throws IOException {
-        changeScene(event,"register.fxml");
+    public void switchToLogin(ActionEvent event) throws IOException {
+        changeScene(event, "login.fxml");
     }
 
     @FXML
     public void switchToRegisterWithPassword(ActionEvent event) throws IOException, UserNotRegisteredException {
-
-        email = emialtextfield.getText();
+        String email = emailTextField.getText();
         User user=findUserByEmail(email);
         String newPassword=WordGenerator(12);
         user.setPassword(newPassword);
-        sendMail(email,"Kingule ti-o picat parola","Parola ta este: "+newPassword+" Sa nu spui la nimeni;)");
-        changeScene(event,"register.fxml");
+        sendMail(email,"Kingule ti-o picat parola","Parola ta este: " + newPassword + " Sa nu spui la nimeni;)");
+        changeScene(event, "login.fxml");
     }
 }
