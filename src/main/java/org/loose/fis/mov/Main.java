@@ -14,7 +14,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         FileSystemService.initDirectory();
         DatabaseService.initDatabase();
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("MainMenuClient.fxml"));
         primaryStage.setTitle("Moviefy");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, 500, 500));
