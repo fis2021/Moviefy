@@ -23,9 +23,7 @@ import static org.loose.fis.mov.services.UserService.findUserByEmail;
 
 public  class ChangePasswordBeforeLogInController {
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
+
 
     @FXML
     private TextField emialtextfield;
@@ -33,9 +31,9 @@ public  class ChangePasswordBeforeLogInController {
 
     @FXML
     public void switchToRegister(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
@@ -78,9 +76,9 @@ public  class ChangePasswordBeforeLogInController {
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
-        root = FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
