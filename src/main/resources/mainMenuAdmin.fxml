@@ -14,7 +14,7 @@
          <content>
             <ListView fx:id="list" prefHeight="11.0" prefWidth="558.0" />
          </content></ScrollPane>
-      <Text layoutX="78.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Today's screenings" />
+      <Text fx:id="pageTitle" layoutX="78.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Today's screenings" />
       <HBox layoutY="2.0" prefHeight="25.0" prefWidth="560.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Hyperlink onAction="#handleHome" prefHeight="29.0" text="Home" textAlignment="CENTER" />
