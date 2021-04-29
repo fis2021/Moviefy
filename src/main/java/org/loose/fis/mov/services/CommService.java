@@ -21,8 +21,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class CommService {
@@ -41,6 +40,7 @@ public class CommService {
             }
         }
     }
+
     private static String encodePassword(String salt, String password) {
         MessageDigest md = getMessageDigest();
         md.update(salt.getBytes(StandardCharsets.UTF_8));
@@ -50,6 +50,7 @@ public class CommService {
         return new String(hashedPassword, StandardCharsets.UTF_8)
                 .replace("\"", ""); //to be able to save in JSON format
     }
+
     private static MessageDigest getMessageDigest() {
         MessageDigest md;
         try {
@@ -59,55 +60,63 @@ public class CommService {
         }
         return md;
     }
+
     private void checkMinimumPasswordStrength(PasswordField password) throws PasswordTooWeakException {
         if (password.getText().length() < 8) {
             throw new PasswordTooWeakException();
         }
     }
 
-    public static String WordGenerator(int m){
+    public static String WordGenerator(int m) {
         StringBuilder sb = new StringBuilder();
 
-        String set ="1234567890-=][poiuytrewqasdfghjkl;'/.,mnbvcxzZXCVBNM,./';LKJHGFDSAQWERTYUIOP[]=-!@#$%^&*()zsefbhtsdo";
+        String set = "1234567890-=][poiuytrewqasdfghjkl;'/.,mnbvcxzZXCVBNM,./';LKJHGFDSAQWERTYUIOP[]=-!@#$%^&*()zsefbhtsdo";
 
-        for (int i= 0; i < m; i++) {
-            int k = (int) (100*Math.random());
+        for (int i = 0; i < m; i++) {
+            int k = (int) (100 * Math.random());
             sb.append(set.charAt(k));
         }
         String result = sb.toString();
         return result;
     }
-public static void sendMail(String emailRecipient,String setSubject,String setText){
-    String host = "smtp.gmail.com";
-    Properties properties = System.getProperties();
-    properties.put("mail.smtp.host", host);
-    properties.put("mail.smtp.port", "465");
 
-    properties.put("mail.smtp.ssl.enable", "true");
-    properties.put("mail.smtp.auth", "true");
-    Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
-        protected PasswordAuthentication getPasswordAuthentication() {
-            return new PasswordAuthentication("geani.gibilan", "mojojojo13");
+    public static void sendMail(String emailRecipient, String setSubject, String setText) {
+        String host = "smtp.gmail.com";
+        Properties properties = System.getProperties();
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.port", "465");
+
+        properties.put("mail.smtp.ssl.enable", "true");
+        properties.put("mail.smtp.auth", "true");
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("geani.gibilan", "mojojojo13");
+            }
+        });
+        try {
+            // Create a default MimeMessage object.
+            MimeMessage message = new MimeMessage(session);
+            // Set From: header field of the header.
+            message.setFrom(new InternetAddress("geani.gibilan@gmail.com"));
+            // Set To: header field of the header.
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailRecipient));
+            // Set Subject: header field
+            message.setSubject(setSubject);
+            // Now set the actual message
+            message.setText(setText);
+            // System.out.println("sending...");
+            // Send message
+            Transport.send(message);
+            //System.out.println("Sent message successfully....");
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
         }
-    });
-    try {
-        // Create a default MimeMessage object.
-        MimeMessage message = new MimeMessage(session);
-        // Set From: header field of the header.
-        message.setFrom(new InternetAddress("geani.gibilan@gmail.com"));
-        // Set To: header field of the header.
-        message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailRecipient));
-        // Set Subject: header field
-        message.setSubject(setSubject);
-        // Now set the actual message
-        message.setText(setText);
-       // System.out.println("sending...");
-        // Send message
-        Transport.send(message);
-        //System.out.println("Sent message successfully....");
-    } catch (MessagingException mex) {
-        mex.printStackTrace();
     }
-}
+
+    public static String extractTime(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
+    }
 
 }
