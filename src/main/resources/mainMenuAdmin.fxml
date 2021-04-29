@@ -10,20 +10,18 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.loose.fis.mov.controllers.MainMenuAdminController">
    <children>
-      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0" AnchorPane.bottomAnchor="375.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <menus>
-            <Menu mnemonicParsing="false" text="Main" />
-          <Menu mnemonicParsing="false" text="Add Screening" />
-          <Menu mnemonicParsing="false" text="LogOut" />
-        </menus>
-         <rotationAxis>
-            <Point3D x="1.0" z="1.0" />
-         </rotationAxis>
-      </MenuBar>
       <ScrollPane layoutX="112.0" layoutY="100.0" prefHeight="265.0" prefWidth="377.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0">
          <content>
             <ListView fx:id="list" prefHeight="11.0" prefWidth="558.0" />
          </content></ScrollPane>
       <Text layoutX="78.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Today's screenings" />
+      <HBox layoutY="2.0" prefHeight="25.0" prefWidth="560.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Hyperlink onAction="#handleHome" prefHeight="29.0" text="Home" textAlignment="CENTER" />
+            <Hyperlink onAction="#handleMyProfile" prefHeight="29.0" prefWidth="62.0" text="My Profile" textAlignment="CENTER" />
+            <Hyperlink onAction="#handleAddScreening" prefHeight="31.0" text="Add Screening" textAlignment="CENTER" />
+            <Hyperlink onAction="#handleLogout" prefHeight="31.0" text="Logout" textAlignment="CENTER" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
