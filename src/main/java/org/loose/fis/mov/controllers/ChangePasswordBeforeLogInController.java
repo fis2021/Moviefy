@@ -11,6 +11,7 @@ import java.util.Properties;
 import javafx.event.ActionEvent;
 import org.loose.fis.mov.exceptions.UserNotRegisteredException;
 import org.loose.fis.mov.model.User;
+import org.loose.fis.mov.services.UserService;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -33,10 +34,9 @@ public  class ChangePasswordBeforeLogInController extends AbstractController{
     @FXML
     public void switchToRegisterWithPassword(ActionEvent event) throws IOException, UserNotRegisteredException {
         String email = emailTextField.getText();
-        User user=findUserByEmail(email);
         String newPassword=WordGenerator(12);
-        user.setPassword(newPassword);
-        sendMail(email,"Kingule ti-o picat parola","Parola ta este: " + newPassword + " Sa nu spui la nimeni;)");
+        UserService.changePassword(email, newPassword);
+        sendMail(email,"Moviefy Password Reset","Your new password is: " + newPassword);
         changeScene(event, "login.fxml");
     }
 }
