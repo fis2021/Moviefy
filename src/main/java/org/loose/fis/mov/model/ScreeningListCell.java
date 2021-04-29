@@ -22,7 +22,7 @@ import org.loose.fis.mov.services.CommService;
  * https://stackoverflow.com/questions/15661500/javafx-listview-item-with-an-image-button
  *
  * */
-public class MovieListCell extends ListCell<Screening> {
+public class ScreeningListCell extends ListCell<Screening> {
     HBox hbox = new HBox();
     Label movieTitle = new Label("(empty)");
     Label screeningTime = new Label("(empty)");
@@ -30,7 +30,7 @@ public class MovieListCell extends ListCell<Screening> {
     Button bookingsButton = new Button("Bookings");
     Button deleteScreeningButton = new Button("Delete this screening");
 
-    public MovieListCell() {
+    public ScreeningListCell() {
         super();
         screeningTime.setTextFill(Color.GREY);
         hbox.getChildren().addAll(movieTitle, screeningTime, pane, bookingsButton, deleteScreeningButton);
