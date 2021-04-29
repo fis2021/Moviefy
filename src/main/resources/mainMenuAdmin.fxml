@@ -20,9 +20,9 @@
             <Point3D x="1.0" z="1.0" />
          </rotationAxis>
       </MenuBar>
-      <ScrollPane fx:id="scroll" layoutX="112.0" layoutY="100.0" prefHeight="265.0" prefWidth="377.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0">
+      <ScrollPane layoutX="112.0" layoutY="100.0" prefHeight="265.0" prefWidth="377.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0">
          <content>
-            <ListView fx:id="list" prefHeight="10.0" prefWidth="248.0" />
+            <ListView fx:id="list" prefHeight="11.0" prefWidth="558.0" />
          </content></ScrollPane>
       <Text layoutX="78.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Today's screenings" />
    </children>

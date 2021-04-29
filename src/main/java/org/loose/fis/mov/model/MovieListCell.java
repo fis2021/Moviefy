@@ -49,13 +49,17 @@ public class MovieListCell extends ListCell<Screening> {
 
     @Override
     protected void updateItem(Screening item, boolean empty) {
+        /* the inherited elements of the cell are left empty */
         super.updateItem(item, empty);
-        setText(null);  // No text in label of super class
+        setText(null);
+
+        /* setting the fields specific for the custom cell */
         if (empty) {
             setGraphic(null);
         } else {
             movieTitle.setText(item != null ? item.getMovieTitle()  : "<null>");
             screeningTime.setText(item != null ? CommService.extractTime(item.getDate()) : "<null>");
+            /* this method call actually sets the appearance of our custom cell */
             setGraphic(hbox);
         }
     }
