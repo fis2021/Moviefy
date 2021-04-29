@@ -41,6 +41,12 @@ public class UserService {
         SessionService.destroySession();
     }
 
+    public static void changePassword(String email, String newPassword) throws UserNotRegisteredException {
+        User user = findUserByEmail(email);
+        user.setPassword(encodePassword(user.getUsername(), newPassword));
+        DatabaseService.getUserRepo().update(user);
+    }
+
     private static User findUser(String username) throws UserNotRegisteredException {
         User user = DatabaseService.getUserRepo().find(eq("username", username)).firstOrDefault();
         if (user == null) {
