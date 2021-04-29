@@ -11,11 +11,22 @@ import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import org.loose.fis.mov.services.CommService;
 
+/*
+ * instead of only having one label and one item, this custom cell also contains buttons with actions linked
+ * to the screening
+ *
+ * it extends ListCell<Screening> and overwrites its constructor, so it can be used by the cellFactory to
+ * generate cells
+ *
+ * the code was adapted from this:
+ * https://stackoverflow.com/questions/15661500/javafx-listview-item-with-an-image-button
+ *
+ * */
 public class MovieListCell extends ListCell<Screening> {
     HBox hbox = new HBox();
     Label movieTitle = new Label("(empty)");
     Label screeningTime = new Label("(empty)");
-    Pane pane = new Pane();
+    Pane pane = new Pane(); // this pane is using to create space between elements - more of them may be added
     Button bookingsButton = new Button("Bookings");
     Button deleteScreeningButton = new Button("Delete this screening");
 
@@ -25,20 +36,14 @@ public class MovieListCell extends ListCell<Screening> {
         hbox.getChildren().addAll(movieTitle, screeningTime, pane, bookingsButton, deleteScreeningButton);
         HBox.setHgrow(pane, Priority.ALWAYS);
 
-        bookingsButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Screening cell = getItem();
-                System.out.println("This would take you to a list of bookings if it were implemented.");
-            }
+        bookingsButton.setOnAction(event -> {
+            Screening cell = getItem();
+            System.out.println("This would take you to a list of bookings if it were implemented.");
         });
 
-        deleteScreeningButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Screening cell = getItem();
-                System.out.println("This would delete the screening for " + cell.getMovieTitle() + " if it were implemented.");
-            }
+        deleteScreeningButton.setOnAction(event -> {
+            Screening cell = getItem();
+            System.out.println("This would delete the screening for " + cell.getMovieTitle() + " if it were implemented.");
         });
     }
 
