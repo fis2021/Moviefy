@@ -116,7 +116,6 @@ public class CommService {
     public static String extractTime(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        return calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
+        return String.format("%2d:%2d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
     }
-
 }
