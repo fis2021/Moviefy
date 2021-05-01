@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.loose.fis.mov.controllers.AddScreeningController">
+    <children>
+        <HBox layoutY="2.0" prefHeight="25.0" prefWidth="560.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Hyperlink onAction="#handleMenuHome" prefHeight="29.0" text="Home" textAlignment="CENTER" />
+                <Hyperlink onAction="#handleMenuMyProfile" prefHeight="29.0" prefWidth="62.0" text="My Profile" textAlignment="CENTER" />
+                <Hyperlink onAction="#handleMenuAddScreening" prefHeight="31.0" text="Add Screening" textAlignment="CENTER" />
+                <Hyperlink onAction="#handleMenuLogout" prefHeight="31.0" text="Logout" textAlignment="CENTER" />
+            </children>
+        </HBox>
+      <TabPane layoutX="30.0" layoutY="30.0" prefHeight="171.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="199.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+        <tabs>
+          <Tab text="Add screening for new movie">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Text fill="gray" layoutX="59.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Title" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="35.05078125">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <Text fill="gray" layoutX="59.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Length" AnchorPane.leftAnchor="50.0">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <Text fill="gray" layoutX="59.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Description" AnchorPane.leftAnchor="50.0">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="movieTitleField" layoutX="183.0" layoutY="31.0" AnchorPane.leftAnchor="180.0" />
+                        <TextField fx:id="movieLengthField" layoutX="183.0" layoutY="59.0" AnchorPane.leftAnchor="180.0" />
+                        <TextArea fx:id="movieDescriptionField" layoutX="180.0" layoutY="87.0" prefHeight="45.0" prefWidth="375.0" wrapText="true" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="50.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Add screening for already existing movie">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ComboBox fx:id="movie" layoutX="180.0" layoutY="45.0" prefWidth="150.0" AnchorPane.leftAnchor="180.0" />
+                        <Text fill="gray" layoutX="52.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="49.05078125">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <Text fill="gray" layoutX="66.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Screening Time" AnchorPane.leftAnchor="50.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="screeningDay" layoutX="183.0" layoutY="229.0" prefHeight="25.0" prefWidth="81.0" promptText="day" AnchorPane.leftAnchor="180.0" />
+      <ComboBox fx:id="screeningMonth" layoutX="269.0" layoutY="229.0" prefHeight="25.0" prefWidth="81.0" promptText="month" />
+      <ComboBox fx:id="screeningYear" layoutX="357.0" layoutY="229.0" prefHeight="25.0" prefWidth="81.0" promptText="year" />
+      <ComboBox fx:id="screeningHour" layoutX="183.0" layoutY="266.0" prefHeight="25.0" prefWidth="81.0" promptText="hour" AnchorPane.leftAnchor="180.0" />
+      <ComboBox fx:id="screeningMinute" layoutX="269.0" layoutY="266.0" prefHeight="25.0" prefWidth="81.0" promptText="minute" />
+      <Button layoutX="357.0" layoutY="338.0" mnemonicParsing="false" onAction="#handleAddScreening" text="Add Screening" />
+      <Text fx:id="message" layoutX="180.0" layoutY="355.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+    </children>
+</AnchorPane>
