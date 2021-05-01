@@ -54,22 +54,22 @@ public class UserProfileController extends AbstractController{
     }
 
     @FXML
-    public void handleHome(ActionEvent actionEvent) {
+    public void handleMenuHome(ActionEvent actionEvent) {
         System.out.println("Not yet implemented.");
     }
 
     @FXML
-    public void handleMyProfile(ActionEvent event) throws IOException {
+    public void handleMenuMyProfile(ActionEvent event) throws IOException {
         changeScene(event, "userProfile.fxml");
     }
 
     @FXML
-    public void handleAddScreening(ActionEvent event) {
+    public void handleMenuAddScreening(ActionEvent event) {
         System.out.println("Not yet implemented.");
     }
 
     @FXML
-    public void handleLogout(ActionEvent event) throws Exception {
+    public void handleMenuLogout(ActionEvent event) throws Exception {
         UserService.logout();
         changeScene(event, "login.fxml");
     }

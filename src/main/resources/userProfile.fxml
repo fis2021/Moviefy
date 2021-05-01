@@ -16,10 +16,10 @@
          </font></Text>
       <HBox layoutY="2.0" prefHeight="25.0" prefWidth="560.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Hyperlink onAction="#handleHome" prefHeight="29.0" text="Home" textAlignment="CENTER" />
-            <Hyperlink onAction="#handleMyProfile" prefHeight="29.0" prefWidth="62.0" text="My Profile" textAlignment="CENTER" />
-            <Hyperlink onAction="#handleAddScreening" prefHeight="31.0" text="Add Screening" textAlignment="CENTER" />
-            <Hyperlink onAction="#handleLogout" prefHeight="31.0" text="Logout" textAlignment="CENTER" />
+            <Hyperlink onAction="#handleMenuHome" prefHeight="29.0" text="Home" textAlignment="CENTER" />
+            <Hyperlink onAction="#handleMenuMyProfile" prefHeight="29.0" prefWidth="62.0" text="My Profile" textAlignment="CENTER" />
+            <Hyperlink onAction="#handleMenuAddScreening" prefHeight="31.0" text="Add Screening" textAlignment="CENTER" />
+            <Hyperlink onAction="#handleMenuLogout" prefHeight="31.0" text="Logout" textAlignment="CENTER" />
          </children>
       </HBox>
       <GridPane layoutX="78.0" layoutY="85.0" AnchorPane.leftAnchor="30.0">
