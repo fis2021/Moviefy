@@ -41,10 +41,12 @@ public class UserProfileController extends AbstractController{
         nameField.setText(user.getFirstname() + " " +  user.getLastname());
         emailField.setText(user.getEmail());
         roleField.setText(user.getRole());
+        cinemaTab.setVisible(false);
 
         if (Objects.equals(user.getRole(), "Admin")) {
             Cinema cinema = DatabaseService.getCinemaRepo().find(eq("adminUsername", user.getUsername())).firstOrDefault();
-            
+
+            cinemaTab.setVisible(true);
             cinemaNameField.setText(cinema.getName());
             cinemaAddressField.setText(cinema.getAddress());
             cinemaCapacityField.setText(String.valueOf(cinema.getCapacity()));
