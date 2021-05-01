@@ -58,7 +58,11 @@ public class ScreeningListCell extends ListCell<Screening> {
             setGraphic(null);
         } else {
             movieTitle.setText(item != null ? item.getMovieTitle()  : "<null>");
-            screeningTime.setText(item != null ? CommService.extractTime(item.getDate()) : "<null>");
+            screeningTime.setText(
+                    item != null ?
+                    CommService.extractDate(item.getDate()) + " " + CommService.extractTime(item.getDate()) :
+                    "<null>"
+            );
             /* this method call actually sets the appearance of our custom cell */
             setGraphic(hbox);
         }

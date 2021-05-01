@@ -9,6 +9,7 @@ import javafx.scene.text.Text;
 import org.loose.fis.mov.exceptions.SessionDoesNotExistException;
 import org.loose.fis.mov.exceptions.UserNotAdminException;
 import org.loose.fis.mov.exceptions.UserNotRegisteredException;
+import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.ScreeningListCell;
 import org.loose.fis.mov.model.Screening;
 import org.loose.fis.mov.services.*;
@@ -33,12 +34,11 @@ public class MainMenuAdminController extends AbstractController {
     @FXML
     public void initialize() {
         try {
+            Cinema cinema = CinemaService.findCinemaForAdmin(SessionService.getLoggedInUser());
+
+            pageTitle.setText("Future screenings for " + cinema.getName());
             observableList = FXCollections.observableList(
-                    ScreeningService.findAllFutureScreeningsForCinema(
-                            CinemaService.findCinemaForAdmin(
-                                    SessionService.getLoggedInUser()
-                            )
-                    )
+                    ScreeningService.findAllFutureScreeningsForCinema(cinema)
             );
             list.setFixedCellSize(CELL_SIZE);
 
