@@ -52,22 +52,22 @@ public class MainMenuAdminController extends AbstractController {
     }
 
     @FXML
-    public void handleLogout(ActionEvent event) throws SessionDoesNotExistException, IOException {
+    public void handleMenuLogout(ActionEvent event) throws SessionDoesNotExistException, IOException {
         UserService.logout();
         changeScene(event, "login.fxml");
     }
 
     @FXML
-    public void handleHome(ActionEvent event) throws IOException {
+    public void handleMenuHome(ActionEvent event) throws IOException {
         changeScene(event, "mainMenuAdmin.fxml");
     }
 
     @FXML
-    public void handleMyProfile(ActionEvent actionEvent) {
+    public void handleMenuMyProfile(ActionEvent actionEvent) {
         System.out.println("This would have taken you to your profile. It's a shame that page doesn't even exist yet.");
     }
 
-    public void handleAddScreening(ActionEvent actionEvent) {
+    public void handleMenuAddScreening(ActionEvent actionEvent) {
         System.out.println("This would have taken you to the Add Screening page. We do not have such capabilities yet.");
     }
 }
