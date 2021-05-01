@@ -118,4 +118,10 @@ public class CommService {
         calendar.setTime(date);
         return String.format("%2d:%2d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
     }
+
+    public static String extractDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return String.format("%2d/%2d/%4d", calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH + 1), calendar.get(Calendar.YEAR));
+    }
 }
