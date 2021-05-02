@@ -90,7 +90,7 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Text>
-                              <ComboBox fx:id="movie" prefHeight="25.0" prefWidth="227.0" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="availableMoviesField" prefHeight="25.0" prefWidth="227.0" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                      </children>
@@ -119,12 +119,12 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Text>
-            <ComboBox fx:id="screeningDay" prefHeight="25.0" prefWidth="81.0" promptText="day" GridPane.columnIndex="1" />
-            <ComboBox fx:id="screeningMonth" prefHeight="25.0" prefWidth="81.0" promptText="month" GridPane.columnIndex="2" />
+            <ComboBox fx:id="screeningDayField" prefHeight="25.0" prefWidth="81.0" promptText="day" GridPane.columnIndex="1" />
+            <ComboBox fx:id="screeningMonthField" prefHeight="25.0" prefWidth="81.0" promptText="month" GridPane.columnIndex="2" />
             <Button mnemonicParsing="false" onAction="#handleAddScreening" text="Add Screening" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-            <ComboBox fx:id="screeningHour" prefHeight="25.0" prefWidth="81.0" promptText="hour" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ComboBox fx:id="screeningMinute" prefHeight="25.0" prefWidth="81.0" promptText="minute" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <ComboBox fx:id="screeningYear" prefHeight="25.0" prefWidth="81.0" promptText="year" GridPane.columnIndex="3" />
+            <ComboBox fx:id="screeningHourField" prefHeight="25.0" prefWidth="81.0" promptText="hour" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="screeningMinuteField" prefHeight="25.0" prefWidth="81.0" promptText="minute" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <ComboBox fx:id="screeningYearField" prefHeight="25.0" prefWidth="81.0" promptText="year" GridPane.columnIndex="3" />
             <Text fx:id="message" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
          </children>
       </GridPane>
