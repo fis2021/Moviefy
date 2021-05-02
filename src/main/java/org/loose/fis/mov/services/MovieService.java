@@ -2,6 +2,7 @@ package org.loose.fis.mov.services;
 
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
+import org.loose.fis.mov.exceptions.MovieAlreadyExistsException;
 import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.Movie;
 import org.loose.fis.mov.model.Screening;
@@ -13,6 +14,14 @@ import static org.dizitart.no2.objects.filters.ObjectFilters.and;
 import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
 public class MovieService {
+    public static boolean checkMovieDuplicate(Movie movie) {
+        Movie result = DatabaseService.getMovieRepo().find(eq("title", movie.getTitle())).firstOrDefault();
+        if (result != null) {
+            return true;
+        }
+        return false;
+    }
+
     public static List<Movie> getMoviesNotScreenedAtCinema(Cinema cinema) {
         ObjectRepository<Movie> movieRepo = DatabaseService.getMovieRepo();
         List<Movie> retVal = movieRepo.find().toList();
