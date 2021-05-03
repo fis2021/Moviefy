@@ -40,4 +40,10 @@ public class MovieService {
 
         return retVal;
     }
+
+    public static Movie getMovieForScreening(Screening screening) {
+        return DatabaseService.getMovieRepo().find(
+                eq("title", screening.getMovieTitle())
+        ).firstOrDefault();
+    }
 }
