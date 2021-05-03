@@ -14,6 +14,16 @@ import static org.dizitart.no2.objects.filters.ObjectFilters.and;
 import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
 public class MovieService {
+    public static Movie addMovie(String title, String description, int length) throws MovieAlreadyExistsException {
+        if (findMovieByTitle(title) != null) {
+            throw new MovieAlreadyExistsException();
+        }
+        Movie movie = new Movie(title, description, length);
+        DatabaseService.getMovieRepo().insert(movie);
+        return movie;
+    }
+
+
     public static boolean checkMovieDuplicate(Movie movie) {
         Movie result = DatabaseService.getMovieRepo().find(eq("title", movie.getTitle())).firstOrDefault();
         if (result != null) {
@@ -44,6 +54,12 @@ public class MovieService {
     public static Movie getMovieForScreening(Screening screening) {
         return DatabaseService.getMovieRepo().find(
                 eq("title", screening.getMovieTitle())
+        ).firstOrDefault();
+    }
+
+    public static Movie findMovieByTitle(String title) {
+        return DatabaseService.getMovieRepo().find(
+                eq("title", title)
         ).firstOrDefault();
     }
 }
