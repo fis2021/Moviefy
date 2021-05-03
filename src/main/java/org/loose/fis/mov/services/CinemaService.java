@@ -8,10 +8,12 @@ import org.loose.fis.mov.model.Cinema;
 import java.util.Objects;
 
 public class CinemaService {
-    public static void addCinema(String name, String adminUsername, String address, int capacity)
+    public static Cinema addCinema(String name, String adminUsername, String address, int capacity)
             throws CinemaAlreadyExistsException {
         CinemaService.checkCinemaAlreadyExists(name);
-        DatabaseService.getCinemaRepo().insert(new Cinema(name, adminUsername, address, capacity));
+        Cinema cinema = new Cinema(name, adminUsername, address, capacity);
+        DatabaseService.getCinemaRepo().insert(cinema);
+        return cinema;
     }
 
     private static void checkCinemaAlreadyExists(String name)  throws CinemaAlreadyExistsException {
