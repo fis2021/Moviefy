@@ -31,7 +31,7 @@
                </effect></Hyperlink>
             </children>
         </HBox>
-      <TabPane layoutX="30.0" layoutY="30.0" prefHeight="171.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="199.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <TabPane fx:id="tabs" layoutX="30.0" layoutY="30.0" prefHeight="171.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="199.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
         <tabs>
           <Tab text="Add screening for new movie">
             <content>
@@ -125,7 +125,7 @@
             <ComboBox fx:id="screeningHourField" prefHeight="25.0" prefWidth="81.0" promptText="hour" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ComboBox fx:id="screeningMinuteField" prefHeight="25.0" prefWidth="81.0" promptText="minute" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <ComboBox fx:id="screeningYearField" prefHeight="25.0" prefWidth="81.0" promptText="year" GridPane.columnIndex="3" />
-            <Text fx:id="message" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Text fx:id="message" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
     </children>

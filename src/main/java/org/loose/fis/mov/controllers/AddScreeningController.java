@@ -5,15 +5,22 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
+import org.loose.fis.mov.exceptions.CinemaCapacityNotUnsignedIntegerException;
+import org.loose.fis.mov.exceptions.EmptyFieldException;
+import org.loose.fis.mov.exceptions.MovieLengthNotUnsignedIntegerException;
+import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.Movie;
+import org.loose.fis.mov.model.User;
 import org.loose.fis.mov.services.*;
 
 import javax.xml.crypto.Data;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -21,23 +28,27 @@ import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
 public class AddScreeningController extends AbstractController{
     @FXML
-    public TextField movieTitleField;
+    private TabPane tabs;
     @FXML
-    public TextField movieLengthField;
+    private TextField movieTitleField;
     @FXML
-    public TextArea movieDescriptionField;
+    private TextField movieLengthField;
     @FXML
-    public ComboBox<Integer> screeningDayField;
+    private TextArea movieDescriptionField;
     @FXML
-    public ComboBox<Integer> screeningMonthField;
+    private ComboBox<Integer> screeningDayField;
     @FXML
-    public ComboBox<Integer> screeningYearField;
+    private ComboBox<Integer> screeningMonthField;
     @FXML
-    public ComboBox<Integer> screeningHourField;
+    private ComboBox<Integer> screeningYearField;
     @FXML
-    public ComboBox<Integer> screeningMinuteField;
+    private ComboBox<Integer> screeningHourField;
     @FXML
-    public ComboBox<String> availableMoviesField;
+    private ComboBox<Integer> screeningMinuteField;
+    @FXML
+    private ComboBox<String> availableMoviesField;
+    @FXML
+    private Text message;
 
     @FXML
         public void initialize() {
@@ -61,7 +72,40 @@ public class AddScreeningController extends AbstractController{
 
     @FXML
     public void handleAddScreening(ActionEvent event) {
-        System.out.println("Not yet implemented");
+        try {
+            checkFieldsForNull();
+            Date screeningDate =
+                    new GregorianCalendar(
+                            screeningYearField.getValue(),
+                            screeningMonthField.getValue() - 1,
+                            screeningDayField.getValue(),
+                            screeningHourField.getValue(),
+                            screeningMinuteField.getValue()
+                    ).getTime();
+
+            // adding new movie;
+            if (tabs.getSelectionModel().isSelected(0)) {
+                checkMovieLengthNumeric();
+                ScreeningService.addScreening(
+                        movieTitleField.getText(),
+                        movieDescriptionField.getText(),
+                        Integer.parseInt(movieLengthField.getText()),
+                        screeningDate
+                );
+            }
+            // adding already existing movie;
+            else {
+                ScreeningService.addScreening(
+                        availableMoviesField.getValue(),
+                        "placeholder",
+                        0,
+                        screeningDate
+                );
+            }
+            message.setText("Successfully added screening!");
+        } catch (Exception e) {
+            message.setText(e.getMessage());
+        }
     }
 
     @FXML
@@ -83,5 +127,31 @@ public class AddScreeningController extends AbstractController{
     public void handleMenuLogout(ActionEvent event) throws Exception {
         UserService.logout();
         changeScene(event, "login.fxml");
+    }
+
+    private void checkFieldsForNull() throws EmptyFieldException {
+        if (tabs.getSelectionModel().isSelected(0)) {
+            if (movieTitleField.getText().isEmpty() || movieDescriptionField.getText().isEmpty() || movieLengthField.getText().isEmpty()) {
+                throw new EmptyFieldException();
+            }
+        } else {
+            if (Objects.equals(availableMoviesField.getValue(), "")) {
+                throw new EmptyFieldException();
+            }
+        }
+        if (Objects.equals(screeningDayField.getValue(), null)
+                || Objects.equals(screeningMonthField.getValue(), null)
+                || Objects.equals(screeningYearField.getValue(), null)
+                || Objects.equals(screeningHourField.getValue(), null)
+                || Objects.equals(screeningMinuteField.getValue(), null)) {
+            throw new EmptyFieldException();
+        }
+    }
+
+    private void checkMovieLengthNumeric() throws MovieLengthNotUnsignedIntegerException {
+        Pattern numberPattern = Pattern.compile("^[1-9][0-9]*$");
+        if (!numberPattern.matcher(movieLengthField.getText()).find()) {
+            throw new MovieLengthNotUnsignedIntegerException();
+        }
     }
 }
