@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Properties;
@@ -135,4 +136,8 @@ public class CommService {
         return false;
     }
 
+    public static boolean isDateInThePast(Date date) {
+        Date now = Calendar.getInstance().getTime();
+        return (date.compareTo(now) < 0);
+    }
 }

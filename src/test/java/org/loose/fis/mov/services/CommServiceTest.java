@@ -61,4 +61,12 @@ class CommServiceTest {
         assertTrue(CommService.areIntervalsOverlapping(intervalA, intervalF)); // F contains start of A;
         assertTrue(CommService.areIntervalsOverlapping(intervalA, intervalG)); // A contains G;
     }
+
+    @Test
+    void isDateInThePastTest() {
+        Date inTheFuture = new GregorianCalendar(2099, Calendar.DECEMBER, 25, 13, 37).getTime();
+        Date inThePast = new GregorianCalendar(2009, Calendar.MAY, 3, 17,58).getTime();
+        assertTrue(CommService.isDateInThePast(inThePast));
+        assertFalse(CommService.isDateInThePast(inTheFuture));
+    }
 }
