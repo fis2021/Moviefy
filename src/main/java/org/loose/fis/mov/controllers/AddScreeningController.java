@@ -10,6 +10,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import org.loose.fis.mov.exceptions.CinemaCapacityNotUnsignedIntegerException;
+import org.loose.fis.mov.exceptions.DateInThePastException;
 import org.loose.fis.mov.exceptions.EmptyFieldException;
 import org.loose.fis.mov.exceptions.MovieLengthNotUnsignedIntegerException;
 import org.loose.fis.mov.model.Cinema;
@@ -74,14 +75,20 @@ public class AddScreeningController extends AbstractController{
     public void handleAddScreening(ActionEvent event) {
         try {
             checkFieldsForNull();
-            Date screeningDate =
-                    new GregorianCalendar(
-                            screeningYearField.getValue(),
-                            screeningMonthField.getValue() - 1,
-                            screeningDayField.getValue(),
-                            screeningHourField.getValue(),
-                            screeningMinuteField.getValue()
-                    ).getTime();
+            Calendar calendar = new GregorianCalendar(
+                    screeningYearField.getValue(),
+                    screeningMonthField.getValue() - 1,
+                    screeningDayField.getValue(),
+                    screeningHourField.getValue(),
+                    screeningMinuteField.getValue()
+            );
+            // setting the calendar mode to non-lenient so invalid dates are rejected;
+            calendar.setLenient(false);
+            Date screeningDate = calendar.getTime();
+            // checking if the inputted date is not a past date;
+            if (CommService.isDateInThePast(screeningDate) == true) {
+                throw new DateInThePastException();
+            }
 
             // adding new movie;
             if (tabs.getSelectionModel().isSelected(0)) {
@@ -103,6 +110,8 @@ public class AddScreeningController extends AbstractController{
                 );
             }
             message.setText("Successfully added screening!");
+        } catch (IllegalArgumentException e) {
+            message.setText("The date you entered is invalid!");
         } catch (Exception e) {
             message.setText(e.getMessage());
         }
