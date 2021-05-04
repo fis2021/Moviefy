@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
+
 class UserServiceTest {
     @BeforeEach
     void setUp() throws IOException {
@@ -93,14 +93,29 @@ class UserServiceTest {
     }
 
     @Test
-    void changePassword() {
+    void changePasswordTest1() {
         assertDoesNotThrow(() -> {
-           UserService.addUser(
+           User user = UserService.addUser(
                    "test", "test", "test", "test_test",
                    "test@test.test", "Client", "", "", ""
            );
-           UserService.changePassword("test@test.test", "new_test_test");
+           UserService.changePassword(user, "new_test_test");
            UserService.login("test", "new_test_test");
         });
     }
+
+    @Test
+    void changePasswordTest2() {
+        assertDoesNotThrow(() -> {
+            User user = UserService.addUser(
+                    "test", "test", "test", "test_test",
+                    "test@test.test", "Client", "", "", ""
+            );
+            UserService.login(user.getUsername(), "test_test");
+            UserService.changePassword("test_test", "new_test_test");
+            UserService.logout();
+            UserService.login("test", "new_test_test");
+        });
+    }
+
 }
