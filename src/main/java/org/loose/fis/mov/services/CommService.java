@@ -130,7 +130,7 @@ public class CommService {
         return String.format(
                 "%2d/%2d/%4d",
                 calendar.get(Calendar.DAY_OF_MONTH),
-                calendar.get(Calendar.MONTH + 1),
+                calendar.get(Calendar.MONTH) + 1,
                 calendar.get(Calendar.YEAR)
         ).replace(' ', '0');
     }
