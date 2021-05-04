@@ -2,8 +2,10 @@ package org.loose.fis.mov.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.PasswordField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import org.loose.fis.mov.exceptions.EmptyFieldException;
 import org.loose.fis.mov.exceptions.UserNotAdminException;
 import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.User;
@@ -31,6 +33,12 @@ public class UserProfileController extends AbstractController{
     private Text cinemaAddressField;
     @FXML
     private Text cinemaCapacityField;
+    @FXML
+    private PasswordField oldPasswordField;
+    @FXML
+    private PasswordField newPasswordField;
+    @FXML
+    private Text changePasswordMessage;
 
     @FXML
     public void initialize() throws UserNotAdminException {
@@ -79,6 +87,19 @@ public class UserProfileController extends AbstractController{
 
     @FXML
     public void handleChangePassword(ActionEvent event) {
-        System.out.println("Not yet implemented.");
+        try {
+            checkFieldsForNull();
+            CommService.checkMinimumPasswordStrength(newPasswordField.getText());
+            UserService.changePassword(oldPasswordField.getText(), newPasswordField.getText());
+            changePasswordMessage.setText("Password change successful!");
+        } catch (Exception e) {
+            changePasswordMessage.setText(e.getMessage());
+        }
+    }
+
+    private void checkFieldsForNull() throws EmptyFieldException {
+        if (oldPasswordField.getText().isEmpty() || newPasswordField.getText().isEmpty()) {
+            throw new EmptyFieldException();
+        }
     }
 }
