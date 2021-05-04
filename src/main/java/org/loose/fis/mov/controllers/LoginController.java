@@ -14,6 +14,7 @@ import org.loose.fis.mov.exceptions.EmptyFieldException;
 import org.loose.fis.mov.exceptions.PasswordIncorrectException;
 import org.loose.fis.mov.exceptions.UserNotRegisteredException;
 import org.loose.fis.mov.model.User;
+import org.loose.fis.mov.services.CommService;
 import org.loose.fis.mov.services.UserService;
 
 import java.io.IOException;
@@ -32,7 +33,10 @@ public class LoginController extends AbstractController{
         try {
             checkFieldsForNull();
             User user = UserService.login(usernameField.getText(), passwordField.getText());
-            changeScene(event, "userProfile.fxml");
+            loginMessage.setText(String.format("Welcome, %s %s!", user.getRole(), user.getUsername()));
+            if (Objects.equals(user.getRole(), "Admin")) {
+                changeScene(event, "mainMenuAdmin.fxml");
+            }
         } catch (Exception e) {
             loginMessage.setText(e.getMessage());
         }

@@ -14,15 +14,16 @@ import java.util.Objects;
 import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
 public class UserService {
-    public static void addUser(String username, String firstname, String lastname, String password, String email, String role,
+    public static User addUser(String username, String firstname, String lastname, String password, String email, String role,
                                String cinemaName, String cinemaAddress, String cinemaCapacity) throws Exception {
         UserService.checkUserAlreadyExists(username);
         UserService.checkEmailAlreadyUsed(email);
         if (Objects.equals(role, "Admin")) {
             CinemaService.addCinema(cinemaName, username, cinemaAddress, Integer.parseInt(cinemaCapacity));
         }
-        DatabaseService.getUserRepo().insert(new User(username, firstname, lastname,
-                UserService.encodePassword(username, password), email, role));
+        User user = new User(username, firstname, lastname,  UserService.encodePassword(username, password), email, role);
+        DatabaseService.getUserRepo().insert(user);
+        return user;
     }
 
     public static List<User> getAllUsers() {
