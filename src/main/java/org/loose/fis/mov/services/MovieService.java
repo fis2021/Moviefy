@@ -14,7 +14,7 @@ import static org.dizitart.no2.objects.filters.ObjectFilters.and;
 import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
 public class MovieService {
-    public static Movie addMovie(String title, String description, int length) throws MovieAlreadyExistsException {
+    protected static Movie addMovie(String title, String description, int length) throws MovieAlreadyExistsException {
         if (findMovieByTitle(title) != null) {
             throw new MovieAlreadyExistsException();
         }

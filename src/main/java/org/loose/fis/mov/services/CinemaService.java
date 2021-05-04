@@ -13,7 +13,7 @@ import java.util.Objects;
 import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
 public class CinemaService {
-    public static Cinema addCinema(String name, String adminUsername, String address, int capacity)
+    protected static Cinema addCinema(String name, String adminUsername, String address, int capacity)
             throws CinemaAlreadyExistsException {
         CinemaService.checkCinemaAlreadyExists(name);
         Cinema cinema = new Cinema(name, adminUsername, address, capacity);
