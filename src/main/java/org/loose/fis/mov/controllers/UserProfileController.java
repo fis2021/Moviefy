@@ -4,12 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import org.loose.fis.mov.exceptions.UserNotAdminException;
 import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.User;
-import org.loose.fis.mov.services.CommService;
-import org.loose.fis.mov.services.DatabaseService;
-import org.loose.fis.mov.services.SessionService;
-import org.loose.fis.mov.services.UserService;
+import org.loose.fis.mov.services.*;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -26,16 +24,16 @@ public class UserProfileController extends AbstractController{
     @FXML
     private Text roleField;
     @FXML
-    public GridPane cinemaTab;
+    private GridPane cinemaTab;
     @FXML
-    public Text cinemaNameField;
+    private Text cinemaNameField;
     @FXML
-    public Text cinemaAddressField;
+    private Text cinemaAddressField;
     @FXML
-    public Text cinemaCapacityField;
+    private Text cinemaCapacityField;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws UserNotAdminException {
         User user = SessionService.getLoggedInUser();
         usernameField.setText(user.getUsername());
         nameField.setText(user.getFirstname() + " " +  user.getLastname());
@@ -44,7 +42,7 @@ public class UserProfileController extends AbstractController{
         cinemaTab.setVisible(false);
 
         if (Objects.equals(user.getRole(), "Admin")) {
-            Cinema cinema = DatabaseService.getCinemaRepo().find(eq("adminUsername", user.getUsername())).firstOrDefault();
+            Cinema cinema = CinemaService.findCinemaForAdmin(user);
 
             cinemaTab.setVisible(true);
             cinemaNameField.setText(cinema.getName());
@@ -54,8 +52,13 @@ public class UserProfileController extends AbstractController{
     }
 
     @FXML
-    public void handleMenuHome(ActionEvent actionEvent) {
-        System.out.println("Not yet implemented.");
+    public void handleMenuHome(ActionEvent event) throws IOException {
+        User user = SessionService.getLoggedInUser();
+        if (Objects.equals(user.getRole(), "Admin")) {
+            changeScene(event, "mainMenuAdmin.fxml");
+        } else {
+            System.out.println("Not yet implemented!");
+        }
     }
 
     @FXML
