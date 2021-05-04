@@ -21,7 +21,7 @@ public class UserService {
         if (Objects.equals(role, "Admin")) {
             CinemaService.addCinema(cinemaName, username, cinemaAddress, Integer.parseInt(cinemaCapacity));
         }
-        User user = new User(username, firstname, lastname,  UserService.encodePassword(username, password), email, role);
+        User user = new User(username, firstname, lastname, UserService.encodePassword(username, password), email, role);
         DatabaseService.getUserRepo().insert(user);
         return user;
     }

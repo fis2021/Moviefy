@@ -65,7 +65,7 @@ public class AddScreeningController extends AbstractController{
         screeningMinuteField.setItems(minuteList);
 
         ObservableList<String> availableMovieList = FXCollections.observableList(
-                DatabaseService.getMovieRepo().find().toList().stream().
+                MovieService.getAllMovies().stream().
                         map(Movie::getTitle).collect(Collectors.toList())
         );
         availableMoviesField.setItems(availableMovieList);
@@ -118,13 +118,18 @@ public class AddScreeningController extends AbstractController{
     }
 
     @FXML
-    public void handleMenuHome(ActionEvent event) {
-        System.out.println("Not yet implemented");
+    public void handleMenuHome(ActionEvent event) throws IOException {
+        User user = SessionService.getLoggedInUser();
+        if (Objects.equals(user.getRole(), "Admin")) {
+            changeScene(event, "mainMenuAdmin.fxml");
+        } else {
+            System.out.println("Not yet implemented!");
+        }
     }
 
     @FXML
-    public void handleMenuMyProfile(ActionEvent event) {
-        System.out.println("Not yet implemented");
+    public void handleMenuMyProfile(ActionEvent event) throws IOException {
+        changeScene(event, "userProfile.fxml");
     }
 
     @FXML

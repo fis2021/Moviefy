@@ -10,6 +10,7 @@ import org.loose.fis.mov.model.Movie;
 import org.loose.fis.mov.model.Screening;
 import org.loose.fis.mov.model.User;
 
+import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.List;
@@ -46,12 +47,13 @@ public class ScreeningService {
                 )
         ).toList();
     }
-    
+
     public static Screening addScreening(String movieTitle, String movieDescription, int movieLength, Date screeningDate)
             throws Exception {
         User user = SessionService.getLoggedInUser();
         // this line will be replaced after merging and integrating with MOV-37;
-        Cinema cinema = DatabaseService.getCinemaRepo().find(eq("adminUsername", user.getUsername())).firstOrDefault();
+        //Cinema cinema = DatabaseService.getCinemaRepo().find(eq("adminUsername", user.getUsername())).firstOrDefault();
+        Cinema cinema = CinemaService.findCinemaForAdmin(user);
 
         // verific data;
         if (checkIntervalOccupied(cinema, screeningDate, movieLength)) {

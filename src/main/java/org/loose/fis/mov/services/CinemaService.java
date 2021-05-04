@@ -43,7 +43,7 @@ public class CinemaService {
         return cinema;
     }
 
-    private static void checkCinemaAlreadyExists(String name)  throws CinemaAlreadyExistsException {
+    private static void checkCinemaAlreadyExists(String name) throws CinemaAlreadyExistsException {
         for (Cinema cinema : DatabaseService.getCinemaRepo().find()) {
             if (Objects.equals(name, cinema.getName())) {
                 throw new CinemaAlreadyExistsException(name);

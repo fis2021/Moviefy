@@ -134,6 +134,7 @@ public class CommService {
                 calendar.get(Calendar.YEAR)
         ).replace(' ', '0');
     }
+
     /* the A interval is where I want to insert a new screening / the B interval is an already existing screening */
     /* the key is the lower margin of the interval / the value is the upper margin of the interval */
     public static boolean areIntervalsOverlapping(Pair<Date, Date> intervalA, Pair<Date, Date> intervalB) {

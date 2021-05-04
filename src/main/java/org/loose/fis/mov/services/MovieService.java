@@ -32,25 +32,6 @@ public class MovieService {
         return false;
     }
 
-    public static List<Movie> getMoviesNotScreenedAtCinema(Cinema cinema) {
-        ObjectRepository<Movie> movieRepo = DatabaseService.getMovieRepo();
-        List<Movie> retVal = movieRepo.find().toList();
-        ObjectRepository<Screening> screeningRepo = DatabaseService.getScreeningRepo();
-
-        for (Movie movie : movieRepo.find()) {
-            if (screeningRepo.find(
-                    and (
-                            eq("cinemaName", cinema.getName()),
-                            eq("movieName", movie.getTitle())
-                    )
-            ).firstOrDefault() != null) {
-                retVal.remove(movie);
-            }
-        }
-
-        return retVal;
-    }
-
     public static Movie getMovieForScreening(Screening screening) {
         return DatabaseService.getMovieRepo().find(
                 eq("title", screening.getMovieTitle())
@@ -61,5 +42,9 @@ public class MovieService {
         return DatabaseService.getMovieRepo().find(
                 eq("title", title)
         ).firstOrDefault();
+    }
+
+    public static List<Movie> getAllMovies() {
+        return DatabaseService.getMovieRepo().find().toList();
     }
 }

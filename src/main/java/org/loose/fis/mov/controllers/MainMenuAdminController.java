@@ -67,7 +67,7 @@ public class MainMenuAdminController extends AbstractController {
         changeScene(event, "userProfile.fxml");
     }
 
-    public void handleMenuAddScreening(ActionEvent actionEvent) {
-        System.out.println("This would have taken you to the Add Screening page. We do not have such capabilities yet.");
+    public void handleMenuAddScreening(ActionEvent event) throws IOException {
+        changeScene(event, "addScreening.fxml");
     }
 }

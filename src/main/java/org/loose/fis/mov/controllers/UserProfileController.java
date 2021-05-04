@@ -67,8 +67,8 @@ public class UserProfileController extends AbstractController{
     }
 
     @FXML
-    public void handleMenuAddScreening(ActionEvent event) {
-        System.out.println("Not yet implemented.");
+    public void handleMenuAddScreening(ActionEvent event) throws IOException {
+        changeScene(event, "addScreening.fxml");
     }
 
     @FXML
