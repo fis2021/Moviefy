@@ -63,8 +63,8 @@ public class MainMenuAdminController extends AbstractController {
     }
 
     @FXML
-    public void handleMenuMyProfile(ActionEvent actionEvent) {
-        System.out.println("This would have taken you to your profile. It's a shame that page doesn't even exist yet.");
+    public void handleMenuMyProfile(ActionEvent event) throws IOException {
+        changeScene(event, "userProfile.fxml");
     }
 
     public void handleMenuAddScreening(ActionEvent actionEvent) {
