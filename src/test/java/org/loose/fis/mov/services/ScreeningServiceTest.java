@@ -1,6 +1,3 @@
-
-    
-
 package org.loose.fis.mov.services;
 
 import org.apache.commons.io.FileUtils;
@@ -9,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.loose.fis.mov.exceptions.CinemaAlreadyExistsException;
+import org.loose.fis.mov.exceptions.TimeIntervalOccupiedException;
+import org.loose.fis.mov.exceptions.UserNotAdminException;
 import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.Movie;
 import org.loose.fis.mov.model.Screening;
@@ -25,20 +24,24 @@ import static org.junit.jupiter.api.Assertions.*;
 class ScreeningServiceTest {
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp() throws Exception {
         FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath().toFile());
         DatabaseService.initDatabase();
+        UserService.addUser("test", "test", "test", "test_test", "test@test.test",
+                "Admin", "test", "test", "10");
+        UserService.login("test", "test_test");
     }
 
     @AfterEach
-    void tearDown() throws IOException {
+    void tearDown() throws Exception {
+        UserService.logout();
         DatabaseService.closeDatabase();
         FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath().toFile());
     }
     
     @Test
-    void checkScreeningOverlapTest() throws CinemaAlreadyExistsException {
-        Cinema cinema = CinemaService.addCinema("testCinema", "test", "test", 10);
+    void checkIntervalOccupiedTest() throws Exception {
+        Cinema cinema = CinemaService.findCinemaForAdmin(SessionService.getLoggedInUser());
         DatabaseService.getMovieRepo().insert(new Movie("testMovie", "test", 30));
         DatabaseService.getScreeningRepo().insert(
                 new Screening(
@@ -104,7 +107,7 @@ class ScreeningServiceTest {
     @Test
     void findAllFutureScreeningsForCinemaString() {
         try {
-            CinemaService.addCinema("test", "test", "test", 12);
+            Cinema cinema = CinemaService.findCinemaForAdmin(SessionService.getLoggedInUser());
             DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() - 10000),
                     "test", "test", 11));
             DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() + 20000),
@@ -121,7 +124,7 @@ class ScreeningServiceTest {
     @Test
     void findAllFutureScreeningsForCinemaCinema() {
         try {
-            Cinema cinema = CinemaService.addCinema("test", "test", "test", 12);
+            Cinema cinema = CinemaService.findCinemaForAdmin(SessionService.getLoggedInUser());
             DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() - 10000),
                     "test", "test", 11));
             DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() + 20000),
@@ -138,7 +141,7 @@ class ScreeningServiceTest {
     @Test
     void findAllScreeningsForCinemaString() {
         try {
-            CinemaService.addCinema("test", "test", "test", 12);
+            Cinema cinema = CinemaService.findCinemaForAdmin(SessionService.getLoggedInUser());
             DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() - 10000),
                     "test", "test", 11));
             DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() + 20000),
@@ -156,7 +159,7 @@ class ScreeningServiceTest {
     @Test
     void FindAllScreeningsForCinemaCinema() {
         try {
-            Cinema cinema = CinemaService.addCinema("test", "test", "test", 12);
+            Cinema cinema = CinemaService.findCinemaForAdmin(SessionService.getLoggedInUser());
             DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() - 10000),
                     "test", "test", 11));
             DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() + 20000),
@@ -169,5 +172,53 @@ class ScreeningServiceTest {
         } catch (Exception e) {
             fail(e.getMessage());
         }
+    }
+
+    @Test
+    void addScreeningTest() {
+        assertDoesNotThrow(() ->
+                ScreeningService.addScreening(
+                        "test",
+                        "test test test",
+                        10,
+                        new GregorianCalendar(
+                                2099,
+                                Calendar.DECEMBER,
+                                25,
+                                13,
+                                37
+                        ).getTime()
+                )
+        );
+
+        assertDoesNotThrow(() ->
+                ScreeningService.addScreening(
+                        "test",
+                        "",
+                        0,
+                        new GregorianCalendar(
+                                2099,
+                                Calendar.DECEMBER,
+                                24,
+                                13,
+                                37
+                        ).getTime()
+                )
+        );
+
+        assertThrows(TimeIntervalOccupiedException.class, () ->
+                ScreeningService.addScreening(
+                        "test",
+                        "test test test",
+                        10,
+                        new GregorianCalendar(
+                                2099,
+                                Calendar.DECEMBER,
+                                25,
+                                13,
+                                37
+                        ).getTime()
+                )
+        );
     }
 }

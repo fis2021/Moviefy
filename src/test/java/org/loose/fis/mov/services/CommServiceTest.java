@@ -69,4 +69,26 @@ class CommServiceTest {
         assertTrue(CommService.isDateInThePast(inThePast));
         assertFalse(CommService.isDateInThePast(inTheFuture));
     }
+
+    @Test
+    void extractTimeTest() {
+        Date date = new GregorianCalendar(
+                2099,
+                Calendar.DECEMBER,
+                25,
+                22,
+                31
+        ).getTime();
+        assertEquals("22:31", CommService.extractTime(date));
+    }
+
+    @Test
+    void extractDateDate() {
+        Date date = new GregorianCalendar(
+                2099,
+                Calendar.DECEMBER,
+                25
+        ).getTime();
+        assertEquals("25/12/2099", CommService.extractDate(date));
+    }
 }
