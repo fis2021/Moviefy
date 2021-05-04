@@ -22,9 +22,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.time.Month;
-import java.time.MonthDay;
-import java.time.Year;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -117,6 +114,26 @@ public class CommService {
         }
     }
 
+    public static String extractTime(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return String.format(
+                "%2d:%2d",
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE)
+        ).replace(' ', '0');
+    }
+
+    public static String extractDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return String.format(
+                "%2d/%2d/%4d",
+                calendar.get(Calendar.DAY_OF_MONTH),
+                calendar.get(Calendar.MONTH + 1),
+                calendar.get(Calendar.YEAR)
+        ).replace(' ', '0');
+    }
     /* the A interval is where I want to insert a new screening / the B interval is an already existing screening */
     /* the key is the lower margin of the interval / the value is the upper margin of the interval */
     public static boolean areIntervalsOverlapping(Pair<Date, Date> intervalA, Pair<Date, Date> intervalB) {
