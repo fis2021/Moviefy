@@ -25,44 +25,8 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 public class CommService {
-
-    private void checkEmailFormatValid(TextField emailField) throws EmailFormatInvalidException {
-        Pattern emailPattern = Pattern.compile("^[A-Za-z1-9.]+@[A-Za-z1-9]+\\.[a-z]+$");
-        if (!emailPattern.matcher(emailField.getText()).find()) {
-            throw new EmailFormatInvalidException();
-        }
-    }
-
-    private static void checkUserAlreadyExists(String username) throws UserAlreadyExistsException {
-        for (User user : DatabaseService.getUserRepo().find()) {
-            if (Objects.equals(username, user.getUsername())) {
-                throw new UserAlreadyExistsException(username);
-            }
-        }
-    }
-
-    private static String encodePassword(String salt, String password) {
-        MessageDigest md = getMessageDigest();
-        md.update(salt.getBytes(StandardCharsets.UTF_8));
-
-        byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
-
-        return new String(hashedPassword, StandardCharsets.UTF_8)
-                .replace("\"", ""); //to be able to save in JSON format
-    }
-
-    private static MessageDigest getMessageDigest() {
-        MessageDigest md;
-        try {
-            md = MessageDigest.getInstance("SHA-512");
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException("SHA-512 does not exist!");
-        }
-        return md;
-    }
-
-    private void checkMinimumPasswordStrength(PasswordField password) throws PasswordTooWeakException {
-        if (password.getText().length() < 8) {
+    public static void checkMinimumPasswordStrength(String password) throws PasswordTooWeakException {
+        if (password.length() < 8) {
             throw new PasswordTooWeakException();
         }
     }
