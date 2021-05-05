@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import org.loose.fis.mov.services.CommService;
+import org.loose.fis.mov.services.ScreeningService;
 
 /*
  * instead of only having one label and one item, this custom cell also contains buttons with actions linked
@@ -42,8 +43,8 @@ public class ScreeningListCell extends ListCell<Screening> {
         });
 
         deleteScreeningButton.setOnAction(event -> {
-            Screening cell = getItem();
-            System.out.println("This would delete the screening for " + cell.getMovieTitle() + " if it were implemented.");
+            Screening screening = getItem();
+            ScreeningService.deleteScreening(screening);
         });
     }
 

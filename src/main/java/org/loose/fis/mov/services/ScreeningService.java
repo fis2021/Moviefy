@@ -40,4 +40,8 @@ public class ScreeningService {
                 )
         ).toList();
     }
+
+    public static void deleteScreening(Screening screening) {
+        DatabaseService.getScreeningRepo().remove(screening);
+    }
 }
