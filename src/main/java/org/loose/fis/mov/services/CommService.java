@@ -22,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class CommService {
@@ -80,7 +81,35 @@ public class CommService {
         return result;
     }
 
-    public static void sendMail(String emailRecipient, String setSubject, String setText) {
+    public static void sendMail(String recipient, String subject, String text) {
+        MimeMessage message = createMailDraft();
+        try {
+            message.setFrom("Moviefy");
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+            message.setSubject(subject);
+            message.setText(text);
+            Transport.send(message);
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+        }
+    }
+
+    public static void sendMail(List<String> recipients, String subject, String text) {
+        MimeMessage message = createMailDraft();
+        try {
+            message.setFrom("Moviefy Cinema Service");
+            for (String recipient : recipients) {
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+            }
+            message.setSubject(subject);
+            message.setText(text);
+            Transport.send(message);
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+        }
+    }
+
+    private static MimeMessage createMailDraft() {
         String host = "smtp.gmail.com";
         Properties properties = System.getProperties();
         properties.put("mail.smtp.host", host);
@@ -88,29 +117,13 @@ public class CommService {
 
         properties.put("mail.smtp.ssl.enable", "true");
         properties.put("mail.smtp.auth", "true");
+
         Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("geani.gibilan", "mojojojo13");
+                return new PasswordAuthentication("moviefycinemaservice", "z+.\\j]4Hg[");
             }
         });
-        try {
-            // Create a default MimeMessage object.
-            MimeMessage message = new MimeMessage(session);
-            // Set From: header field of the header.
-            message.setFrom(new InternetAddress("geani.gibilan@gmail.com"));
-            // Set To: header field of the header.
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailRecipient));
-            // Set Subject: header field
-            message.setSubject(setSubject);
-            // Now set the actual message
-            message.setText(setText);
-            // System.out.println("sending...");
-            // Send message
-            Transport.send(message);
-            //System.out.println("Sent message successfully....");
-        } catch (MessagingException mex) {
-            mex.printStackTrace();
-        }
+        return new MimeMessage(session);
     }
 
     public static String extractTime(Date date) {
