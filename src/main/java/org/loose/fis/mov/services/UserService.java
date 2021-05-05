@@ -48,7 +48,7 @@ public class UserService {
         DatabaseService.getUserRepo().update(user);
     }
 
-    private static User findUser(String username) throws UserNotRegisteredException {
+    public static User findUser(String username) throws UserNotRegisteredException {
         User user = DatabaseService.getUserRepo().find(eq("username", username)).firstOrDefault();
         if (user == null) {
             throw new UserNotRegisteredException();
