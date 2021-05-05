@@ -12,6 +12,9 @@ import javafx.scene.paint.Color;
 import org.loose.fis.mov.services.BookingService;
 import org.loose.fis.mov.services.CommService;
 import org.loose.fis.mov.services.ScreeningService;
+import org.loose.fis.mov.services.SessionService;
+
+import java.util.List;
 
 /*
  * instead of only having one label and one item, this custom cell also contains buttons with actions linked
@@ -47,19 +50,23 @@ public class ScreeningListCell extends ListCell<Screening> {
         deleteScreeningButton.setOnAction(event -> {
             Screening screening = getItem();
             ScreeningService.deleteScreening(screening);
-            CommService.sendMail(
-                    BookingService.findUsersWithBookingAtScreening(screening),
-                    "Booking cancelled.",
-                    "Your booking for "
-                            + screening.getMovieTitle()
-                            + " at "
-                            + screening.getCinemaName()
-                            + " on "
-                            + CommService.extractDate(screening.getDate())
-                            + " "
-                            + CommService.extractTime(screening.getDate())
-                            + " was cancelled.\n We are sorry!"
-            );
+            List<User> bookedUsers = BookingService.findUsersWithBookingAtScreening(screening);
+
+            if (!bookedUsers.isEmpty()) {
+                CommService.sendMail(
+                        bookedUsers,
+                        "Booking cancelled.",
+                        "Your booking for "
+                                + screening.getMovieTitle()
+                                + " at "
+                                + screening.getCinemaName()
+                                + " on "
+                                + CommService.extractDate(screening.getDate())
+                                + " "
+                                + CommService.extractTime(screening.getDate())
+                                + " was cancelled.\nWe are sorry!"
+                );
+            }
 
             isCancelled = true;
             screeningTime.setTextFill(Color.CRIMSON);
