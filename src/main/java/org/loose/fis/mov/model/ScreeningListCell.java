@@ -30,6 +30,7 @@ public class ScreeningListCell extends ListCell<Screening> {
     Pane pane = new Pane(); // this pane is using to create space between elements - more of them may be added
     Button bookingsButton = new Button("Bookings");
     Button deleteScreeningButton = new Button("Delete this screening");
+    boolean isCancelled = false;
 
     public ScreeningListCell() {
         super();
@@ -45,6 +46,11 @@ public class ScreeningListCell extends ListCell<Screening> {
         deleteScreeningButton.setOnAction(event -> {
             Screening screening = getItem();
             ScreeningService.deleteScreening(screening);
+            isCancelled = true;
+            screeningTime.setTextFill(Color.CRIMSON);
+            screeningTime.setText("Cancelled");
+            bookingsButton.setVisible(false);
+            deleteScreeningButton.setVisible(false);
         });
     }
 
@@ -61,8 +67,11 @@ public class ScreeningListCell extends ListCell<Screening> {
             movieTitle.setText(item != null ? item.getMovieTitle()  : "<null>");
             screeningTime.setText(
                     item != null ?
-                    CommService.extractDate(item.getDate()) + " " + CommService.extractTime(item.getDate()) :
-                    "<null>"
+                            isCancelled != true ?
+                                    CommService.extractDate(item.getDate()) + " " + CommService.extractTime(item.getDate()) :
+                                    "Cancelled"
+                            :
+                            "<null>"
             );
             /* this method call actually sets the appearance of our custom cell */
             setGraphic(hbox);
