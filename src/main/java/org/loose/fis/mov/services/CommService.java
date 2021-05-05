@@ -94,12 +94,12 @@ public class CommService {
         }
     }
 
-    public static void sendMail(List<String> recipients, String subject, String text) {
+    public static void sendMail(List<User> recipients, String subject, String text) {
         MimeMessage message = createMailDraft();
         try {
-            message.setFrom("Moviefy Cinema Service");
-            for (String recipient : recipients) {
-                message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+            message.setFrom("Moviefy");
+            for (User recipient : recipients) {
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient.getEmail()));
             }
             message.setSubject(subject);
             message.setText(text);
