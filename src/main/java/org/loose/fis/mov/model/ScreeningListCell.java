@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
+import org.loose.fis.mov.services.BookingService;
 import org.loose.fis.mov.services.CommService;
 import org.loose.fis.mov.services.ScreeningService;
 
@@ -46,6 +47,20 @@ public class ScreeningListCell extends ListCell<Screening> {
         deleteScreeningButton.setOnAction(event -> {
             Screening screening = getItem();
             ScreeningService.deleteScreening(screening);
+            CommService.sendMail(
+                    BookingService.findUsersWithBookingAtScreening(screening),
+                    "Booking cancelled.",
+                    "Your booking for "
+                            + screening.getMovieTitle()
+                            + " at "
+                            + screening.getCinemaName()
+                            + " on "
+                            + CommService.extractDate(screening.getDate())
+                            + " "
+                            + CommService.extractTime(screening.getDate())
+                            + " was cancelled.\n We are sorry!"
+            );
+
             isCancelled = true;
             screeningTime.setTextFill(Color.CRIMSON);
             screeningTime.setText("Cancelled");
