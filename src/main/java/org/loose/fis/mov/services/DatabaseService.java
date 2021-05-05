@@ -31,27 +31,27 @@ public class DatabaseService {
         database.close();
     }
 
-    public static ObjectRepository<User> getUserRepo() {
+    protected static ObjectRepository<User> getUserRepo() {
         return userRepo;
     }
 
-    public static ObjectRepository<Cinema> getCinemaRepo() {
+    protected static ObjectRepository<Cinema> getCinemaRepo() {
         return cinemaRepo;
     }
 
-    public static ObjectRepository<Movie> getMovieRepo() {
+    protected static ObjectRepository<Movie> getMovieRepo() {
         return movieRepo;
     }
 
-    public static ObjectRepository<Screening> getScreeningRepo() {
+    protected static ObjectRepository<Screening> getScreeningRepo() {
         return screeningRepo;
     }
 
-    public static ObjectRepository<Booking> getBookingRepo() {
+    protected static ObjectRepository<Booking> getBookingRepo() {
         return bookingRepo;
     }
 
-    public static ObjectRepository<Review> getReviewRepo() {
+    protected static ObjectRepository<Review> getReviewRepo() {
         return reviewRepo;
     }
 }

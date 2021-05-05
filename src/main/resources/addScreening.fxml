@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.loose.fis.mov.controllers.AddScreeningController">
+    <children>
+        <HBox layoutY="2.0" prefHeight="25.0" prefWidth="560.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Hyperlink onAction="#handleMenuHome" prefHeight="29.0" text="Home" textAlignment="CENTER">
+               <effect>
+                  <Blend />
+               </effect></Hyperlink>
+                <Hyperlink onAction="#handleMenuMyProfile" prefHeight="29.0" prefWidth="62.0" text="My Profile" textAlignment="CENTER">
+               <effect>
+                  <Blend />
+               </effect></Hyperlink>
+                <Hyperlink onAction="#handleMenuAddScreening" prefHeight="31.0" text="Add Screening" textAlignment="CENTER">
+               <effect>
+                  <Blend />
+               </effect></Hyperlink>
+                <Hyperlink onAction="#handleMenuLogout" prefHeight="31.0" text="Logout" textAlignment="CENTER">
+               <effect>
+                  <Blend />
+               </effect></Hyperlink>
+            </children>
+        </HBox>
+      <TabPane fx:id="tabs" layoutX="30.0" layoutY="30.0" prefHeight="171.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="199.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+        <tabs>
+          <Tab text="Add screening for new movie">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <GridPane layoutX="50.0" layoutY="11.0" prefHeight="121.0" prefWidth="500.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="10.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="245.0" minWidth="10.0" prefWidth="128.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="372.0" minWidth="10.0" prefWidth="372.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Text fill="gray" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Title">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <TextField fx:id="movieTitleField" prefHeight="25.0" prefWidth="248.0" GridPane.columnIndex="1" />
+                              <Text fill="gray" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Length" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <TextField fx:id="movieLengthField" prefHeight="25.0" prefWidth="298.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Text fill="gray" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Description" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <TextArea fx:id="movieDescriptionField" prefHeight="55.0" prefWidth="526.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Add screening for already existing movie">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <GridPane layoutX="40.0" layoutY="63.0" prefHeight="25.0" prefWidth="487.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="127.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="424.0" minWidth="10.0" prefWidth="373.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Text fill="gray" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <ComboBox fx:id="availableMoviesField" prefHeight="25.0" prefWidth="227.0" GridPane.columnIndex="1" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <GridPane layoutX="41.0" layoutY="225.0" prefHeight="120.0" prefWidth="507.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="43.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="124.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text fill="gray" strokeType="OUTSIDE" strokeWidth="0.0" text="Screening Time">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Text>
+            <ComboBox fx:id="screeningDayField" prefHeight="25.0" prefWidth="81.0" promptText="day" GridPane.columnIndex="1" />
+            <ComboBox fx:id="screeningMonthField" prefHeight="25.0" prefWidth="81.0" promptText="month" GridPane.columnIndex="2" />
+            <Button mnemonicParsing="false" onAction="#handleAddScreening" text="Add Screening" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <ComboBox fx:id="screeningHourField" prefHeight="25.0" prefWidth="81.0" promptText="hour" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="screeningMinuteField" prefHeight="25.0" prefWidth="81.0" promptText="minute" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <ComboBox fx:id="screeningYearField" prefHeight="25.0" prefWidth="81.0" promptText="year" GridPane.columnIndex="3" />
+            <Text fx:id="message" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
+    </children>
+</AnchorPane>

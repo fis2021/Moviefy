@@ -33,9 +33,10 @@ public class LoginController extends AbstractController{
         try {
             checkFieldsForNull();
             User user = UserService.login(usernameField.getText(), passwordField.getText());
-            loginMessage.setText(String.format("Welcome, %s %s!", user.getRole(), user.getUsername()));
             if (Objects.equals(user.getRole(), "Admin")) {
                 changeScene(event, "mainMenuAdmin.fxml");
+            } else {
+                loginMessage.setText(String.format("Welcome, %s %s!", user.getRole(), user.getUsername()));
             }
         } catch (Exception e) {
             loginMessage.setText(e.getMessage());
