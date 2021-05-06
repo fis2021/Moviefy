@@ -21,7 +21,7 @@ public class UserService {
         if (Objects.equals(role, "Admin")) {
             CinemaService.addCinema(cinemaName, username, cinemaAddress, Integer.parseInt(cinemaCapacity));
         }
-        User user = new User(username, firstname, lastname,  UserService.encodePassword(username, password), email, role);
+        User user = new User(username, firstname, lastname, UserService.encodePassword(username, password), email, role);
         DatabaseService.getUserRepo().insert(user);
         return user;
     }
@@ -42,13 +42,20 @@ public class UserService {
         SessionService.destroySession();
     }
 
-    public static void changePassword(String email, String newPassword) throws UserNotRegisteredException {
-        User user = findUserByEmail(email);
+    /* this is used for changing the password before login */
+    public static void changePassword(User user, String newPassword) {
         user.setPassword(encodePassword(user.getUsername(), newPassword));
         DatabaseService.getUserRepo().update(user);
     }
 
-    public static User findUser(String username) throws UserNotRegisteredException {
+    /* this is used for changing the password after login */
+    public static void changePassword(String oldPassword, String newPassword) throws PasswordIncorrectException {
+        User user = SessionService.getLoggedInUser();
+        checkPassword(user, oldPassword);
+        changePassword(user, newPassword);
+    }
+
+    private static User findUser(String username) throws UserNotRegisteredException {
         User user = DatabaseService.getUserRepo().find(eq("username", username)).firstOrDefault();
         if (user == null) {
             throw new UserNotRegisteredException();

@@ -18,7 +18,7 @@
          <children>
             <Hyperlink onAction="#handleMenuHome" prefHeight="29.0" text="Home" textAlignment="CENTER" />
             <Hyperlink onAction="#handleMenuMyProfile" prefHeight="29.0" prefWidth="62.0" text="My Profile" textAlignment="CENTER" />
-            <Hyperlink onAction="#handleMenuAddScreening" prefHeight="31.0" text="Add Screening" textAlignment="CENTER" />
+            <Hyperlink fx:id="commonMenuField" onAction="#handleMenuCommonField" prefHeight="31.0" textAlignment="CENTER" />
             <Hyperlink onAction="#handleMenuLogout" prefHeight="31.0" text="Logout" textAlignment="CENTER" />
          </children>
       </HBox>
@@ -111,10 +111,13 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Text>
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" onAction="#handleChangePassword" text="Change password" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Button mnemonicParsing="false" onAction="#handleChangePassword" text="Change password" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></Button>
             <Text fx:id="changePasswordMessage" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <PasswordField fx:id="oldPasswordField" GridPane.columnIndex="1" />
+            <PasswordField fx:id="newPasswordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </children>
