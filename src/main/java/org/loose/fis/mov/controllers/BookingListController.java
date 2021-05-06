@@ -15,6 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import org.loose.fis.mov.exceptions.UserNotRegisteredException;
 import org.loose.fis.mov.model.Booking;
 import org.loose.fis.mov.model.Screening;
 import org.loose.fis.mov.model.User;
@@ -52,11 +53,36 @@ public class BookingListController extends AbstractController {
         ObservableList<Booking> observableList =
                 FXCollections.observableList(BookingService.findBookingsAtScreening(selectedScreening));
 
-        /* setting the appropiate info for each column - not yet */
-
-        firstNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getClientName()));
-        lastNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getClientName()));
-        emailNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getClientName()));
+        firstNameColumn.setCellValueFactory(cellData -> {
+            try {
+                return new SimpleStringProperty(
+                        UserService.findUser(cellData.getValue().getClientName()).getFirstname()
+                );
+            } catch (UserNotRegisteredException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+        lastNameColumn.setCellValueFactory(cellData -> {
+            try {
+                return new SimpleStringProperty(
+                        UserService.findUser(cellData.getValue().getClientName()).getLastname()
+                );
+            } catch (UserNotRegisteredException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+        emailNameColumn.setCellValueFactory(cellData -> {
+            try {
+                return new SimpleStringProperty(
+                        UserService.findUser(cellData.getValue().getClientName()).getEmail()
+                );
+            } catch (UserNotRegisteredException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
         seatNumberColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<Integer>(cellData.getValue().getNumberOfSeats()));
         table.setItems(observableList);
     }
