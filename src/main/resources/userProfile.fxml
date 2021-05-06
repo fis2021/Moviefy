@@ -18,7 +18,7 @@
          <children>
             <Hyperlink onAction="#handleMenuHome" prefHeight="29.0" text="Home" textAlignment="CENTER" />
             <Hyperlink onAction="#handleMenuMyProfile" prefHeight="29.0" prefWidth="62.0" text="My Profile" textAlignment="CENTER" />
-            <Hyperlink onAction="#handleMenuAddScreening" prefHeight="31.0" text="Add Screening" textAlignment="CENTER" />
+            <Hyperlink fx:id="commonMenuField" onAction="#handleMenuCommonField" prefHeight="31.0" textAlignment="CENTER" />
             <Hyperlink onAction="#handleMenuLogout" prefHeight="31.0" text="Logout" textAlignment="CENTER" />
          </children>
       </HBox>

@@ -5,9 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.loose.fis.mov.model.Screening;
 import org.loose.fis.mov.services.DatabaseService;
 import org.loose.fis.mov.services.FileSystemService;
+import org.loose.fis.mov.services.MovieService;
+import org.loose.fis.mov.services.UserService;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -18,7 +19,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         FileSystemService.initDirectory();
         DatabaseService.initDatabase();
-
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
         primaryStage.setTitle("Moviefy");
         primaryStage.setResizable(false);

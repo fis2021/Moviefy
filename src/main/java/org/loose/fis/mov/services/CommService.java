@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import org.loose.fis.mov.exceptions.EmailFormatInvalidException;
 import org.loose.fis.mov.exceptions.EmptyFieldException;
 import org.loose.fis.mov.exceptions.PasswordTooWeakException;
@@ -93,8 +94,32 @@ public class CommService {
         return String.format(
                 "%2d/%2d/%4d",
                 calendar.get(Calendar.DAY_OF_MONTH),
-                calendar.get(Calendar.MONTH + 1),
+                calendar.get(Calendar.MONTH) + 1,
                 calendar.get(Calendar.YEAR)
         ).replace(' ', '0');
+    }
+
+    /* the A interval is where I want to insert a new screening / the B interval is an already existing screening */
+    /* the key is the lower margin of the interval / the value is the upper margin of the interval */
+    public static boolean areIntervalsOverlapping(Pair<Date, Date> intervalA, Pair<Date, Date> intervalB) {
+        // case 1: interval B contains the beginning of interval A || interval B contains interval A;
+        if (intervalA.getKey().compareTo(intervalB.getKey()) >= 0 && intervalA.getKey().compareTo(intervalB.getValue()) <= 0) {
+            return true;
+        }
+        // case 2: interval B contains the end of interval A || interval B contains interval A;
+        else if (intervalA.getValue().compareTo(intervalB.getKey()) >= 0 && intervalA.getValue().compareTo(intervalB.getValue()) <= 0) {
+            return true;
+        }
+        // case 3: interval A contains interval B;
+        else if (intervalA.getKey().compareTo(intervalB.getKey()) < 0 && intervalA.getValue().compareTo(intervalB.getValue()) > 0) {
+            return true;
+        }
+        // case 4: the intervals are not overlapping;
+        return false;
+    }
+
+    public static boolean isDateInThePast(Date date) {
+        Date now = Calendar.getInstance().getTime();
+        return (date.compareTo(now) < 0);
     }
 }

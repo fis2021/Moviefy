@@ -2,7 +2,9 @@ package org.loose.fis.mov.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import org.loose.fis.mov.exceptions.EmptyFieldException;
@@ -17,6 +19,8 @@ import java.util.Objects;
 import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
 public class UserProfileController extends AbstractController{
+    @FXML
+    private Hyperlink commonMenuField;
     @FXML
     private Text usernameField;
     @FXML
@@ -50,12 +54,16 @@ public class UserProfileController extends AbstractController{
         cinemaTab.setVisible(false);
 
         if (Objects.equals(user.getRole(), "Admin")) {
+            commonMenuField.setText("Add Screening");
+
             Cinema cinema = CinemaService.findCinemaForAdmin(user);
 
             cinemaTab.setVisible(true);
             cinemaNameField.setText(cinema.getName());
             cinemaAddressField.setText(cinema.getAddress());
             cinemaCapacityField.setText(String.valueOf(cinema.getCapacity()));
+        } else {
+            commonMenuField.setText("My Bookings");
         }
     }
 
@@ -75,7 +83,8 @@ public class UserProfileController extends AbstractController{
     }
 
     @FXML
-    public void handleMenuAddScreening(ActionEvent event) {
+    public void handleMenuCommonField(ActionEvent event) {
+        // must branch into admin and client users after merging the add screening story;
         System.out.println("Not yet implemented.");
     }
 
