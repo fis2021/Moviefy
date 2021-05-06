@@ -9,7 +9,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
+import org.loose.fis.mov.services.BookingService;
 import org.loose.fis.mov.services.CommService;
+import org.loose.fis.mov.services.ScreeningService;
+import org.loose.fis.mov.services.SessionService;
+
+import java.util.List;
 
 /*
  * instead of only having one label and one item, this custom cell also contains buttons with actions linked
@@ -29,6 +34,7 @@ public class ScreeningListCell extends ListCell<Screening> {
     Pane pane = new Pane(); // this pane is using to create space between elements - more of them may be added
     Button bookingsButton = new Button("Bookings");
     Button deleteScreeningButton = new Button("Delete this screening");
+    boolean isCancelled = false;
 
     public ScreeningListCell() {
         super();
@@ -42,8 +48,31 @@ public class ScreeningListCell extends ListCell<Screening> {
         });
 
         deleteScreeningButton.setOnAction(event -> {
-            Screening cell = getItem();
-            System.out.println("This would delete the screening for " + cell.getMovieTitle() + " if it were implemented.");
+            Screening screening = getItem();
+            ScreeningService.deleteScreening(screening);
+            List<User> bookedUsers = BookingService.findUsersWithBookingAtScreening(screening);
+
+            if (!bookedUsers.isEmpty()) {
+                CommService.sendMail(
+                        bookedUsers,
+                        "Booking cancelled.",
+                        "Your booking for "
+                                + screening.getMovieTitle()
+                                + " at "
+                                + screening.getCinemaName()
+                                + " on "
+                                + CommService.extractDate(screening.getDate())
+                                + " "
+                                + CommService.extractTime(screening.getDate())
+                                + " was cancelled.\nWe are sorry!"
+                );
+            }
+
+            isCancelled = true;
+            screeningTime.setTextFill(Color.CRIMSON);
+            screeningTime.setText("Cancelled");
+            bookingsButton.setVisible(false);
+            deleteScreeningButton.setVisible(false);
         });
     }
 
@@ -60,8 +89,11 @@ public class ScreeningListCell extends ListCell<Screening> {
             movieTitle.setText(item != null ? item.getMovieTitle()  : "<null>");
             screeningTime.setText(
                     item != null ?
-                    CommService.extractDate(item.getDate()) + " " + CommService.extractTime(item.getDate()) :
-                    "<null>"
+                            isCancelled != true ?
+                                    CommService.extractDate(item.getDate()) + " " + CommService.extractTime(item.getDate()) :
+                                    "Cancelled"
+                            :
+                            "<null>"
             );
             /* this method call actually sets the appearance of our custom cell */
             setGraphic(hbox);

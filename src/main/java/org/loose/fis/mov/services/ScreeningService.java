@@ -48,6 +48,10 @@ public class ScreeningService {
         ).toList();
     }
 
+    public static void deleteScreening(Screening screening) {
+        DatabaseService.getScreeningRepo().remove(screening);
+    }
+
     public static Screening addScreening(String movieTitle, String movieDescription, int movieLength, Date screeningDate)
             throws Exception {
         User user = SessionService.getLoggedInUser();
