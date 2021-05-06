@@ -34,8 +34,9 @@ public  class ChangePasswordBeforeLogInController extends AbstractController{
     @FXML
     public void switchToRegisterWithPassword(ActionEvent event) throws IOException, UserNotRegisteredException {
         String email = emailTextField.getText();
-        String newPassword=WordGenerator(12);
-        UserService.changePassword(email, newPassword);
+        User user = UserService.findUserByEmail(email);
+        String newPassword = WordGenerator(12);
+        UserService.changePassword(user, newPassword);
         sendMail(email,"Moviefy Password Reset","Your new password is: " + newPassword);
         changeScene(event, "login.fxml");
     }

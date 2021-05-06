@@ -42,10 +42,17 @@ public class UserService {
         SessionService.destroySession();
     }
 
-    public static void changePassword(String email, String newPassword) throws UserNotRegisteredException {
-        User user = findUserByEmail(email);
+    /* this is used for changing the password before login */
+    public static void changePassword(User user, String newPassword) {
         user.setPassword(encodePassword(user.getUsername(), newPassword));
         DatabaseService.getUserRepo().update(user);
+    }
+
+    /* this is used for changing the password after login */
+    public static void changePassword(String oldPassword, String newPassword) throws PasswordIncorrectException {
+        User user = SessionService.getLoggedInUser();
+        checkPassword(user, oldPassword);
+        changePassword(user, newPassword);
     }
 
     private static User findUser(String username) throws UserNotRegisteredException {
