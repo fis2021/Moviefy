@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #470000;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.loose.fis.mov.controllers.MainMenuBOOKINGClientController">
+   <left>
+      <VBox prefHeight="355.0" prefWidth="65.0" style="-fx-background-color: #872929;" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#bookingtomain" prefHeight="45.0" prefWidth="65.0" style="-fx-background-color: TRANSPARENT; -fx-text-fill: #341919;" text="Main" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#bookingtoprofile" prefHeight="45.0" prefWidth="65.0" style="-fx-background-color: transparent; -fx-text-fill: #341919;" text="Profile">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="65.0" style="-fx-background-color: #470000; -fx-text-fill: #f0f0f0;" text="Booking">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#logoutbutton" prefHeight="45.0" prefWidth="65.0" style="-fx-background-color: transparent; -fx-text-fill: #0D0000;" text="Log Out">
+               <VBox.margin>
+                  <Insets top="180.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </left>
+</BorderPane>
