@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 
 import java.io.IOException;
 
-public class MainMenuBOOKINGClientController extends AbstractController{
+public class MainMenuBOOKINGClientController extends AbstractMenusController{
 
     public void bookingtoprofile(ActionEvent event) throws IOException {
 

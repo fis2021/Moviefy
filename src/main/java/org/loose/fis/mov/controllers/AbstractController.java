@@ -17,9 +17,6 @@ abstract class AbstractController {
         stage.setScene(scene);
         stage.show();
     }
-    public void logoutbutton()
-    {
-        System.out.println("get me out!");
-    }
+
 
 }
