@@ -6,6 +6,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import org.loose.fis.mov.services.CommService;
 import org.loose.fis.mov.services.UserService;
 
 import java.io.IOException;
@@ -47,9 +48,9 @@ public class RegistrationController extends AbstractController{
     public void handleRegisterAction() {
             if (!areFieldsFilled()) {
                 registrationMessage.setText("A required field is empty!");
-            } else if (!isEmailValid()) {
+            } else if (!CommService.isEmailValid(emailField.getText())) {
                 registrationMessage.setText("The e-mail address format is invalid!");
-            } else if (!isPasswordValid()) {
+            } else if (!CommService.isPasswordValid(passwordField.getText())) {
                 registrationMessage.setText(
                         "The password must be at least 8 characters long!");
             } else if (Objects.equals(
@@ -88,14 +89,16 @@ public class RegistrationController extends AbstractController{
         }
     }
 
-    private boolean isPasswordValid() {
-        return passwordField.getText().length() >= MIN_PASSWORD_LENGTH;
-    }
+//    private boolean isPasswordValid() {
+//        return passwordField.getText().length() >= MIN_PASSWORD_LENGTH;
+//    }
 
-    private boolean isEmailValid() {
-        Pattern emailPattern = Pattern.compile("^[A-Za-z1-9.]+@[A-Za-z1-9]+\\.[a-z]+$");
-        return emailPattern.matcher(emailField.getText()).find();
-    }
+//    private boolean isEmailValid() {
+//        Pattern emailPattern = Pattern.compile(
+//                "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$"
+//        );
+//        return emailPattern.matcher(emailField.getText()).find();
+//    }
 
     private boolean isCinemaCapacityNumeric() {
         Pattern numberPattern = Pattern.compile("^[1-9][0-9]*$");

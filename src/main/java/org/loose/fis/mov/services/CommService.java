@@ -18,7 +18,9 @@ public final class CommService {
     }
 
     public static boolean isEmailValid(String email) {
-        Pattern emailPattern = Pattern.compile("^[A-Za-z1-9.]+@[A-Za-z1-9]+\\.[a-z]+$");
+        Pattern emailPattern = Pattern.compile(
+                "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$"
+        );
         return emailPattern.matcher(email).find();
     }
 
