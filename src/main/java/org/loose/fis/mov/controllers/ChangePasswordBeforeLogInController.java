@@ -22,12 +22,14 @@ public  class ChangePasswordBeforeLogInController extends AbstractController{
     }
 
     @FXML
-    public void switchToRegisterWithPassword(ActionEvent event) throws IOException, UserNotRegisteredException {
-        String email = emailTextField.getText();
-        User user = UserService.findUserByEmail(email);
+    public void switchToRegisterWithPassword(ActionEvent event) throws IOException {
         String newPassword = WordGenerator(12);
-        UserService.changePassword(user, newPassword);
-        sendMail(email,"Moviefy Password Reset","Your new password is: " + newPassword);
-        changeScene(event, "login.fxml");
+        try {
+            UserService.changePasswordBeforeLogin(emailTextField.getText(), newPassword);
+            sendMail(emailTextField.getText(),"Moviefy Password Reset","Your new password is: " + newPassword);
+            changeScene(event, "login.fxml");
+        } catch (UserNotRegisteredException e) {
+            e.printStackTrace();
+        }
     }
 }

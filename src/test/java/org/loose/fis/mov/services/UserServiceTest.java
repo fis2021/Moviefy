@@ -100,7 +100,7 @@ class UserServiceTest {
                     "test@test.test", "Client", "", "", ""
             );
             UserService.login(user.getUsername(), "test_test");
-            UserService.changePassword("test_test", "new_test_test");
+            UserService.changePasswordAfterLogin("test_test", "new_test_test");
             UserService.logout();
             UserService.login("test", "new_test_test");
         });

@@ -47,14 +47,24 @@ public final class UserService {
         SessionService.destroySession();
     }
 
-    /* this is used for changing the password before login */
     public static void changePassword(User user, String newPassword) {
         user.setPassword(encodePassword(user.getUsername(), newPassword));
         DatabaseService.getUserRepo().update(user);
     }
 
+    /* this is used for changing the password before login */
+    public static void changePasswordBeforeLogin(String email, String newPassword)
+    throws UserNotRegisteredException {
+        User user = findUserByEmail(email);
+        if (user == null) {
+            throw new UserNotRegisteredException();
+        }
+        changePassword(user, newPassword);
+    }
+
     /* this is used for changing the password after login */
-    public static void changePassword(String oldPassword, String newPassword) throws PasswordIncorrectException {
+    public static void changePasswordAfterLogin(String oldPassword, String newPassword)
+    throws PasswordIncorrectException {
         User user = SessionService.getLoggedInUser();
         checkPassword(user, oldPassword);
         changePassword(user, newPassword);
