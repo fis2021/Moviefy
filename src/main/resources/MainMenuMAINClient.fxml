@@ -29,7 +29,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#logoutbutton" prefHeight="45.0" prefWidth="65.0" style="-fx-background-color: transparent; -fx-text-fill: #0D0000;" text="Log Out">
+            <Button mnemonicParsing="false" onAction="#handleLogoutButton" prefHeight="45.0" prefWidth="65.0" style="-fx-background-color: transparent; -fx-text-fill: #0D0000;" text="Log Out">
                <VBox.margin>
                   <Insets top="180.0" />
                </VBox.margin>

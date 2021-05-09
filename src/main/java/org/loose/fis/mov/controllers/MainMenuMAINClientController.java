@@ -27,23 +27,30 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
     private Slider MCSlider;
     @FXML
     private ListView<Object> MCList;
-
-    private char curentlist;
+    private int checkChar(char list){
+        if(list==0)return 0;
+        else
+            return 1;
+    }
+    private int curentlist=0;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-MCSlider.valueProperty().addListener(new ChangeListener<Number>() {
+    
+    MCSlider.valueProperty().addListener(new ChangeListener<Number>() {
     @Override
     public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
         if((int)MCSlider.getValue()==0)
         {
-            curentlist='m';
+            curentlist=0;
         }
         else
         {
-            curentlist='c';
+            curentlist=1;
         }
         System.out.println(curentlist);
     }
 });
+    //here
+
     }
 }

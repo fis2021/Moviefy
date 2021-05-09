@@ -1,9 +1,17 @@
 package org.loose.fis.mov.controllers;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import org.loose.fis.mov.exceptions.SessionDoesNotExistException;
+import org.loose.fis.mov.services.UserService;
+
+import java.io.IOException;
+
 abstract class AbstractMenusController extends AbstractController{
 
-    public void logoutbutton()
-    {
-        System.out.println("get me out!");
+    @FXML
+    public void handleLogoutButton(ActionEvent event) throws SessionDoesNotExistException, IOException {
+        UserService.logout();
+        changeScene(event, "login.fxml");
     }
 }

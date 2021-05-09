@@ -19,7 +19,7 @@
             <Hyperlink onAction="#handleMenuHome" prefHeight="29.0" text="Home" textAlignment="CENTER" />
             <Hyperlink onAction="#handleMenuMyProfile" prefHeight="29.0" prefWidth="62.0" text="My Profile" textAlignment="CENTER" />
             <Hyperlink onAction="#handleMenuAddScreening" prefHeight="31.0" text="Add Screening" textAlignment="CENTER" />
-            <Hyperlink onAction="#handleMenuLogout" prefHeight="31.0" text="Logout" textAlignment="CENTER" />
+            <Hyperlink onAction="#handleLogoutButton" prefHeight="31.0" text="Logout" textAlignment="CENTER" />
          </children>
       </HBox>
       <GridPane layoutX="20.0" layoutY="40.0" prefHeight="60.0" prefWidth="215.0">

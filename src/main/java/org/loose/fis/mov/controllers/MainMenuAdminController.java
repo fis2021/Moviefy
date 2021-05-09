@@ -22,7 +22,7 @@ import java.util.Date;
 import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 import static org.dizitart.no2.objects.filters.ObjectFilters.gt;
 
-public class MainMenuAdminController extends AbstractController {
+public class MainMenuAdminController extends AbstractMenusController {
     private static final int CELL_SIZE = 30;
     private ObservableList<Screening> observableList;
 
@@ -51,11 +51,11 @@ public class MainMenuAdminController extends AbstractController {
         }
     }
 
-    @FXML
-    public void handleMenuLogout(ActionEvent event) throws SessionDoesNotExistException, IOException {
-        UserService.logout();
-        changeScene(event, "login.fxml");
-    }
+//    @FXML
+//    public void handleMenuLogout(ActionEvent event) throws SessionDoesNotExistException, IOException {
+//        UserService.logout();
+//        changeScene(event, "login.fxml");
+//    }
 
     @FXML
     public void handleMenuHome(ActionEvent event) throws IOException {
