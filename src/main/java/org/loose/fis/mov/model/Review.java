@@ -5,7 +5,7 @@ import org.dizitart.no2.objects.Id;
 
 import java.util.Objects;
 
-public class Review {
+public final class Review {
     @Id
     private NitriteId id;
     private String clientUsername;

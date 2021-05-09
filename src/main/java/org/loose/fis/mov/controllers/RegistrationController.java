@@ -69,7 +69,6 @@ public class RegistrationController extends AbstractController{
                     registrationMessage.setText(e.getMessage());
                 }
             }
-
     }
 
     @FXML

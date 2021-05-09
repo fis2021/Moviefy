@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
-public class CommService {
+public final class CommService {
     public static boolean isPasswordValid(String password) {
         return password.length() >= 8;
     }

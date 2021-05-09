@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.dizitart.no2.objects.filters.ObjectFilters.*;
 
-public class ScreeningService {
+public final class ScreeningService {
     public static List<Screening> findAllScreeningsForCinema(String cinemaName) {
         return DatabaseService.getScreeningRepo().find(
                 eq("cinemaName", cinemaName)
@@ -74,7 +74,7 @@ public class ScreeningService {
     }
 
     /* Method for checking if there is a screening overlapping with a certain period of time */
-    public static boolean checkIntervalOccupied(Cinema cinema, Date date, int length) {
+    private static boolean checkIntervalOccupied(Cinema cinema, Date date, int length) {
         Calendar calendar = Calendar.getInstance();
 
         // setting the bounds for the interval to check;

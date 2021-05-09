@@ -47,16 +47,16 @@ public class AddScreeningController extends AbstractController{
     private Text message;
 
     @FXML
-        public void initialize() {
-            ObservableList<Integer> dayList = FXCollections.observableList(IntStream.rangeClosed(1, 31).boxed().collect(Collectors.toList()));
-            screeningDayField.setItems(dayList);
-            ObservableList<Integer> monthList = FXCollections.observableList(IntStream.rangeClosed(1, 12).boxed().collect(Collectors.toList()));
-            screeningMonthField.setItems(monthList);
-            ObservableList<Integer> yearList = FXCollections.observableList(IntStream.rangeClosed(2021, 2031).boxed().collect(Collectors.toList()));
-            screeningYearField.setItems(yearList);
-            ObservableList<Integer> hourList = FXCollections.observableList(IntStream.rangeClosed(0, 23).boxed().collect(Collectors.toList()));
-            screeningHourField.setItems(hourList);
-            ObservableList<Integer> minuteList = FXCollections.observableList(IntStream.rangeClosed(0, 59).boxed().collect(Collectors.toList()));
+    public void initialize() {
+        ObservableList<Integer> dayList = FXCollections.observableList(IntStream.rangeClosed(1, 31).boxed().collect(Collectors.toList()));
+        screeningDayField.setItems(dayList);
+        ObservableList<Integer> monthList = FXCollections.observableList(IntStream.rangeClosed(1, 12).boxed().collect(Collectors.toList()));
+        screeningMonthField.setItems(monthList);
+        ObservableList<Integer> yearList = FXCollections.observableList(IntStream.rangeClosed(2021, 2031).boxed().collect(Collectors.toList()));
+        screeningYearField.setItems(yearList);
+        ObservableList<Integer> hourList = FXCollections.observableList(IntStream.rangeClosed(0, 23).boxed().collect(Collectors.toList()));
+        screeningHourField.setItems(hourList);
+        ObservableList<Integer> minuteList = FXCollections.observableList(IntStream.rangeClosed(0, 59).boxed().collect(Collectors.toList()));
         screeningMinuteField.setItems(minuteList);
 
         ObservableList<String> availableMovieList = FXCollections.observableList(

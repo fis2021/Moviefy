@@ -8,7 +8,7 @@ import java.util.Objects;
 
 import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
-public class CinemaService {
+public final class CinemaService {
     protected static Cinema addCinema(String name, String adminUsername, String address, int capacity)
             throws CinemaAlreadyExistsException {
         if (CinemaService.existsCinema(name)) {

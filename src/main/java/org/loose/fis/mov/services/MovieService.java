@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
-public class MovieService {
+public final class MovieService {
     protected static Movie addMovie(String title, String description, int length) {
         Movie movie = new Movie(title, description, length);
         DatabaseService.getMovieRepo().insert(movie);

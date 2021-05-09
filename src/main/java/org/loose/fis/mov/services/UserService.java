@@ -11,7 +11,7 @@ import java.util.Objects;
 
 import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
-public class UserService {
+public final class UserService {
     public static User addUser(String username, String firstname, String lastname, String password, String email, String role,
                                String cinemaName, String cinemaAddress, String cinemaCapacity) throws Exception {
         if (UserService.userAlreadyExists(username)) {

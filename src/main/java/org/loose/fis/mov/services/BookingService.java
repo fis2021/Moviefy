@@ -1,6 +1,5 @@
 package org.loose.fis.mov.services;
 
-import org.loose.fis.mov.exceptions.UserNotRegisteredException;
 import org.loose.fis.mov.model.Booking;
 import org.loose.fis.mov.model.Screening;
 import org.loose.fis.mov.model.User;

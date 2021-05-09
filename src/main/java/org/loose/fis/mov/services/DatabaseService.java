@@ -4,7 +4,7 @@ import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.loose.fis.mov.model.*;
 
-public class DatabaseService {
+public final class DatabaseService {
     private static ObjectRepository<User> userRepo;
     private static ObjectRepository<Cinema> cinemaRepo;
     private static ObjectRepository<Movie> movieRepo;

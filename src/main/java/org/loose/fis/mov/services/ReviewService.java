@@ -1,4 +1,4 @@
 package org.loose.fis.mov.services;
 
-public class ReviewService {
+public final class ReviewService {
 }

@@ -24,13 +24,13 @@ public class BookingListController extends AbstractController {
     @FXML
     private Text pageTitle;
     @FXML
-    public TableColumn<Booking, String> firstNameColumn;
+    private TableColumn<Booking, String> firstNameColumn;
     @FXML
-    public TableColumn<Booking, String> lastNameColumn;
+    private TableColumn<Booking, String> lastNameColumn;
     @FXML
-    public TableColumn<Booking, String> emailNameColumn;
+    private TableColumn<Booking, String> emailNameColumn;
     @FXML
-    public TableColumn<Booking, Integer> seatNumberColumn;
+    private TableColumn<Booking, Integer> seatNumberColumn;
     @FXML
     private TableView<Booking> table;
 
