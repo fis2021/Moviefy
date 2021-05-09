@@ -1,7 +1,6 @@
 package org.loose.fis.mov.services;
 
 import org.loose.fis.mov.exceptions.SessionAlreadyExistsException;
-import org.loose.fis.mov.exceptions.SessionDoesNotExistException;
 import org.loose.fis.mov.model.Screening;
 import org.loose.fis.mov.model.User;
 
@@ -20,10 +19,7 @@ public final class SessionService {
         loggedInUser = user;
     }
 
-    public static void destroySession() throws SessionDoesNotExistException {
-        if (!checkSessionExists()) {
-            throw new SessionDoesNotExistException();
-        }
+    public static void destroySession() {
         loggedInUser = null;
     }
 

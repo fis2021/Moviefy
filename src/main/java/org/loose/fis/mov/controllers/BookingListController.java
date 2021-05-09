@@ -6,36 +6,31 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import org.loose.fis.mov.exceptions.UserNotRegisteredException;
 import org.loose.fis.mov.model.Booking;
 import org.loose.fis.mov.model.Screening;
-import org.loose.fis.mov.model.User;
-import org.loose.fis.mov.services.*;
+import org.loose.fis.mov.services.BookingService;
+import org.loose.fis.mov.services.CommService;
+import org.loose.fis.mov.services.SessionService;
+import org.loose.fis.mov.services.UserService;
 
 import java.io.IOException;
-import java.util.List;
 
 public class BookingListController extends AbstractController {
 
     @FXML
     private Text pageTitle;
     @FXML
-    public TableColumn<Booking, String> firstNameColumn;
+    private TableColumn<Booking, String> firstNameColumn;
     @FXML
-    public TableColumn<Booking, String> lastNameColumn;
+    private TableColumn<Booking, String> lastNameColumn;
     @FXML
-    public TableColumn<Booking, String> emailNameColumn;
+    private TableColumn<Booking, String> emailNameColumn;
     @FXML
-    public TableColumn<Booking, Integer> seatNumberColumn;
+    private TableColumn<Booking, Integer> seatNumberColumn;
     @FXML
     private TableView<Booking> table;
 
@@ -54,36 +49,22 @@ public class BookingListController extends AbstractController {
                 FXCollections.observableList(BookingService.findBookingsAtScreening(selectedScreening));
 
         firstNameColumn.setCellValueFactory(cellData -> {
-            try {
-                return new SimpleStringProperty(
-                        UserService.findUser(cellData.getValue().getClientName()).getFirstname()
-                );
-            } catch (UserNotRegisteredException e) {
-                e.printStackTrace();
-            }
-            return null;
+            return new SimpleStringProperty(
+                    UserService.findUser(cellData.getValue().getClientName()).getFirstname()
+            );
         });
         lastNameColumn.setCellValueFactory(cellData -> {
-            try {
-                return new SimpleStringProperty(
-                        UserService.findUser(cellData.getValue().getClientName()).getLastname()
-                );
-            } catch (UserNotRegisteredException e) {
-                e.printStackTrace();
-            }
-            return null;
+            return new SimpleStringProperty(
+                    UserService.findUser(cellData.getValue().getClientName()).getLastname()
+            );
         });
         emailNameColumn.setCellValueFactory(cellData -> {
-            try {
-                return new SimpleStringProperty(
-                        UserService.findUser(cellData.getValue().getClientName()).getEmail()
-                );
-            } catch (UserNotRegisteredException e) {
-                e.printStackTrace();
-            }
-            return null;
+            return new SimpleStringProperty(
+                    UserService.findUser(cellData.getValue().getClientName()).getEmail()
+            );
         });
-        seatNumberColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<Integer>(cellData.getValue().getNumberOfSeats()));
+        seatNumberColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(
+                cellData.getValue().getNumberOfSeats()));
         table.setItems(observableList);
     }
 

@@ -2,21 +2,19 @@ package org.loose.fis.mov.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.PasswordField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import org.loose.fis.mov.exceptions.EmptyFieldException;
-import org.loose.fis.mov.exceptions.UserNotAdminException;
 import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.User;
-import org.loose.fis.mov.services.*;
+import org.loose.fis.mov.services.CinemaService;
+import org.loose.fis.mov.services.CommService;
+import org.loose.fis.mov.services.SessionService;
+import org.loose.fis.mov.services.UserService;
 
 import java.io.IOException;
 import java.util.Objects;
-
-import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
 public class UserProfileController extends AbstractController{
     @FXML
@@ -45,7 +43,7 @@ public class UserProfileController extends AbstractController{
     private Text changePasswordMessage;
 
     @FXML
-    public void initialize() throws UserNotAdminException {
+    public void initialize() {
         User user = SessionService.getLoggedInUser();
         usernameField.setText(user.getUsername());
         nameField.setText(user.getFirstname() + " " +  user.getLastname());
@@ -96,19 +94,25 @@ public class UserProfileController extends AbstractController{
 
     @FXML
     public void handleChangePassword(ActionEvent event) {
-        try {
-            checkFieldsForNull();
-            CommService.checkMinimumPasswordStrength(newPasswordField.getText());
-            UserService.changePassword(oldPasswordField.getText(), newPasswordField.getText());
-            changePasswordMessage.setText("Password change successful!");
-        } catch (Exception e) {
-            changePasswordMessage.setText(e.getMessage());
+        if (!areFieldsFilled()) {
+            changePasswordMessage.setText("A required field is empty!");
+        } else if (!CommService.isPasswordValid(newPasswordField.getText())) {
+            changePasswordMessage.setText("The password must be at least 8 characters long!");
+        } else {
+            try {
+                UserService.changePassword(
+                        oldPasswordField.getText(),
+                        newPasswordField.getText()
+                );
+                changePasswordMessage.setText("Password change successful!");
+            } catch (Exception e) {
+                changePasswordMessage.setText(e.getMessage());
+            }
         }
     }
 
-    private void checkFieldsForNull() throws EmptyFieldException {
-        if (oldPasswordField.getText().isEmpty() || newPasswordField.getText().isEmpty()) {
-            throw new EmptyFieldException();
-        }
+    private boolean areFieldsFilled() {
+        return !oldPasswordField.getText().isEmpty() && !newPasswordField
+                .getText().isEmpty();
     }
 }

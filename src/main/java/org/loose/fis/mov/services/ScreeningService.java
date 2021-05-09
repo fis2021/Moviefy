@@ -1,23 +1,19 @@
 package org.loose.fis.mov.services;
 
 import javafx.util.Pair;
-import org.dizitart.no2.Nitrite;
-import org.dizitart.no2.objects.ObjectRepository;
-import org.loose.fis.mov.exceptions.MovieAlreadyExistsException;
 import org.loose.fis.mov.exceptions.TimeIntervalOccupiedException;
 import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.Movie;
 import org.loose.fis.mov.model.Screening;
 import org.loose.fis.mov.model.User;
 
-import javax.xml.crypto.Data;
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static org.dizitart.no2.objects.filters.ObjectFilters.*;
 
-public class ScreeningService {
+public final class ScreeningService {
     public static List<Screening> findAllScreeningsForCinema(String cinemaName) {
         return DatabaseService.getScreeningRepo().find(
                 eq("cinemaName", cinemaName)
@@ -53,7 +49,7 @@ public class ScreeningService {
     }
 
     public static Screening addScreening(String movieTitle, String movieDescription, int movieLength, Date screeningDate)
-            throws Exception {
+            throws TimeIntervalOccupiedException {
         User user = SessionService.getLoggedInUser();
         // this line will be replaced after merging and integrating with MOV-37;
         //Cinema cinema = DatabaseService.getCinemaRepo().find(eq("adminUsername", user.getUsername())).firstOrDefault();
@@ -78,7 +74,7 @@ public class ScreeningService {
     }
 
     /* Method for checking if there is a screening overlapping with a certain period of time */
-    public static boolean checkIntervalOccupied(Cinema cinema, Date date, int length) {
+    private static boolean checkIntervalOccupied(Cinema cinema, Date date, int length) {
         Calendar calendar = Calendar.getInstance();
 
         // setting the bounds for the interval to check;

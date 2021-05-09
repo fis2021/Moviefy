@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.loose.fis.mov.exceptions.CinemaAlreadyExistsException;
-import org.loose.fis.mov.exceptions.UserNotAdminException;
 import org.loose.fis.mov.model.User;
 
 import java.io.IOException;
@@ -45,16 +44,16 @@ class CinemaServiceTest {
         }
     }
 
-    @Test
-    void findCinemaForAdminStringFail() {
-        try {
-            UserService.addUser("test", "test", "test", "test_test", "test@test.test",
-                    "Client", "", "", "");
-            assertThrows(UserNotAdminException.class, () -> CinemaService.findCinemaForAdmin("test"));
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
-    }
+//    @Test
+//    void findCinemaForAdminStringFail() {
+//        try {
+//            UserService.addUser("test", "test", "test", "test_test", "test@test.test",
+//                    "Client", "", "", "");
+//            assertThrows(UserNotAdminException.class, () -> CinemaService.findCinemaForAdmin("test"));
+//        } catch (Exception e) {
+//            fail(e.getMessage());
+//        }
+//    }
 
     @Test
     void findCinemaForAdminUserSuccess() {
@@ -67,14 +66,14 @@ class CinemaServiceTest {
         }
     }
 
-    @Test
-    void findCinemaForAdminUserFail() {
-        try {
-            User user = UserService.addUser("test", "test", "test", "test_test", "test@test.test",
-                    "Client", "", "", "");
-            assertThrows(UserNotAdminException.class, () -> CinemaService.findCinemaForAdmin(user));
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
-    }
+//    @Test
+//    void findCinemaForAdminUserFail() {
+//        try {
+//            User user = UserService.addUser("test", "test", "test", "test_test", "test@test.test",
+//                    "Client", "", "", "");
+//            assertThrows(UserNotAdminException.class, () -> CinemaService.findCinemaForAdmin(user));
+//        } catch (Exception e) {
+//            fail(e.getMessage());
+//        }
+//    }
 }

@@ -1,6 +1,5 @@
 package org.loose.fis.mov.services;
 
-import org.loose.fis.mov.exceptions.UserNotRegisteredException;
 import org.loose.fis.mov.model.Booking;
 import org.loose.fis.mov.model.Screening;
 import org.loose.fis.mov.model.User;
@@ -18,11 +17,7 @@ public class BookingService {
 
         bookings.forEach(booking -> usernames.add(booking.getClientName()));
         usernames.forEach(username -> {
-            try {
-                users.add(UserService.findUser(username));
-            } catch (UserNotRegisteredException e) {
-                e.printStackTrace();
-            }
+            users.add(UserService.findUser(username));
         });
 
         return users;
