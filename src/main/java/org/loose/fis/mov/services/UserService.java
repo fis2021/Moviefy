@@ -14,15 +14,16 @@ import java.util.Objects;
 import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
 public class UserService {
-    public static void addUser(String username, String firstname, String lastname, String password, String email, String role,
+    public static User addUser(String username, String firstname, String lastname, String password, String email, String role,
                                String cinemaName, String cinemaAddress, String cinemaCapacity) throws Exception {
         UserService.checkUserAlreadyExists(username);
         UserService.checkEmailAlreadyUsed(email);
         if (Objects.equals(role, "Admin")) {
             CinemaService.addCinema(cinemaName, username, cinemaAddress, Integer.parseInt(cinemaCapacity));
         }
-        DatabaseService.getUserRepo().insert(new User(username, firstname, lastname,
-                UserService.encodePassword(username, password), email, role));
+        User user = new User(username, firstname, lastname, UserService.encodePassword(username, password), email, role);
+        DatabaseService.getUserRepo().insert(user);
+        return user;
     }
 
     public static List<User> getAllUsers() {
@@ -41,7 +42,20 @@ public class UserService {
         SessionService.destroySession();
     }
 
-    private static User findUser(String username) throws UserNotRegisteredException {
+    /* this is used for changing the password before login */
+    public static void changePassword(User user, String newPassword) {
+        user.setPassword(encodePassword(user.getUsername(), newPassword));
+        DatabaseService.getUserRepo().update(user);
+    }
+
+    /* this is used for changing the password after login */
+    public static void changePassword(String oldPassword, String newPassword) throws PasswordIncorrectException {
+        User user = SessionService.getLoggedInUser();
+        checkPassword(user, oldPassword);
+        changePassword(user, newPassword);
+    }
+
+    public static User findUser(String username) throws UserNotRegisteredException {
         User user = DatabaseService.getUserRepo().find(eq("username", username)).firstOrDefault();
         if (user == null) {
             throw new UserNotRegisteredException();

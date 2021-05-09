@@ -72,11 +72,7 @@ public class RegistrationController extends AbstractController{
 
     @FXML
     public void handleLoginAction(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        changeScene(event, "login.fxml");
     }
 
     @FXML
@@ -90,13 +86,6 @@ public class RegistrationController extends AbstractController{
             cinemaCapacityField.clear();
         }
     }
-  
-    @FXML
-    public void switchToPopUp(ActionEvent event) throws IOException {
-
-        changeScene(event,"changePasswordPopUp.fxml");
-    }
-
 
     private void checkMinimumPasswordStrength() throws PasswordTooWeakException {
         if (passwordField.getText().length() < MIN_PASSWORD_LENGTH) {

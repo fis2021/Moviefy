@@ -14,6 +14,7 @@ import org.loose.fis.mov.exceptions.EmptyFieldException;
 import org.loose.fis.mov.exceptions.PasswordIncorrectException;
 import org.loose.fis.mov.exceptions.UserNotRegisteredException;
 import org.loose.fis.mov.model.User;
+import org.loose.fis.mov.services.CommService;
 import org.loose.fis.mov.services.UserService;
 
 import java.io.IOException;
@@ -28,26 +29,29 @@ public class LoginController extends AbstractController{
     private Text loginMessage;
 
     @FXML
-    public void handleLoginAction() {
+    public void handleLoginAction(ActionEvent event) {
         try {
             checkFieldsForNull();
             User user = UserService.login(usernameField.getText(), passwordField.getText());
-            loginMessage.setText(String.format("Welcome, %s %s!", user.getRole(), user.getUsername()));
+            if (Objects.equals(user.getRole(), "Admin")) {
+                changeScene(event, "mainMenuAdmin.fxml");
+            } else {
+                loginMessage.setText(String.format("Welcome, %s %s!", user.getRole(), user.getUsername()));
+            }
         } catch (Exception e) {
             loginMessage.setText(e.getMessage());
         }
     }
 
     @FXML
-    public void handleChangePasswordAction() {
-
+    public void handleChangePasswordAction(ActionEvent event) throws IOException {
+        changeScene(event, "changePasswordPopUp.fxml");
     }
 
     @FXML
     public void handleRegisterAction(ActionEvent event) throws IOException {
         changeScene(event,"register.fxml");
     }
-
 
     private void checkFieldsForNull() throws EmptyFieldException {
         if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) {

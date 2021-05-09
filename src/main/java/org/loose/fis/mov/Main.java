@@ -7,6 +7,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.loose.fis.mov.services.DatabaseService;
 import org.loose.fis.mov.services.FileSystemService;
+import org.loose.fis.mov.services.MovieService;
+import org.loose.fis.mov.services.UserService;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class Main extends Application {
 
@@ -17,7 +22,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("MainMenuMAINClient.fxml"));
         primaryStage.setTitle("Moviefy");
         primaryStage.setResizable(false);
-        primaryStage.setScene(new Scene(root, 500, 500));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 

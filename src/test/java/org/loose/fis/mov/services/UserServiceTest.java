@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.loose.fis.mov.exceptions.*;
+import org.loose.fis.mov.model.User;
 
 import java.io.IOException;
 
@@ -21,8 +22,14 @@ class UserServiceTest {
 
     @AfterEach
     void tearDown() throws IOException {
-        DatabaseService.closeDatabase();
-        FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath().toFile());
+        try {
+            SessionService.destroySession();
+        } catch (SessionDoesNotExistException ignored) {
+
+        } finally {
+            DatabaseService.closeDatabase();
+            FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath().toFile());
+        }
     }
 
     @Test
@@ -84,4 +91,31 @@ class UserServiceTest {
             UserService.logout();
         });
     }
+
+    @Test
+    void changePasswordTest1() {
+        assertDoesNotThrow(() -> {
+           User user = UserService.addUser(
+                   "test", "test", "test", "test_test",
+                   "test@test.test", "Client", "", "", ""
+           );
+           UserService.changePassword(user, "new_test_test");
+           UserService.login("test", "new_test_test");
+        });
+    }
+
+    @Test
+    void changePasswordTest2() {
+        assertDoesNotThrow(() -> {
+            User user = UserService.addUser(
+                    "test", "test", "test", "test_test",
+                    "test@test.test", "Client", "", "", ""
+            );
+            UserService.login(user.getUsername(), "test_test");
+            UserService.changePassword("test_test", "new_test_test");
+            UserService.logout();
+            UserService.login("test", "new_test_test");
+        });
+    }
+
 }
