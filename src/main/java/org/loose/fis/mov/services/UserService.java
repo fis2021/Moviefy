@@ -56,9 +56,6 @@ public final class UserService {
     public static void changePasswordBeforeLogin(String email, String newPassword)
     throws UserNotRegisteredException {
         User user = findUserByEmail(email);
-        if (user == null) {
-            throw new UserNotRegisteredException();
-        }
         changePassword(user, newPassword);
     }
 
