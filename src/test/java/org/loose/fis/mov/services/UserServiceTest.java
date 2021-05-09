@@ -10,7 +10,8 @@ import org.loose.fis.mov.model.User;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Disabled
 class UserServiceTest {

@@ -2,21 +2,17 @@ package org.loose.fis.mov.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
-import org.loose.fis.mov.exceptions.*;
+import org.loose.fis.mov.exceptions.CinemaCapacityNotUnsignedIntegerException;
+import org.loose.fis.mov.exceptions.EmailFormatInvalidException;
+import org.loose.fis.mov.exceptions.EmptyFieldException;
+import org.loose.fis.mov.exceptions.PasswordTooWeakException;
 import org.loose.fis.mov.services.UserService;
-import java.io.IOException;
-import java.net.URL;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.regex.Pattern;
 

@@ -6,13 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.loose.fis.mov.model.Movie;
-import org.loose.fis.mov.model.Screening;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
-import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.loose.fis.mov.services.MovieService.checkMovieDuplicate;
 
 @Disabled

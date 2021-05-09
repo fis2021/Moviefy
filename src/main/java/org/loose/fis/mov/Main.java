@@ -7,11 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.loose.fis.mov.services.DatabaseService;
 import org.loose.fis.mov.services.FileSystemService;
-import org.loose.fis.mov.services.MovieService;
-import org.loose.fis.mov.services.UserService;
-
-import java.util.Calendar;
-import java.util.Date;
 
 public class Main extends Application {
 

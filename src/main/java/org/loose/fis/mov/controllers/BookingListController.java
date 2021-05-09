@@ -6,23 +6,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import org.loose.fis.mov.exceptions.UserNotRegisteredException;
 import org.loose.fis.mov.model.Booking;
 import org.loose.fis.mov.model.Screening;
-import org.loose.fis.mov.model.User;
-import org.loose.fis.mov.services.*;
+import org.loose.fis.mov.services.BookingService;
+import org.loose.fis.mov.services.CommService;
+import org.loose.fis.mov.services.SessionService;
+import org.loose.fis.mov.services.UserService;
 
 import java.io.IOException;
-import java.util.List;
 
 public class BookingListController extends AbstractController {
 

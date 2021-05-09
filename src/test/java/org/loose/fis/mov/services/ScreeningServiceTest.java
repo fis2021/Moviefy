@@ -5,15 +5,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.loose.fis.mov.exceptions.CinemaAlreadyExistsException;
 import org.loose.fis.mov.exceptions.TimeIntervalOccupiedException;
-import org.loose.fis.mov.exceptions.UserNotAdminException;
 import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.Movie;
 import org.loose.fis.mov.model.Screening;
 
-import javax.xml.crypto.Data;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;

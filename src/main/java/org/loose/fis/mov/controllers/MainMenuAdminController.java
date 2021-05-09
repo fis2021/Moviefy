@@ -15,20 +15,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import org.loose.fis.mov.exceptions.SessionDoesNotExistException;
 import org.loose.fis.mov.exceptions.UserNotAdminException;
-import org.loose.fis.mov.exceptions.UserNotRegisteredException;
 import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.Screening;
 import org.loose.fis.mov.model.User;
 import org.loose.fis.mov.services.*;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-
-
-import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
-import static org.dizitart.no2.objects.filters.ObjectFilters.gt;
 
 public class MainMenuAdminController extends AbstractController {
     private static final int CELL_SIZE = 30;

@@ -1,18 +1,14 @@
 package org.loose.fis.mov.services;
 
 import javafx.util.Pair;
-import org.dizitart.no2.Nitrite;
-import org.dizitart.no2.objects.ObjectRepository;
-import org.loose.fis.mov.exceptions.MovieAlreadyExistsException;
 import org.loose.fis.mov.exceptions.TimeIntervalOccupiedException;
 import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.Movie;
 import org.loose.fis.mov.model.Screening;
 import org.loose.fis.mov.model.User;
 
-import javax.xml.crypto.Data;
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static org.dizitart.no2.objects.filters.ObjectFilters.*;

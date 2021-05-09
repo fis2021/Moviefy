@@ -2,21 +2,21 @@ package org.loose.fis.mov.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.PasswordField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import org.loose.fis.mov.exceptions.EmptyFieldException;
 import org.loose.fis.mov.exceptions.UserNotAdminException;
 import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.User;
-import org.loose.fis.mov.services.*;
+import org.loose.fis.mov.services.CinemaService;
+import org.loose.fis.mov.services.CommService;
+import org.loose.fis.mov.services.SessionService;
+import org.loose.fis.mov.services.UserService;
 
 import java.io.IOException;
 import java.util.Objects;
-
-import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
 public class UserProfileController extends AbstractController{
     @FXML

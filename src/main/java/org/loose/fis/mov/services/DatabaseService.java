@@ -4,8 +4,6 @@ import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.loose.fis.mov.model.*;
 
-import static org.loose.fis.mov.services.FileSystemService.getPathToFile;
-
 public class DatabaseService {
     private static ObjectRepository<User> userRepo;
     private static ObjectRepository<Cinema> cinemaRepo;

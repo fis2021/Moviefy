@@ -1,7 +1,5 @@
 package org.loose.fis.mov.services;
 
-import org.dizitart.no2.objects.Cursor;
-import org.dizitart.no2.objects.ObjectRepository;
 import org.loose.fis.mov.exceptions.*;
 import org.loose.fis.mov.model.User;
 

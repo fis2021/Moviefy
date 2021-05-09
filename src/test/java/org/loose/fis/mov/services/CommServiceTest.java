@@ -1,23 +1,14 @@
 package org.loose.fis.mov.services;
 
 
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.loose.fis.mov.model.User;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.util.Pair;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.loose.fis.mov.model.User;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 

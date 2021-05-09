@@ -9,23 +9,21 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import org.loose.fis.mov.exceptions.CinemaCapacityNotUnsignedIntegerException;
 import org.loose.fis.mov.exceptions.DateInThePastException;
 import org.loose.fis.mov.exceptions.EmptyFieldException;
 import org.loose.fis.mov.exceptions.MovieLengthNotUnsignedIntegerException;
-import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.Movie;
 import org.loose.fis.mov.model.User;
 import org.loose.fis.mov.services.*;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
 public class AddScreeningController extends AbstractController{
     @FXML
