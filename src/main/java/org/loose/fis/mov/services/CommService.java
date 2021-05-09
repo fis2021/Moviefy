@@ -1,7 +1,6 @@
 package org.loose.fis.mov.services;
 
 import javafx.util.Pair;
-import org.loose.fis.mov.exceptions.PasswordTooWeakException;
 import org.loose.fis.mov.model.User;
 
 import javax.mail.*;
@@ -13,10 +12,8 @@ import java.util.List;
 import java.util.Properties;
 
 public class CommService {
-    public static void checkMinimumPasswordStrength(String password) throws PasswordTooWeakException {
-        if (password.length() < 8) {
-            throw new PasswordTooWeakException();
-        }
+    public static boolean isPasswordValid(String password) {
+        return password.length() >= 8;
     }
 
     public static String WordGenerator(int m) {

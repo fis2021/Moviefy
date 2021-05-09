@@ -9,9 +9,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import org.loose.fis.mov.exceptions.DateInThePastException;
-import org.loose.fis.mov.exceptions.EmptyFieldException;
-import org.loose.fis.mov.exceptions.MovieLengthNotUnsignedIntegerException;
 import org.loose.fis.mov.model.Movie;
 import org.loose.fis.mov.model.User;
 import org.loose.fis.mov.services.*;
@@ -71,8 +68,12 @@ public class AddScreeningController extends AbstractController{
 
     @FXML
     public void handleAddScreening(ActionEvent event) {
-        try {
-            checkFieldsForNull();
+        if (!areFieldsFilled()) {
+            message.setText("A required field is empty!");
+        } else if (tabs.getSelectionModel().isSelected(0) &&
+                !isLengthNumeric()) {
+            message.setText("The length of the movie is invalid.");
+        } else {
             Calendar calendar = new GregorianCalendar(
                     screeningYearField.getValue(),
                     screeningMonthField.getValue() - 1,
@@ -80,38 +81,39 @@ public class AddScreeningController extends AbstractController{
                     screeningHourField.getValue(),
                     screeningMinuteField.getValue()
             );
-            // setting the calendar mode to non-lenient so invalid dates are rejected;
-            calendar.setLenient(false);
             Date screeningDate = calendar.getTime();
-            // checking if the inputted date is not a past date;
-            if (CommService.isDateInThePast(screeningDate) == true) {
-                throw new DateInThePastException();
-            }
+            if (CommService.isDateInThePast(screeningDate)) {
+                message.setText("The inputted date is in the past!");
+            } else {
+                try {
+                    // setting the calendar mode to non-lenient so invalid dates are rejected;
+                    calendar.setLenient(false);
 
-            // adding new movie;
-            if (tabs.getSelectionModel().isSelected(0)) {
-                checkMovieLengthNumeric();
-                ScreeningService.addScreening(
-                        movieTitleField.getText(),
-                        movieDescriptionField.getText(),
-                        Integer.parseInt(movieLengthField.getText()),
-                        screeningDate
-                );
+                    // adding new movie;
+                    if (tabs.getSelectionModel().isSelected(0)) {
+                        ScreeningService.addScreening(
+                                movieTitleField.getText(),
+                                movieDescriptionField.getText(),
+                                Integer.parseInt(movieLengthField.getText()),
+                                screeningDate
+                        );
+                    }
+                    // adding already existing movie;
+                    else {
+                        ScreeningService.addScreening(
+                                availableMoviesField.getValue(),
+                                "placeholder",
+                                0,
+                                screeningDate
+                        );
+                    }
+                    message.setText("Successfully added screening!");
+                } catch (IllegalArgumentException e) {
+                    message.setText("The date you entered is invalid!");
+                } catch (Exception e) {
+                    message.setText(e.getMessage());
+                }
             }
-            // adding already existing movie;
-            else {
-                ScreeningService.addScreening(
-                        availableMoviesField.getValue(),
-                        "placeholder",
-                        0,
-                        screeningDate
-                );
-            }
-            message.setText("Successfully added screening!");
-        } catch (IllegalArgumentException e) {
-            message.setText("The date you entered is invalid!");
-        } catch (Exception e) {
-            message.setText(e.getMessage());
         }
     }
 
@@ -141,29 +143,25 @@ public class AddScreeningController extends AbstractController{
         changeScene(event, "login.fxml");
     }
 
-    private void checkFieldsForNull() throws EmptyFieldException {
+    private boolean areFieldsFilled() {
         if (tabs.getSelectionModel().isSelected(0)) {
             if (movieTitleField.getText().isEmpty() || movieDescriptionField.getText().isEmpty() || movieLengthField.getText().isEmpty()) {
-                throw new EmptyFieldException();
+                return false;
             }
         } else {
-            if (Objects.equals(availableMoviesField.getValue(), "")) {
-                throw new EmptyFieldException();
+            if (availableMoviesField.getSelectionModel().isEmpty()) {
+                return false;
             }
         }
-        if (Objects.equals(screeningDayField.getValue(), null)
-                || Objects.equals(screeningMonthField.getValue(), null)
-                || Objects.equals(screeningYearField.getValue(), null)
-                || Objects.equals(screeningHourField.getValue(), null)
-                || Objects.equals(screeningMinuteField.getValue(), null)) {
-            throw new EmptyFieldException();
-        }
+        return !Objects.equals(screeningDayField.getValue(), null)
+                && !Objects.equals(screeningMonthField.getValue(), null)
+                && !Objects.equals(screeningYearField.getValue(), null)
+                && !Objects.equals(screeningHourField.getValue(), null)
+                && !Objects.equals(screeningMinuteField.getValue(), null);
     }
 
-    private void checkMovieLengthNumeric() throws MovieLengthNotUnsignedIntegerException {
+    private boolean isLengthNumeric() {
         Pattern numberPattern = Pattern.compile("^[1-9][0-9]*$");
-        if (!numberPattern.matcher(movieLengthField.getText()).find()) {
-            throw new MovieLengthNotUnsignedIntegerException();
-        }
+        return numberPattern.matcher(movieLengthField.getText()).find();
     }
 }

@@ -14,8 +14,12 @@ import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 public class UserService {
     public static User addUser(String username, String firstname, String lastname, String password, String email, String role,
                                String cinemaName, String cinemaAddress, String cinemaCapacity) throws Exception {
-        UserService.checkUserAlreadyExists(username);
-        UserService.checkEmailAlreadyUsed(email);
+        if (UserService.userAlreadyExists(username)) {
+            throw new UserAlreadyExistsException(username);
+        }
+        if (UserService.emailAddressUsed(email)) {
+            throw new EmailAddressAlreadyUsedException(email);
+        }
         if (Objects.equals(role, "Admin")) {
             CinemaService.addCinema(cinemaName, username, cinemaAddress, Integer.parseInt(cinemaCapacity));
         }
@@ -31,12 +35,15 @@ public class UserService {
     /* Returns the user as an Object so the app can redirect to the appropriate screen */
     public static User login(String username, String password) throws Exception {
         User user = findUser(username);
+        if (user == null) {
+            throw new UserNotRegisteredException();
+        }
         checkPassword(user, password);
         SessionService.startSession(user);
         return user;
     }
 
-    public static void logout() throws SessionDoesNotExistException {
+    public static void logout() {
         SessionService.destroySession();
     }
 
@@ -53,12 +60,8 @@ public class UserService {
         changePassword(user, newPassword);
     }
 
-    public static User findUser(String username) throws UserNotRegisteredException {
-        User user = DatabaseService.getUserRepo().find(eq("username", username)).firstOrDefault();
-        if (user == null) {
-            throw new UserNotRegisteredException();
-        }
-        return user;
+    public static User findUser(String username) {
+        return DatabaseService.getUserRepo().find(eq("username", username)).firstOrDefault();
     }
 
     private static void checkPassword(User user, String password) throws PasswordIncorrectException {
@@ -67,20 +70,22 @@ public class UserService {
         }
     }
 
-    private static void checkUserAlreadyExists(String username) throws UserAlreadyExistsException {
+    private static boolean userAlreadyExists(String username) {
         for (User user : DatabaseService.getUserRepo().find()) {
             if (Objects.equals(username, user.getUsername())) {
-                throw new UserAlreadyExistsException(username);
+                return true;
             }
         }
+        return false;
     }
 
-    private static void checkEmailAlreadyUsed(String email) throws EmailAddressAlreadyUsedException {
+    private static boolean emailAddressUsed(String email) {
         for (User user : DatabaseService.getUserRepo().find()) {
             if (Objects.equals(email, user.getEmail())) {
-                throw new EmailAddressAlreadyUsedException(email);
+                return true;
             }
         }
+        return false;
     }
 
     private static String encodePassword(String salt, String password) {
@@ -110,5 +115,4 @@ public class UserService {
         }
         return user;
     }
-
 }

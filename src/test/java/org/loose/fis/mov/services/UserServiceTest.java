@@ -23,14 +23,9 @@ class UserServiceTest {
 
     @AfterEach
     void tearDown() throws IOException {
-        try {
-            SessionService.destroySession();
-        } catch (SessionDoesNotExistException ignored) {
-
-        } finally {
-            DatabaseService.closeDatabase();
-            FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath().toFile());
-        }
+        SessionService.destroySession();
+        DatabaseService.closeDatabase();
+        FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath().toFile());
     }
 
     @Test
@@ -82,14 +77,6 @@ class UserServiceTest {
                     "Client", "", "", "");
             UserService.login("test", "test_test");
             UserService.login("test", "test_test");
-        });
-    }
-
-    @Test
-    void logout() {
-        assertThrows(SessionDoesNotExistException.class, () -> {
-            UserService.logout();
-            UserService.logout();
         });
     }
 

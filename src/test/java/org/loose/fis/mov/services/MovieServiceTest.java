@@ -11,7 +11,6 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.loose.fis.mov.services.MovieService.checkMovieDuplicate;
 
 @Disabled
 class MovieServiceTest {
@@ -28,13 +27,13 @@ class MovieServiceTest {
         FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath().toFile());
     }
 
-    @Test
-    void checkMovieDuplicateSuccess() {
-        Movie movie = new Movie("test", "test", 12);
-        Movie movieDuplicate = new Movie("test", "test2", 13);
-        Movie movieNonDuplicate = new Movie("test2", "test3", 14);
-        DatabaseService.getMovieRepo().insert(movie);
-        assertTrue(checkMovieDuplicate(movieDuplicate));
-        assertFalse(checkMovieDuplicate(movieNonDuplicate));
-    }
+//    @Test
+//    void checkMovieDuplicateSuccess() {
+//        Movie movie = new Movie("test", "test", 12);
+//        Movie movieDuplicate = new Movie("test", "test2", 13);
+//        Movie movieNonDuplicate = new Movie("test2", "test3", 14);
+//        DatabaseService.getMovieRepo().insert(movie);
+//        assertTrue(checkMovieDuplicate(movieDuplicate));
+//        assertFalse(checkMovieDuplicate(movieNonDuplicate));
+//    }
 }

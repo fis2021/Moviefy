@@ -18,11 +18,7 @@ public class BookingService {
 
         bookings.forEach(booking -> usernames.add(booking.getClientName()));
         usernames.forEach(username -> {
-            try {
-                users.add(UserService.findUser(username));
-            } catch (UserNotRegisteredException e) {
-                e.printStackTrace();
-            }
+            users.add(UserService.findUser(username));
         });
 
         return users;

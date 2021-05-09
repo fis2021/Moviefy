@@ -49,34 +49,19 @@ public class BookingListController extends AbstractController {
                 FXCollections.observableList(BookingService.findBookingsAtScreening(selectedScreening));
 
         firstNameColumn.setCellValueFactory(cellData -> {
-            try {
-                return new SimpleStringProperty(
-                        UserService.findUser(cellData.getValue().getClientName()).getFirstname()
-                );
-            } catch (UserNotRegisteredException e) {
-                e.printStackTrace();
-            }
-            return null;
+            return new SimpleStringProperty(
+                    UserService.findUser(cellData.getValue().getClientName()).getFirstname()
+            );
         });
         lastNameColumn.setCellValueFactory(cellData -> {
-            try {
-                return new SimpleStringProperty(
-                        UserService.findUser(cellData.getValue().getClientName()).getLastname()
-                );
-            } catch (UserNotRegisteredException e) {
-                e.printStackTrace();
-            }
-            return null;
+            return new SimpleStringProperty(
+                    UserService.findUser(cellData.getValue().getClientName()).getLastname()
+            );
         });
         emailNameColumn.setCellValueFactory(cellData -> {
-            try {
-                return new SimpleStringProperty(
-                        UserService.findUser(cellData.getValue().getClientName()).getEmail()
-                );
-            } catch (UserNotRegisteredException e) {
-                e.printStackTrace();
-            }
-            return null;
+            return new SimpleStringProperty(
+                    UserService.findUser(cellData.getValue().getClientName()).getEmail()
+            );
         });
         seatNumberColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(
                 cellData.getValue().getNumberOfSeats()));

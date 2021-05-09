@@ -49,7 +49,7 @@ public class ScreeningService {
     }
 
     public static Screening addScreening(String movieTitle, String movieDescription, int movieLength, Date screeningDate)
-            throws Exception {
+            throws TimeIntervalOccupiedException {
         User user = SessionService.getLoggedInUser();
         // this line will be replaced after merging and integrating with MOV-37;
         //Cinema cinema = DatabaseService.getCinemaRepo().find(eq("adminUsername", user.getUsername())).firstOrDefault();
