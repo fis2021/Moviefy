@@ -100,7 +100,7 @@ public class UserProfileController extends AbstractController{
             changePasswordMessage.setText("The password must be at least 8 characters long!");
         } else {
             try {
-                UserService.changePassword(
+                UserService.changePasswordAfterLogin(
                         oldPasswordField.getText(),
                         newPasswordField.getText()
                 );
