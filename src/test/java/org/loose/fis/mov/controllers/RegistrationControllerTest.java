@@ -17,6 +17,7 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -47,7 +48,10 @@ class RegistrationControllerTest {
 
     @Start
     void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass()
+                                                                     .getClassLoader()
+                                                                     .getResource(
+                                                                             "register.fxml")));
         primaryStage.setTitle("Moviefy - Testing");
         primaryStage.setScene(new Scene(root, 600, 575));
         primaryStage.show();

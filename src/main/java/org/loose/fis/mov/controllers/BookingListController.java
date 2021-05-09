@@ -78,7 +78,8 @@ public class BookingListController extends AbstractController {
             }
             return null;
         });
-        seatNumberColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<Integer>(cellData.getValue().getNumberOfSeats()));
+        seatNumberColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(
+                cellData.getValue().getNumberOfSeats()));
         table.setItems(observableList);
     }
 

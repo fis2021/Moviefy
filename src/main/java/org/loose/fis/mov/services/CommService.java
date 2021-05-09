@@ -28,8 +28,7 @@ public class CommService {
             int k = (int) (100 * Math.random());
             sb.append(set.charAt(k));
         }
-        String result = sb.toString();
-        return result;
+        return sb.toString();
     }
 
     public static void sendMail(String recipient, String subject, String text) {

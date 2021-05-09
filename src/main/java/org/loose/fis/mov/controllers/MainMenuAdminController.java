@@ -25,7 +25,6 @@ import java.util.List;
 
 public class MainMenuAdminController extends AbstractController {
     private static final int CELL_SIZE = 30;
-    private ObservableList<Screening> observableList;
 
     @FXML
     private Text pageTitle;
@@ -38,9 +37,11 @@ public class MainMenuAdminController extends AbstractController {
             Cinema cinema = CinemaService.findCinemaForAdmin(SessionService.getLoggedInUser());
 
             pageTitle.setText("Future screenings for " + cinema.getName());
-            observableList = FXCollections.observableList(
-                    ScreeningService.findAllFutureScreeningsForCinema(cinema)
-            );
+            ObservableList<Screening> observableList = FXCollections
+                    .observableList(
+                            ScreeningService
+                                    .findAllFutureScreeningsForCinema(cinema)
+                    );
             list.setFixedCellSize(CELL_SIZE);
 
             /* changing the ListView to use our custom List Cells instead of the default ones */
