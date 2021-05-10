@@ -19,7 +19,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass()
                                                                      .getClassLoader()
                                                                      .getResource(
-                                                                             "MainMenuMAINClient.fxml")));
+                                                                             "login.fxml")));
         primaryStage.setTitle("Moviefy");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root));
