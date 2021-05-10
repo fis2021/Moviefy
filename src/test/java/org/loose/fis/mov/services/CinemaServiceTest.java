@@ -1,10 +1,7 @@
 package org.loose.fis.mov.services;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.loose.fis.mov.exceptions.CinemaAlreadyExistsException;
 import org.loose.fis.mov.model.User;
 
@@ -12,68 +9,98 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
 class CinemaServiceTest {
 
+    @BeforeAll
+    static void beforeAll() {
+        FileSystemService.setApplicationFolder("moviefy_test");
+        FileSystemService.initDirectory();
+    }
+
+    @AfterAll
+    static void afterAll()
+    throws IOException {
+        FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath()
+                                         .toFile());
+    }
+
     @BeforeEach
-    void setUp() throws IOException {
-        FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath().toFile());
+    void setUp()
+    throws IOException {
+        FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath()
+                                         .toFile());
         DatabaseService.initDatabase();
     }
 
     @AfterEach
-    void tearDown() throws IOException {
+    void tearDown() {
         DatabaseService.closeDatabase();
-        FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath().toFile());
+        SessionService.destroySession();
     }
 
     @Test
+    @DisplayName("Test adding cinema to database")
     void addCinema() {
-        assertDoesNotThrow(() -> CinemaService.addCinema("test", "test", "test", 10));
-        assertThrows(CinemaAlreadyExistsException.class, () -> CinemaService.addCinema("test", "test", "test", 10));
+        assertDoesNotThrow(() -> CinemaService
+                .addCinema("test", "test", "test", 10));
+        assertEquals(1, DatabaseService.getCinemaRepo().find().toList().size());
     }
 
     @Test
-    void findCinemaForAdminStringSuccess() {
-        try {
-            UserService.addUser("test", "test", "test", "test_test", "test@test.test",
-                    "Admin", "test", "test", "10");
-            assertEquals("test", CinemaService.findCinemaForAdmin("test").getAdminUsername());
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
+    @DisplayName("Test if adding duplicate cinemas is impossible")
+    void addCinemaFail() {
+        assertDoesNotThrow(() -> {
+            CinemaService
+                    .addCinema("test", "test", "test", 10);
+            CinemaService
+                    .addCinema("test2", "test2", "test2", 10);
+        });
+        assertThrows(
+                CinemaAlreadyExistsException.class,
+                () -> CinemaService.addCinema("test", "test2", "test", 10)
+        );
+        assertEquals(2, DatabaseService.getCinemaRepo().find().toList().size());
     }
-
-//    @Test
-//    void findCinemaForAdminStringFail() {
-//        try {
-//            UserService.addUser("test", "test", "test", "test_test", "test@test.test",
-//                    "Client", "", "", "");
-//            assertThrows(UserNotAdminException.class, () -> CinemaService.findCinemaForAdmin("test"));
-//        } catch (Exception e) {
-//            fail(e.getMessage());
-//        }
-//    }
 
     @Test
-    void findCinemaForAdminUserSuccess() {
-        try {
-            User user = UserService.addUser("test", "test", "test", "test_test", "test@test.test",
-                    "Admin", "test", "test", "10");
-            assertEquals("test", CinemaService.findCinemaForAdmin(user).getAdminUsername());
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
+    @DisplayName("Test if we can find a cinema based on an Admin Username string")
+    void findCinemaForAdminString() {
+        assertDoesNotThrow(() -> UserService.addUser(
+                "test_admin",
+                "test",
+                "test",
+                "test_test",
+                "test@test.test",
+                "Admin",
+                "test_cinema",
+                "test",
+                "10"
+        ));
+        assertNull(CinemaService.findCinemaForAdmin("wrong_admin"));
+        assertEquals(
+                "test_cinema",
+                CinemaService.findCinemaForAdmin("test_admin").getName()
+        );
     }
 
-//    @Test
-//    void findCinemaForAdminUserFail() {
-//        try {
-//            User user = UserService.addUser("test", "test", "test", "test_test", "test@test.test",
-//                    "Client", "", "", "");
-//            assertThrows(UserNotAdminException.class, () -> CinemaService.findCinemaForAdmin(user));
-//        } catch (Exception e) {
-//            fail(e.getMessage());
-//        }
-//    }
+    @Test
+    @DisplayName("Test if we can find a cinema based on an Admin User object")
+    void findCinemaForAdminUser()
+    throws Exception {
+        User admin = UserService.addUser(
+                "test_admin",
+                "test",
+                "test",
+                "test_test",
+                "test@test.test",
+                "Admin",
+                "test_cinema",
+                "test",
+                "10"
+        );
+        assertEquals(
+                "test_cinema",
+                CinemaService.findCinemaForAdmin(admin).getName()
+        );
+    }
 }
