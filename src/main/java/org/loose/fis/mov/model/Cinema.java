@@ -4,7 +4,7 @@ import org.dizitart.no2.objects.Id;
 
 import java.util.Objects;
 
-public class Cinema {
+public final class Cinema {
     @Id
     private String name;
     private String adminUsername;

@@ -2,19 +2,10 @@ package org.loose.fis.mov.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import org.loose.fis.mov.exceptions.EmptyFieldException;
-import org.loose.fis.mov.exceptions.PasswordIncorrectException;
-import org.loose.fis.mov.exceptions.UserNotRegisteredException;
 import org.loose.fis.mov.model.User;
-import org.loose.fis.mov.services.CommService;
 import org.loose.fis.mov.services.UserService;
 
 import java.io.IOException;
@@ -30,16 +21,20 @@ public class LoginController extends AbstractController{
 
     @FXML
     public void handleLoginAction(ActionEvent event) {
-        try {
-            checkFieldsForNull();
-            User user = UserService.login(usernameField.getText(), passwordField.getText());
-            if (Objects.equals(user.getRole(), "Admin")) {
-                changeScene(event, "mainMenuAdmin.fxml");
-            } else {
-                loginMessage.setText(String.format("Welcome, %s %s!", user.getRole(), user.getUsername()));
+        if (!areFieldsFilled()) {
+            loginMessage.setText("A required field is empty!");
+        } else {
+            try {
+
+                User user = UserService.login(usernameField.getText(), passwordField.getText());
+                if (Objects.equals(user.getRole(), "Admin")) {
+                    changeScene(event, "mainMenuAdmin.fxml");
+                } else {
+                    loginMessage.setText(String.format("Welcome, %s %s!", user.getRole(), user.getUsername()));
+                }
+            } catch (Exception e) {
+                loginMessage.setText(e.getMessage());
             }
-        } catch (Exception e) {
-            loginMessage.setText(e.getMessage());
         }
     }
 
@@ -53,9 +48,8 @@ public class LoginController extends AbstractController{
         changeScene(event,"register.fxml");
     }
 
-    private void checkFieldsForNull() throws EmptyFieldException {
-        if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) {
-            throw new EmptyFieldException();
-        }
+    private boolean areFieldsFilled() {
+        return !usernameField.getText().isEmpty() && !passwordField.getText()
+                .isEmpty();
     }
 }

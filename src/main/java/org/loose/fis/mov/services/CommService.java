@@ -1,36 +1,27 @@
 package org.loose.fis.mov.services;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.PasswordField;
-import javafx.stage.Stage;
 import javafx.util.Pair;
-import org.loose.fis.mov.exceptions.EmailFormatInvalidException;
-import org.loose.fis.mov.exceptions.EmptyFieldException;
-import org.loose.fis.mov.exceptions.PasswordTooWeakException;
-import org.loose.fis.mov.exceptions.UserAlreadyExistsException;
 import org.loose.fis.mov.model.User;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.awt.*;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.regex.Pattern;
 
-public class CommService {
-    public static void checkMinimumPasswordStrength(String password) throws PasswordTooWeakException {
-        if (password.length() < 8) {
-            throw new PasswordTooWeakException();
-        }
+public final class CommService {
+    public static boolean isPasswordValid(String password) {
+        return password.length() >= 8;
+    }
+
+    public static boolean isEmailValid(String email) {
+        Pattern emailPattern = Pattern.compile(
+                "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$"
+        );
+        return emailPattern.matcher(email).find();
     }
 
     public static String WordGenerator(int m) {
@@ -42,8 +33,7 @@ public class CommService {
             int k = (int) (100 * Math.random());
             sb.append(set.charAt(k));
         }
-        String result = sb.toString();
-        return result;
+        return sb.toString();
     }
 
     public static void sendMail(String recipient, String subject, String text) {

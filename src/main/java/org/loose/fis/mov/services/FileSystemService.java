@@ -4,7 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class FileSystemService {
+public final class FileSystemService {
     private static final String APPLICATION_FOLDER = ".moviefy";
     private static final String USER_FOLDER = System.getProperty("user.home");
     private static final Path APPLICATION_HOME_PATH = Paths.get(USER_FOLDER, APPLICATION_FOLDER);

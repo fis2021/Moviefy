@@ -10,7 +10,8 @@ import org.loose.fis.mov.model.User;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Disabled
 class UserServiceTest {
@@ -22,14 +23,9 @@ class UserServiceTest {
 
     @AfterEach
     void tearDown() throws IOException {
-        try {
-            SessionService.destroySession();
-        } catch (SessionDoesNotExistException ignored) {
-
-        } finally {
-            DatabaseService.closeDatabase();
-            FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath().toFile());
-        }
+        SessionService.destroySession();
+        DatabaseService.closeDatabase();
+        FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath().toFile());
     }
 
     @Test
@@ -85,14 +81,6 @@ class UserServiceTest {
     }
 
     @Test
-    void logout() {
-        assertThrows(SessionDoesNotExistException.class, () -> {
-            UserService.logout();
-            UserService.logout();
-        });
-    }
-
-    @Test
     void changePasswordTest1() {
         assertDoesNotThrow(() -> {
            User user = UserService.addUser(
@@ -112,7 +100,7 @@ class UserServiceTest {
                     "test@test.test", "Client", "", "", ""
             );
             UserService.login(user.getUsername(), "test_test");
-            UserService.changePassword("test_test", "new_test_test");
+            UserService.changePasswordAfterLogin("test_test", "new_test_test");
             UserService.logout();
             UserService.login("test", "new_test_test");
         });

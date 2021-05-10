@@ -10,19 +10,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.loose.fis.mov.exceptions.EmailFormatInvalidException;
-import org.loose.fis.mov.exceptions.PasswordTooWeakException;
 import org.loose.fis.mov.services.DatabaseService;
 import org.loose.fis.mov.services.FileSystemService;
-import org.loose.fis.mov.services.UserService;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 import java.io.IOException;
+import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.testfx.assertions.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Disabled
 @ExtendWith(ApplicationExtension.class)
@@ -51,7 +48,10 @@ class RegistrationControllerTest {
 
     @Start
     void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass()
+                                                                     .getClassLoader()
+                                                                     .getResource(
+                                                                             "register.fxml")));
         primaryStage.setTitle("Moviefy - Testing");
         primaryStage.setScene(new Scene(root, 600, 575));
         primaryStage.show();

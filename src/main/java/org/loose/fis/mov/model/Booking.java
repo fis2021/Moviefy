@@ -5,7 +5,7 @@ import org.dizitart.no2.objects.Id;
 
 import java.util.Objects;
 
-public class Booking {
+public final class Booking {
     @Id
     private NitriteId id;
     private String clientName;
