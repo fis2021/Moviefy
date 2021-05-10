@@ -5,8 +5,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
+import org.loose.fis.mov.model.Movie;
+import org.loose.fis.mov.services.MovieService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,6 +33,8 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
         else
             return 1;
     }
+
+
     private int curentlist=0;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -42,10 +45,12 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
         if((int)MCSlider.getValue()==0)
         {
             curentlist=0;
+            //change list to movies
         }
         else
         {
             curentlist=1;
+            //change list to cinemas
         }
         System.out.println(curentlist);
     }
@@ -53,4 +58,5 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
     //here
 
     }
+
 }
