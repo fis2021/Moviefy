@@ -75,7 +75,7 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
         HBox hbox = new HBox();
         Label cinemaName = new Label("(empty)");
         Pane pane = new Pane();
-        Button bookmovie=new Button("Book Movie");
+        Button bookmovie=new Button("Browse Movie");
 
         public CinemaCell(){
             super();
@@ -106,15 +106,12 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
         }
     }
 
-
-
     @FXML
     private ListView MCList;
 
     private int curentlist;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
 
 
 
@@ -141,8 +138,5 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
         System.out.println(curentlist);
     }
 });
-    //here
-
     }
-
 }
