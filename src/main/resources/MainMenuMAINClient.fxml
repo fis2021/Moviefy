@@ -67,18 +67,18 @@
    <right>
       <VBox prefHeight="400.0" prefWidth="275.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="382.0" text="Title" textFill="#f0f0f0">
+            <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="382.0" textFill="#f0f0f0">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label fx:id="subtitle" alignment="CENTER" prefHeight="17.0" prefWidth="469.0" text=" Subtitle" textFill="#f0f0f0">
+            <Label fx:id="subtitle" alignment="CENTER" prefHeight="17.0" prefWidth="469.0" textFill="#f0f0f0">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="text" alignment="CENTER" prefHeight="17.0" prefWidth="455.0" text="Text" textFill="#f0f0f0" />
-            <ListView fx:id="RMList" prefHeight="200.0" prefWidth="265.0">
+            <Label fx:id="text" alignment="CENTER" prefHeight="17.0" prefWidth="455.0" textFill="#f0f0f0" />
+            <ListView fx:id="RMList" minHeight="200.0" prefHeight="200.0" prefWidth="265.0">
                <VBox.margin>
                   <Insets right="10.0" />
                </VBox.margin>

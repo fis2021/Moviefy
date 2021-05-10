@@ -34,6 +34,12 @@ public final class CinemaService {
         ).firstOrDefault();
         return cinema;
     }
+    public static Cinema findCinemaByName(String name) {
+        Cinema cinema = DatabaseService.getCinemaRepo().find(
+                eq("name", name)
+        ).firstOrDefault();
+        return cinema;
+    }
 
     private static boolean existsCinema(String name) {
         for (Cinema cinema : DatabaseService.getCinemaRepo().find()) {
