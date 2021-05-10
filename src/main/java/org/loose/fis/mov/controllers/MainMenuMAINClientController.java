@@ -23,28 +23,64 @@ import java.util.ResourceBundle;
 
 public class MainMenuMAINClientController extends AbstractMenusController implements Initializable {
 
-    public void maintoprofile(ActionEvent event) throws IOException {
-
-    changeScene(event,"MainMenuPROFILEClient.fxml");
-    }
-    public void maintobooking(ActionEvent event) throws IOException {
-
-        changeScene(event,"MainMenuBOOKINGClient.fxml");
-    }
+    private static int CELL_SIZE = 20;
     @FXML
     private Slider MCSlider;
-    private static int CELL_SIZE=20;
+    @FXML
+    private ListView MCList;
+    private int curentlist;
+
+    public void maintoprofile(ActionEvent event)
+    throws IOException {
+
+        changeScene(event, "MainMenuPROFILEClient.fxml");
+    }
+
+    public void maintobooking(ActionEvent event)
+    throws IOException {
+
+        changeScene(event, "MainMenuBOOKINGClient.fxml");
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
 
+        MCSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable,
+                                Number oldValue, Number newValue) {
+                if ((int) MCSlider.getValue() == 0) {
+                    MCList.setItems(null);
+                    ObservableList<?> movies = FXCollections
+                            .observableList(MovieService.getAllMovies());
+                    MCList.setFixedCellSize(CELL_SIZE);
+                    MCList.setCellFactory(param -> new MovieCell());
+                    MCList.setItems(movies);
 
+                    MCList.setPrefHeight(movies.size() * MCList
+                            .getFixedCellSize() + 2);
+                } else {
+                    MCList.setItems(null);
+                    ObservableList<?> cinemas = FXCollections
+                            .observableList(CinemaService.getAllCinema());
+                    MCList.setFixedCellSize(CELL_SIZE);
+                    MCList.setCellFactory(param -> new CinemaCell());
+                    MCList.setItems(cinemas);
 
-    private class MovieCell extends ListCell<Object>{
+                }
+            }
+        });
+    }
+
+    private class MovieCell extends ListCell {
+
         HBox hbox = new HBox();
         Label movieTitle = new Label("(empty)");
         Pane pane = new Pane();
-        Button more=new Button("...");
+        Button more = new Button("...");
 
-        public MovieCell(){
+        public MovieCell() {
             super();
             hbox.getChildren().addAll(movieTitle, pane, more);
             HBox.setHgrow(pane, Priority.ALWAYS);
@@ -53,11 +89,12 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             });
         }
 
-        public void buttonAction(){
+        public void buttonAction() {
             //cand este apasat un buton afiseaza datele acelui film in dreapta.
             System.out.println("Broo stiu ce e sexu da nu iti zic");
         }
-        protected void updateItem(Movie item, boolean empty) {
+
+        protected void updateItem(Object item, boolean empty) {
             /* the inherited elements of the cell are left empty */
             super.updateItem(item, empty);
             setText(null);
@@ -66,19 +103,25 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             if (empty) {
                 setGraphic(null);
             } else {
-                movieTitle.setText(item != null ? item.getTitle() : "<null>");
+                if (item instanceof Movie) {
+                    movieTitle.setText(item != null ?
+                                               ((Movie) item).getTitle() :
+                                               "<null>");
+                }
                 /* this method call actually sets the appearance of our custom cell */
                 setGraphic(hbox);
             }
         }
     }
-    private class CinemaCell extends ListCell<Object>{
+
+    private class CinemaCell extends ListCell {
+
         HBox hbox = new HBox();
         Label cinemaName = new Label("(empty)");
         Pane pane = new Pane();
-        Button bookmovie=new Button("Browse Movie");
+        Button bookmovie = new Button("Browse Movie");
 
-        public CinemaCell(){
+        public CinemaCell() {
             super();
             hbox.getChildren().addAll(cinemaName, pane, bookmovie);
             HBox.setHgrow(pane, Priority.ALWAYS);
@@ -87,11 +130,12 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             });
         }
 
-        public void buttonAction(){
+        public void buttonAction() {
             //cand este apasat un buton afiseaza datele acelui film in dreapta.
             System.out.println("Legit merge ");
         }
-        protected void updateItem(Cinema item, boolean empty) {
+
+        protected void updateItem(Object item, boolean empty) {
             /* the inherited elements of the cell are left empty */
             super.updateItem(item, empty);
             setText(null);
@@ -100,45 +144,14 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             if (empty) {
                 setGraphic(null);
             } else {
-                cinemaName.setText(item != null ? item.getName()  : "<null>");
-                /* this method call actually sets the appearance of our custom cell */
-                setGraphic(hbox);
+                if (item instanceof Cinema) {
+                    cinemaName.setText(item != null ?
+                                               ((Cinema) item).getName() :
+                                               "<null>");
+                    /* this method call actually sets the appearance of our custom cell */
+                    setGraphic(hbox);
+                }
             }
         }
-    }
-
-    @FXML
-    private ListView<Object> MCList;
-
-    private int curentlist;
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-
-
-    MCSlider.valueProperty().addListener(new ChangeListener<Number>() {
-    @Override
-    public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-        if((int)MCSlider.getValue()==0)
-        {
-            MCList.setItems(null);
-            ObservableList<? extends Object> movies= FXCollections.observableList(MovieService.getAllMovies());
-            MCList.setFixedCellSize(CELL_SIZE);
-            MCList.setCellFactory(param -> new MovieCell());
-            MCList.setItems((ObservableList<Object>) movies);
-
-            MCList.setPrefHeight(movies.size() * MCList.getFixedCellSize() + 2);
-        }
-        else
-        {
-            MCList.setItems(null);
-            ObservableList<? extends Object> cinemas= FXCollections.observableList(CinemaService.getAllCinema());
-            MCList.setFixedCellSize(CELL_SIZE);
-            MCList.setCellFactory(param -> new CinemaCell());
-            MCList.setItems((ObservableList<Object>) cinemas);
-
-        }
-    }
-});
     }
 }
