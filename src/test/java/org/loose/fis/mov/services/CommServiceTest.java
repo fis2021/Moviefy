@@ -2,9 +2,7 @@ package org.loose.fis.mov.services;
 
 
 import javafx.util.Pair;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.loose.fis.mov.model.User;
 
@@ -12,15 +10,13 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
 class CommServiceTest {
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
+    @Test
+    @DisplayName("Check if the password format validator works")
+    void isPasswordValid() {
+        assertFalse(CommService.isPasswordValid("short"));
+        assertTrue(CommService.isPasswordValid("long_pas"));
     }
 
     @Test
