@@ -1,220 +1,376 @@
 package org.loose.fis.mov.services;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.loose.fis.mov.exceptions.TimeIntervalOccupiedException;
-import org.loose.fis.mov.model.Cinema;
-import org.loose.fis.mov.model.Movie;
-import org.loose.fis.mov.model.Screening;
 
+import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
 class ScreeningServiceTest {
 
+    @BeforeAll
+    static void beforeAll() {
+        FileSystemService.setApplicationFolder("moviefy_test");
+        FileSystemService.initDirectory();
+    }
+
+    @AfterAll
+    static void afterAll()
+    throws IOException {
+        FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath()
+                                         .toFile());
+    }
+
     @BeforeEach
-    void setUp() throws Exception {
-        FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath().toFile());
+    void setUp()
+    throws Exception {
+        FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath()
+                                         .toFile());
         DatabaseService.initDatabase();
-        UserService.addUser("test", "test", "test", "test_test", "test@test.test",
-                "Admin", "test", "test", "10");
+        UserService
+                .addUser("test", "test", "test", "test_test", "test@test.test",
+                         "Admin", "test", "test", "10"
+                );
+        MovieService.addMovie("existing_movie", "test", 10);
         UserService.login("test", "test_test");
     }
 
     @AfterEach
-    void tearDown() throws Exception {
+    void tearDown() {
         UserService.logout();
         DatabaseService.closeDatabase();
-        FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath().toFile());
-    }
-    
-//    @Test
-//    void checkIntervalOccupiedTest() throws Exception {
-//        Cinema cinema = CinemaService.findCinemaForAdmin(SessionService.getLoggedInUser());
-//        DatabaseService.getMovieRepo().insert(new Movie("testMovie", "test", 30));
-//        DatabaseService.getScreeningRepo().insert(
-//                new Screening(
-//                        null,
-//                        new GregorianCalendar(
-//                                2021, Calendar.MAY, 31, 13, 37
-//                        ).getTime(),
-//                        "testMovie",
-//                        "testCinema",
-//                        10
-//                        )
-//        );
-//        assertTrue(ScreeningService.checkIntervalOccupied(
-//                cinema,
-//                new GregorianCalendar(
-//                        2021, Calendar.MAY, 31, 13, 38
-//                ).getTime(),
-//                30
-//                )
-//        );
-//        assertTrue(ScreeningService.checkIntervalOccupied(
-//                cinema,
-//                new GregorianCalendar(
-//                        2021, Calendar.MAY, 31, 12, 0
-//                ).getTime(),
-//                120
-//                )
-//        );
-//        assertTrue(ScreeningService.checkIntervalOccupied(
-//                cinema,
-//                new GregorianCalendar(
-//                        2021, Calendar.MAY, 31, 13, 50
-//                ).getTime(),
-//                10
-//                )
-//        );
-//        assertTrue(ScreeningService.checkIntervalOccupied(
-//                cinema,
-//                new GregorianCalendar(
-//                        2021, Calendar.MAY, 31, 13, 37
-//                ).getTime(),
-//                30
-//                )
-//        );
-//        assertFalse(ScreeningService.checkIntervalOccupied(
-//                cinema,
-//                new GregorianCalendar(
-//                        2021, Calendar.MAY, 31, 13, 6
-//                ).getTime(),
-//                30
-//                )
-//        );
-//        assertFalse(ScreeningService.checkIntervalOccupied(
-//                cinema,
-//                new GregorianCalendar(
-//                        2021, Calendar.MAY, 30, 13, 6
-//                ).getTime(),
-//                30
-//                )
-//        );
-//    }
-    
-    @Test
-    void findAllFutureScreeningsForCinemaString() {
-        try {
-            Cinema cinema = CinemaService.findCinemaForAdmin(SessionService.getLoggedInUser());
-            DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() - 10000),
-                    "test", "test", 11));
-            DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() + 20000),
-                    "test2", "test2", 11));
-            DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() + 10000),
-                    "test3", "test", 11));
-            assertEquals(1, ScreeningService.findAllFutureScreeningsForCinema("test").size());
-            assertEquals("test3", ScreeningService.findAllFutureScreeningsForCinema("test").get(0).getMovieTitle());
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
     }
 
     @Test
-    void findAllFutureScreeningsForCinemaCinema() {
-        try {
-            Cinema cinema = CinemaService.findCinemaForAdmin(SessionService.getLoggedInUser());
-            DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() - 10000),
-                    "test", "test", 11));
-            DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() + 20000),
-                    "test2", "test2", 11));
-            DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() + 10000),
-                    "test3", "test", 11));
-            assertEquals(1, ScreeningService.findAllFutureScreeningsForCinema(cinema).size());
-            assertEquals("test3", ScreeningService.findAllFutureScreeningsForCinema(cinema).get(0).getMovieTitle());
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
-    }
-
-    @Test
-    void findAllScreeningsForCinemaString() {
-        try {
-            Cinema cinema = CinemaService.findCinemaForAdmin(SessionService.getLoggedInUser());
-            DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() - 10000),
-                    "test", "test", 11));
-            DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() + 20000),
-                    "test2", "test2", 11));
-            DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() + 10000),
-                    "test3", "test", 11));
-            assertEquals(2, ScreeningService.findAllScreeningsForCinema("test").size());
-            assertEquals("test", ScreeningService.findAllScreeningsForCinema("test").get(0).getMovieTitle());
-            assertEquals("test3", ScreeningService.findAllScreeningsForCinema("test").get(1).getMovieTitle());
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
-    }
-
-    @Test
-    void FindAllScreeningsForCinemaCinema() {
-        try {
-            Cinema cinema = CinemaService.findCinemaForAdmin(SessionService.getLoggedInUser());
-            DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() - 10000),
-                    "test", "test", 11));
-            DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() + 20000),
-                    "test2", "test2", 11));
-            DatabaseService.getScreeningRepo().insert(new Screening(null, new Date(System.currentTimeMillis() + 10000),
-                    "test3", "test", 11));
-            assertEquals(2, ScreeningService.findAllScreeningsForCinema(cinema).size());
-            assertEquals("test", ScreeningService.findAllScreeningsForCinema(cinema).get(0).getMovieTitle());
-            assertEquals("test3", ScreeningService.findAllScreeningsForCinema(cinema).get(1).getMovieTitle());
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
-    }
-
-    @Test
-    void addScreeningTest() {
-        assertDoesNotThrow(() ->
-                ScreeningService.addScreening(
-                        "test",
-                        "test test test",
-                        10,
-                        new GregorianCalendar(
-                                2099,
-                                Calendar.DECEMBER,
-                                25,
-                                13,
-                                37
-                        ).getTime()
-                )
+    @DisplayName("Test if a screening for a new movie is added while also adding the movie")
+    void addScreeningNewMovie() {
+        assertDoesNotThrow(() -> ScreeningService.addScreening(
+                "new_movie",
+                "test description",
+                10,
+                new GregorianCalendar(
+                        2099,
+                        Calendar.DECEMBER,
+                        25,
+                        13,
+                        37
+                ).getTime()
+                           )
         );
-
-        assertDoesNotThrow(() ->
-                ScreeningService.addScreening(
-                        "test",
-                        "",
-                        0,
-                        new GregorianCalendar(
-                                2099,
-                                Calendar.DECEMBER,
-                                24,
-                                13,
-                                37
-                        ).getTime()
-                )
+        assertEquals(
+                1,
+                DatabaseService.getScreeningRepo().find().toList().size()
         );
+        assertEquals(2, DatabaseService.getMovieRepo().find().toList().size());
+        assertEquals(
+                "new_movie",
+                DatabaseService.getScreeningRepo().find().firstOrDefault()
+                        .getMovieTitle()
+        );
+        assertEquals(
+                "test",
+                DatabaseService.getScreeningRepo().find().firstOrDefault()
+                        .getCinemaName()
+        );
+    }
 
+    @Test
+    @DisplayName("Test if a screening for an existing movie is added without adding a separate entry in the movie database")
+    void addScreeningExistingMovie() {
+        assertDoesNotThrow(() -> ScreeningService.addScreening(
+                "existing_movie",
+                "empty",
+                30,
+                new GregorianCalendar(
+                        2099,
+                        Calendar.DECEMBER,
+                        25,
+                        13,
+                        37
+                ).getTime()
+                           )
+        );
+        assertEquals(
+                1,
+                DatabaseService.getScreeningRepo().find().toList().size()
+        );
+        assertEquals(1, DatabaseService.getMovieRepo().find().toList().size());
+        assertEquals(
+                "existing_movie",
+                DatabaseService.getScreeningRepo().find().firstOrDefault()
+                        .getMovieTitle()
+        );
+        assertEquals(
+                "test",
+                DatabaseService.getMovieRepo().find().firstOrDefault()
+                        .getDescription()
+        );
+        assertEquals(
+                "test",
+                DatabaseService.getScreeningRepo().find().firstOrDefault()
+                        .getCinemaName()
+        );
+    }
+
+    @Test
+    @DisplayName("Test if screenings with overlapping timeframes are refused")
+    void addScreeningOverlappingTimeframe() {
+        assertDoesNotThrow(() -> {
+            ScreeningService.addScreening(
+                    "existing_movie",
+                    "empty",
+                    5,
+                    new GregorianCalendar(
+                            2099,
+                            Calendar.DECEMBER,
+                            25,
+                            13,
+                            37
+                    ).getTime()
+            );
+            ScreeningService.addScreening(
+                    "existing_movie",
+                    "empty",
+                    5,
+                    new GregorianCalendar(
+                            2099,
+                            Calendar.DECEMBER,
+                            31,
+                            23,
+                            59
+                    ).getTime()
+            );
+        });
+
+        // overlapping - the new movie overlaps on the end of an existing one
         assertThrows(TimeIntervalOccupiedException.class, () ->
                 ScreeningService.addScreening(
-                        "test",
+                        "existing_movie",
                         "test test test",
-                        10,
+                        31,
                         new GregorianCalendar(
                                 2099,
                                 Calendar.DECEMBER,
                                 25,
                                 13,
-                                37
+                                43
                         ).getTime()
                 )
+        );
+
+        // overlapping - the new movie overlaps on the beginning of an existing one
+        assertThrows(TimeIntervalOccupiedException.class, () ->
+                ScreeningService.addScreening(
+                        "new_movie",
+                        "test test test",
+                        30,
+                        new GregorianCalendar(
+                                2099,
+                                Calendar.DECEMBER,
+                                25,
+                                13,
+                                12
+                        ).getTime()
+                )
+        );
+
+        // overlapping - the new movie completely overlaps on the existing one - new is bigger
+        assertThrows(TimeIntervalOccupiedException.class, () ->
+                ScreeningService.addScreening(
+                        "new_movie",
+                        "test test test",
+                        3,
+                        new GregorianCalendar(
+                                2099,
+                                Calendar.DECEMBER,
+                                25,
+                                13,
+                                32
+                        ).getTime()
+                )
+        );
+
+        // overlapping - the new movie completely overlaps on the existing one - old is bigger
+        assertThrows(TimeIntervalOccupiedException.class, () ->
+                ScreeningService.addScreening(
+                        "newer_movie",
+                        "test test test",
+                        2,
+                        new GregorianCalendar(
+                                2099,
+                                Calendar.DECEMBER,
+                                25,
+                                13,
+                                39
+                        ).getTime()
+                )
+        );
+
+        assertEquals(
+                2,
+                DatabaseService.getScreeningRepo().find().toList().size()
+        );
+    }
+
+    @Test
+    @DisplayName("Test if screening deletion works")
+    void deleteScreening() {
+        assertDoesNotThrow(() -> ScreeningService.addScreening(
+                "existing_movie",
+                "empty",
+                30,
+                new GregorianCalendar(
+                        2099,
+                        Calendar.DECEMBER,
+                        25,
+                        13,
+                        37
+                ).getTime()
+                           )
+        );
+        ScreeningService.deleteScreening(
+                ScreeningService.findAllFutureScreeningsForCinema(
+                        CinemaService.findCinemaForAdmin("test")
+                ).get(0)
+        );
+        assertEquals(
+                0,
+                DatabaseService.getScreeningRepo().find().toList().size()
+        );
+    }
+
+    @Test
+    @DisplayName("Test the getter for all the future screenings with Cinema param")
+    void findAllFutureScreeningsCinema() {
+        assertEquals(
+                0,
+                ScreeningService.findAllFutureScreeningsForCinema(
+                        CinemaService.findCinemaForAdmin(
+                                SessionService.getLoggedInUser()
+                        )
+                ).size()
+        );
+        assertDoesNotThrow(() -> ScreeningService.addScreening(
+                "existing_movie",
+                "empty",
+                30,
+                new GregorianCalendar(
+                        2099,
+                        Calendar.DECEMBER,
+                        25,
+                        13,
+                        37
+                ).getTime()
+        ));
+        assertEquals(
+                1,
+                ScreeningService.findAllFutureScreeningsForCinema(
+                        CinemaService.findCinemaForAdmin(
+                                SessionService.getLoggedInUser()
+                        )
+                ).size()
+        );
+        assertDoesNotThrow(() -> ScreeningService.addScreening(
+                "existing_movie",
+                "empty",
+                30,
+                new GregorianCalendar(
+                        2099,
+                        Calendar.DECEMBER,
+                        26,
+                        13,
+                        37
+                ).getTime()
+        ));
+        assertDoesNotThrow(() -> ScreeningService.addScreening(
+                "existing_movie",
+                "empty",
+                30,
+                new GregorianCalendar(
+                        2099,
+                        Calendar.DECEMBER,
+                        26,
+                        19,
+                        37
+                ).getTime()
+        ));
+        assertEquals(
+                3,
+                ScreeningService.findAllFutureScreeningsForCinema(
+                        CinemaService.findCinemaForAdmin(
+                                SessionService.getLoggedInUser()
+                        )
+                ).size()
+        );
+    }
+
+    @Test
+    @DisplayName("Test the getter for all the future screenings with String param")
+    void findAllFutureScreeningsString() {
+        assertEquals(
+                0,
+                ScreeningService.findAllFutureScreeningsForCinema(
+                        CinemaService.findCinemaForAdmin(
+                                SessionService.getLoggedInUser()
+                        ).getName()
+                ).size()
+        );
+        assertDoesNotThrow(() -> ScreeningService.addScreening(
+                "existing_movie",
+                "empty",
+                30,
+                new GregorianCalendar(
+                        2099,
+                        Calendar.DECEMBER,
+                        25,
+                        13,
+                        37
+                ).getTime()
+        ));
+        assertEquals(
+                1,
+                ScreeningService.findAllFutureScreeningsForCinema(
+                        CinemaService.findCinemaForAdmin(
+                                SessionService.getLoggedInUser()
+                        ).getName()
+                ).size()
+        );
+        assertDoesNotThrow(() -> ScreeningService.addScreening(
+                "existing_movie",
+                "empty",
+                30,
+                new GregorianCalendar(
+                        2099,
+                        Calendar.DECEMBER,
+                        26,
+                        13,
+                        37
+                ).getTime()
+        ));
+        assertDoesNotThrow(() -> ScreeningService.addScreening(
+                "existing_movie",
+                "empty",
+                30,
+                new GregorianCalendar(
+                        2099,
+                        Calendar.DECEMBER,
+                        26,
+                        19,
+                        37
+                ).getTime()
+        ));
+        assertEquals(
+                3,
+                ScreeningService.findAllFutureScreeningsForCinema(
+                        CinemaService.findCinemaForAdmin(
+                                SessionService.getLoggedInUser()
+                        ).getName()
+                ).size()
         );
     }
 }
+
