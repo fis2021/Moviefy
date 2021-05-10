@@ -27,6 +27,12 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
     @FXML
     private Slider MCSlider;
     @FXML
+    private Label title;
+    @FXML
+    private Label subtitle;
+    @FXML
+    private Label text;
+    @FXML
     private ListView MCList;
     private int curentlist;
 
@@ -41,6 +47,7 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
 
         changeScene(event, "MainMenuBOOKINGClient.fxml");
     }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -73,6 +80,7 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
         });
     }
 
+
     private class MovieCell extends ListCell {
 
         HBox hbox = new HBox();
@@ -88,10 +96,12 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
                 this.buttonAction();
             });
         }
-
         public void buttonAction() {
-            //cand este apasat un buton afiseaza datele acelui film in dreapta.
-            System.out.println("Broo stiu ce e sexu da nu iti zic");
+            title.setText(movieTitle.getText());
+            Movie film = null;
+            film=MovieService.getMovieByTitle(movieTitle.getText());
+            subtitle.setText(film.getDescription());
+            text.setText(String.valueOf(film.getLength()));
         }
 
         protected void updateItem(Object item, boolean empty) {
