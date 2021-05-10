@@ -30,7 +30,7 @@ public class LoginController extends AbstractController{
                 if (Objects.equals(user.getRole(), "Admin")) {
                     changeScene(event, "mainMenuAdmin.fxml");
                 }
-                if( (Objects.equals(user.getRole(), "Client")))
+                else
                 {
                     changeScene(event, "mainMenuMAINClient.fxml");
                 }

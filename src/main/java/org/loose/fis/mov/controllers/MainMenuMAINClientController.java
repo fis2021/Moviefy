@@ -18,6 +18,7 @@ import org.loose.fis.mov.services.MovieService;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainMenuMAINClientController extends AbstractMenusController implements Initializable {
@@ -37,7 +38,7 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
 
 
 
-    private class MovieCell extends ListCell<Movie>{
+    private class MovieCell extends ListCell<Object>{
         HBox hbox = new HBox();
         Label movieTitle = new Label("(empty)");
         Pane pane = new Pane();
@@ -65,13 +66,13 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             if (empty) {
                 setGraphic(null);
             } else {
-                movieTitle.setText(item != null ? item.getTitle()  : "<null>");
+                movieTitle.setText(item != null ? item.getTitle() : "<null>");
                 /* this method call actually sets the appearance of our custom cell */
                 setGraphic(hbox);
             }
         }
     }
-    private class CinemaCell extends ListCell<Cinema>{
+    private class CinemaCell extends ListCell<Object>{
         HBox hbox = new HBox();
         Label cinemaName = new Label("(empty)");
         Pane pane = new Pane();
@@ -107,7 +108,7 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
     }
 
     @FXML
-    private ListView MCList;
+    private ListView<Object> MCList;
 
     private int curentlist;
     @Override
@@ -120,22 +121,23 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
     public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
         if((int)MCSlider.getValue()==0)
         {
-            ObservableList<Movie> movies= FXCollections.observableList(MovieService.getAllMovies());
+            MCList.setItems(null);
+            ObservableList<? extends Object> movies= FXCollections.observableList(MovieService.getAllMovies());
             MCList.setFixedCellSize(CELL_SIZE);
             MCList.setCellFactory(param -> new MovieCell());
-            MCList.setItems(movies);
+            MCList.setItems((ObservableList<Object>) movies);
 
             MCList.setPrefHeight(movies.size() * MCList.getFixedCellSize() + 2);
         }
         else
         {
-            ObservableList<Cinema> cinemas= FXCollections.observableList(CinemaService.getAllCinema());
+            MCList.setItems(null);
+            ObservableList<? extends Object> cinemas= FXCollections.observableList(CinemaService.getAllCinema());
             MCList.setFixedCellSize(CELL_SIZE);
             MCList.setCellFactory(param -> new CinemaCell());
-            MCList.setItems(cinemas);
+            MCList.setItems((ObservableList<Object>) cinemas);
 
         }
-        System.out.println(curentlist);
     }
 });
     }
