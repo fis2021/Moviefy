@@ -21,7 +21,11 @@ import org.loose.fis.mov.services.*;
 import java.io.IOException;
 import java.util.List;
 
-public class MainMenuAdminController extends AbstractController {
+
+import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
+import static org.dizitart.no2.objects.filters.ObjectFilters.gt;
+
+public class MainMenuAdminController extends AbstractMenusController {
     private static final int CELL_SIZE = 30;
 
     @FXML
@@ -47,11 +51,11 @@ public class MainMenuAdminController extends AbstractController {
         list.setPrefHeight(observableList.size() * list.getFixedCellSize() + 2);
     }
 
-    @FXML
-    public void handleMenuLogout(ActionEvent event) throws IOException {
-        UserService.logout();
-        changeScene(event, "login.fxml");
-    }
+//    @FXML
+//    public void handleMenuLogout(ActionEvent event) throws SessionDoesNotExistException, IOException {
+//        UserService.logout();
+//        changeScene(event, "login.fxml");
+//    }
 
     @FXML
     public void handleMenuHome(ActionEvent event) throws IOException {
