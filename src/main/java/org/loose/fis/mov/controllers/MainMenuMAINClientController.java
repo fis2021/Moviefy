@@ -5,21 +5,19 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.Movie;
-import org.loose.fis.mov.model.Screening;
-import org.loose.fis.mov.services.CommService;
+import org.loose.fis.mov.services.CinemaService;
 import org.loose.fis.mov.services.MovieService;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainMenuMAINClientController extends AbstractMenusController implements Initializable {
@@ -73,12 +71,45 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             }
         }
     }
+    private class CinemaCell extends ListCell<Cinema>{
+        HBox hbox = new HBox();
+        Label cinemaName = new Label("(empty)");
+        Pane pane = new Pane();
+        Button bookmovie=new Button("Book Movie");
 
+        public CinemaCell(){
+            super();
+            hbox.getChildren().addAll(cinemaName, pane, bookmovie);
+            HBox.setHgrow(pane, Priority.ALWAYS);
+            bookmovie.setOnAction(event -> {
+                this.buttonAction();
+            });
+        }
+
+        public void buttonAction(){
+            //cand este apasat un buton afiseaza datele acelui film in dreapta.
+            System.out.println("Legit merge ");
+        }
+        protected void updateItem(Cinema item, boolean empty) {
+            /* the inherited elements of the cell are left empty */
+            super.updateItem(item, empty);
+            setText(null);
+
+            /* setting the fields specific for the custom cell */
+            if (empty) {
+                setGraphic(null);
+            } else {
+                cinemaName.setText(item != null ? item.getName()  : "<null>");
+                /* this method call actually sets the appearance of our custom cell */
+                setGraphic(hbox);
+            }
+        }
+    }
 
 
 
     @FXML
-    private ListView<Movie> MCList;
+    private ListView MCList;
 
     private int curentlist;
     @Override
@@ -101,8 +132,10 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
         }
         else
         {
-            curentlist=1;
-            //change list to cinemas
+            ObservableList<Cinema> cinemas= FXCollections.observableList(CinemaService.getAllCinema());
+            MCList.setFixedCellSize(CELL_SIZE);
+            MCList.setCellFactory(param -> new CinemaCell());
+            MCList.setItems(cinemas);
 
         }
         System.out.println(curentlist);

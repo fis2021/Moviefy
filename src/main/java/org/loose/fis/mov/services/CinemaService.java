@@ -2,8 +2,10 @@ package org.loose.fis.mov.services;
 
 import org.loose.fis.mov.exceptions.CinemaAlreadyExistsException;
 import org.loose.fis.mov.model.Cinema;
+import org.loose.fis.mov.model.Movie;
 import org.loose.fis.mov.model.User;
 
+import java.util.List;
 import java.util.Objects;
 
 import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
@@ -41,4 +43,8 @@ public final class CinemaService {
         }
         return false;
     }
+    public static List<Cinema> getAllCinema() {
+        return DatabaseService.getCinemaRepo().find().toList();
+    }
+
 }
