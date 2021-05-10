@@ -47,7 +47,7 @@ public final class UserService {
         SessionService.destroySession();
     }
 
-    public static void changePassword(User user, String newPassword) {
+    private static void changePassword(User user, String newPassword) {
         user.setPassword(encodePassword(user.getUsername(), newPassword));
         DatabaseService.getUserRepo().update(user);
     }
@@ -56,6 +56,9 @@ public final class UserService {
     public static void changePasswordBeforeLogin(String email, String newPassword)
     throws UserNotRegisteredException {
         User user = findUserByEmail(email);
+        if (user == null) {
+            throw new UserNotRegisteredException();
+        }
         changePassword(user, newPassword);
     }
 
@@ -115,11 +118,7 @@ public final class UserService {
         return md;
     }
 
-    public static User findUserByEmail(String email) throws UserNotRegisteredException {
-        User user = DatabaseService.getUserRepo().find(eq("email", email)).firstOrDefault();
-        if (user == null) {
-            throw new UserNotRegisteredException();
-        }
-        return user;
+    public static User findUserByEmail(String email) {
+        return DatabaseService.getUserRepo().find(eq("email", email)).firstOrDefault();
     }
 }
