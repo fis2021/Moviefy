@@ -17,6 +17,7 @@ import org.loose.fis.mov.model.Screening;
 import org.loose.fis.mov.services.CinemaService;
 import org.loose.fis.mov.services.MovieService;
 import org.loose.fis.mov.services.ScreeningService;
+import org.loose.fis.mov.services.SessionService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -72,6 +73,7 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
                                 Number oldValue, Number newValue) {
                 if ((int) MCSlider.getValue() == 0) {
                     makeLabelsNull();
+                    RMList.setItems(null);
                     MCList.setItems(null);
                     ObservableList<?> movies = FXCollections
                             .observableList(MovieService.getAllMovies());
@@ -83,6 +85,7 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
                             .getFixedCellSize() + 2);
                 } else {
                     makeLabelsNull();
+                    RMList.setItems(null);
                     MCList.setItems(null);
                     ObservableList<?> cinemas = FXCollections
                             .observableList(CinemaService.getAllCinema());
@@ -149,6 +152,7 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             HBox.setHgrow(pane, Priority.ALWAYS);
             bookmovie.setOnAction(event -> {
                 try {
+                    SessionService.setSelectedScreening(//aici trebuie sa fie un screening care il primesti doar in updateitem...);
                     changeScene(event,"BookMovie.fxml");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -173,7 +177,6 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
                 }
             }
         }
-
     }
 
     private class CinemaCell extends ListCell {
