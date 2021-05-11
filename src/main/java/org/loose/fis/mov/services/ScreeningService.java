@@ -1,6 +1,7 @@
 package org.loose.fis.mov.services;
 
 import javafx.util.Pair;
+import org.dizitart.no2.NitriteId;
 import org.loose.fis.mov.exceptions.TimeIntervalOccupiedException;
 import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.Movie;
@@ -25,6 +26,11 @@ public final class ScreeningService {
                 eq("cinemaName", cinema.getName())
         ).toList();
     }
+    public static Screening findScreeningByID(NitriteId id){
+        return DatabaseService.getScreeningRepo().find(
+                eq("id", id) ).firstOrDefault();
+
+    }
 
     public static List<Screening> findAllFutureScreeningsForCinema(String cinemaName) {
         return DatabaseService.getScreeningRepo().find(
@@ -43,6 +49,7 @@ public final class ScreeningService {
                 )
         ).toList();
     }
+
 
     public static void deleteScreening(Screening screening) {
         DatabaseService.getScreeningRepo().remove(screening);

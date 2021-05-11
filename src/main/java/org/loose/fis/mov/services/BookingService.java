@@ -26,7 +26,11 @@ public class BookingService {
 
         return users;
     }
-
+    public static List<Booking> findBookingofUser(User user){
+        return DatabaseService.getBookingRepo().find(
+                eq("clientName", user.getUsername())
+        ).toList();
+    }
     public static List<Booking> findBookingsAtScreening(Screening screening) {
         return DatabaseService.getBookingRepo().find(
                 eq("screeningId", screening.getId())
