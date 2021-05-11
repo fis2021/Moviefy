@@ -58,7 +58,7 @@ public class MainMenuPROFILEClientController extends AbstractMenusController {
     }
     else
     {
-        UserService.changeUsername(nu.getText());
+        UserService.changeUsername(SessionService.getLoggedInUser(),nu.getText());
         initialize();
         nu.setText(null);
         nu.setPromptText("Type here the new Username");

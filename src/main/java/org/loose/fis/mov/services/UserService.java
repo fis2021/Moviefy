@@ -85,8 +85,7 @@ public final class UserService {
         }
         return false;
     }
-    public static void changeUsername(String string){
-        User user = SessionService.getLoggedInUser();
+    public static void changeUsername(User user,String string){
         user.setUsername(string);
         DatabaseService.getUserRepo().update(user);
     }
