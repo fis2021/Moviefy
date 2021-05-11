@@ -46,72 +46,72 @@ class CommServiceTest {
     @DisplayName("Test if the checker for interval overlapping works")
     void areIntervalsOverlapping() {
         Pair<Date, Date> intervalA = new Pair<>(
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 10, 30)
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 10, 0)
                         .getTime(),
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 14, 45)
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 14, 0)
                         .getTime()
         );
         Pair<Date, Date> intervalB = new Pair<>(
-                new GregorianCalendar(2020, Calendar.MARCH, 25, 9, 21)
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 9, 0)
                         .getTime(),
-                new GregorianCalendar(2020, Calendar.MARCH, 25, 10, 29)
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 11, 0)
                         .getTime()
         );
         Pair<Date, Date> intervalC = new Pair<>(
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 9, 59)
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 13, 0)
                         .getTime(),
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 17, 24)
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 15, 0)
                         .getTime()
         );
         Pair<Date, Date> intervalD = new Pair<>(
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 12, 31)
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 11, 0)
                         .getTime(),
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 14, 46)
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 13, 0)
                         .getTime()
         );
         Pair<Date, Date> intervalE = new Pair<>(
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 10, 30)
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 9, 0)
                         .getTime(),
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 14, 45)
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 15, 0)
                         .getTime()
         );
         Pair<Date, Date> intervalF = new Pair<>(
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 9, 30)
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 10, 0)
                         .getTime(),
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 11, 45)
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 14, 0)
                         .getTime()
         );
         Pair<Date, Date> intervalG = new Pair<>(
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 11, 30)
+                new GregorianCalendar(2021, Calendar.MARCH, 26, 10, 0)
                         .getTime(),
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 13, 45)
+                new GregorianCalendar(2021, Calendar.MARCH, 26, 14, 0)
                         .getTime()
         );
 
-        assertFalse(CommService.areIntervalsOverlapping(
+        assertTrue(CommService.areIntervalsOverlapping(
                 intervalA,
                 intervalB
-        )); // not overlapping;
+        )); // overlapping on beginning of A;
         assertTrue(CommService.areIntervalsOverlapping(
                 intervalA,
                 intervalC
-        )); // C contains A;
+        )); // overlapping on end of A;
         assertTrue(CommService.areIntervalsOverlapping(
                 intervalA,
                 intervalD
-        )); // D contains end of A;
+        )); // overlapping A contains D
         assertTrue(CommService.areIntervalsOverlapping(
                 intervalA,
                 intervalE
-        )); // E equals A;
+        )); // overlapping A is contained by E
         assertTrue(CommService.areIntervalsOverlapping(
                 intervalA,
                 intervalF
-        )); // F contains start of A;
-        assertTrue(CommService.areIntervalsOverlapping(
+        )); // A contains G;
+        assertFalse(CommService.areIntervalsOverlapping(
                 intervalA,
                 intervalG
-        )); // A contains G;
+        )); // not overlapping
     }
 
     @Test

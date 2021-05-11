@@ -51,16 +51,18 @@ public final class CommService {
 
     public static void sendMail(List<User> recipients, String subject, String text) {
         MimeMessage message = createMailDraft();
-        try {
-            message.setFrom("Moviefy");
-            for (User recipient : recipients) {
-                message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient.getEmail()));
+        if (!recipients.isEmpty()) {
+            try {
+                message.setFrom("Moviefy");
+                for (User recipient : recipients) {
+                    message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient.getEmail()));
+                }
+                message.setSubject(subject);
+                message.setText(text);
+                Transport.send(message);
+            } catch (MessagingException mex) {
+                mex.printStackTrace();
             }
-            message.setSubject(subject);
-            message.setText(text);
-            Transport.send(message);
-        } catch (MessagingException mex) {
-            mex.printStackTrace();
         }
     }
 
