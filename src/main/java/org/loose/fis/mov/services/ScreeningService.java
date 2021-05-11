@@ -61,7 +61,7 @@ public final class ScreeningService {
         }
 
         // verific film duplicat;
-        Movie movie = MovieService.findMovieByTitle(movieTitle);
+        Movie movie = MovieService.getMovieByTitle(movieTitle);
         if (movie == null) {
             movie = MovieService.addMovie(movieTitle, movieDescription, movieLength);
         }

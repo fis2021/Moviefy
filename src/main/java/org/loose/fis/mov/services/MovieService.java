@@ -26,12 +26,6 @@ public final class MovieService {
         ).firstOrDefault();
     }
 
-    public static Movie findMovieByTitle(String title) {
-        return DatabaseService.getMovieRepo().find(
-                eq("title", title)
-        ).firstOrDefault();
-    }
-
     public static List<Movie> getAllMovies() {
         return DatabaseService.getMovieRepo().find().toList();
     }
