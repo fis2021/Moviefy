@@ -15,4 +15,9 @@ public final class ReviewService {
                 eq("movieTitle", MovieTitle)
         ).toList();
     }
+    public static void addReview(Review review){
+        DatabaseService.getReviewRepo().insert(review);
+        DatabaseService.getMovieRepo().update(SessionService.getSelectedMovie());
+    }
+
 }

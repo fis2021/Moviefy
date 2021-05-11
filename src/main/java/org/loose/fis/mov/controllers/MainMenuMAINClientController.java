@@ -64,8 +64,8 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
         subtitle.setText(" ");
         text.setText(" ");
     }
-    public void addButtonAction(){
-
+    public void addButtonAction(ActionEvent event) throws IOException {
+        changeScene(event,"PopUpReview.fxml");
     }
     public void editButtonAction(){
 
@@ -152,7 +152,9 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
 //                deleteButton.setDisable(false);
             title.setText(movieTitle.getText());
             Movie film = null;
+
             film=MovieService.getMovieByTitle(movieTitle.getText());
+            SessionService.setSelectedString(film);
             subtitle.setText(film.getDescription());
             text.setText(String.valueOf(film.getLength()));
         }
