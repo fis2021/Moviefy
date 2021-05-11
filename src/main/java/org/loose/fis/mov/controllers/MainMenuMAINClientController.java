@@ -13,12 +13,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.Movie;
+import org.loose.fis.mov.model.Screening;
 import org.loose.fis.mov.services.CinemaService;
 import org.loose.fis.mov.services.MovieService;
+import org.loose.fis.mov.services.ScreeningService;
+import org.loose.fis.mov.services.SessionService;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainMenuMAINClientController extends AbstractMenusController implements Initializable {
@@ -27,7 +31,23 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
     @FXML
     private Slider MCSlider;
     @FXML
+    private Label title;
+    @FXML
+    private Label subtitle;
+    @FXML
+    private Label text;
+    @FXML
     private ListView MCList;
+    @FXML
+    private ListView RMList;
+
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button editButton;
+    @FXML
+    private Button deleteButton;
+
     private int curentlist;
 
     public void maintoprofile(ActionEvent event)
@@ -41,9 +61,25 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
 
         changeScene(event, "MainMenuBOOKINGClient.fxml");
     }
+    private void makeLabelsNull(){
+        title.setText(" ");
+        subtitle.setText(" ");
+        text.setText(" ");
+    }
+    public void addButtonAction(){
+
+    }
+    public void editButtonAction(){
+
+    }
+    public void deleteButtonAction(){
+
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
 
 
         MCSlider.valueProperty().addListener(new ChangeListener<Number>() {
@@ -51,6 +87,8 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             public void changed(ObservableValue<? extends Number> observable,
                                 Number oldValue, Number newValue) {
                 if ((int) MCSlider.getValue() == 0) {
+                    makeLabelsNull();
+                    RMList.setItems(null);
                     MCList.setItems(null);
                     ObservableList<?> movies = FXCollections
                             .observableList(MovieService.getAllMovies());
@@ -61,6 +99,14 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
                     MCList.setPrefHeight(movies.size() * MCList
                             .getFixedCellSize() + 2);
                 } else {
+                    addButton.setVisible(false);
+                    addButton.setDisable(true);
+                    editButton.setVisible(false);
+                    editButton.setDisable(true);
+                    deleteButton.setVisible(false);
+                    deleteButton.setDisable(true);
+                    makeLabelsNull();
+                    RMList.setItems(null);
                     MCList.setItems(null);
                     ObservableList<?> cinemas = FXCollections
                             .observableList(CinemaService.getAllCinema());
@@ -72,6 +118,7 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             }
         });
     }
+
 
     private class MovieCell extends ListCell {
 
@@ -88,10 +135,20 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
                 this.buttonAction();
             });
         }
-
         public void buttonAction() {
-            //cand este apasat un buton afiseaza datele acelui film in dreapta.
-            System.out.println("Broo stiu ce e sexu da nu iti zic");
+
+            addButton.setVisible(true);
+            addButton.setDisable(false);
+            //trebuie implementat partea de reviewuri
+//                editButton.setVisible(true);
+//                editButton.setDisable(false);
+//                deleteButton.setVisible(true);
+//                deleteButton.setDisable(false);
+            title.setText(movieTitle.getText());
+            Movie film = null;
+            film=MovieService.getMovieByTitle(movieTitle.getText());
+            subtitle.setText(film.getDescription());
+            text.setText(String.valueOf(film.getLength()));
         }
 
         protected void updateItem(Object item, boolean empty) {
@@ -113,6 +170,44 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             }
         }
     }
+    private class ScreeningCell extends ListCell{
+        HBox hbox = new HBox();
+        Label MovieName = new Label("(empty)");
+        Pane pane = new Pane();
+        Button bookmovie = new Button("Book seats");
+        public ScreeningCell() {
+            super();
+            hbox.getChildren().addAll(MovieName, pane, bookmovie);
+            HBox.setHgrow(pane, Priority.ALWAYS);
+            bookmovie.setOnAction(event -> {
+                Screening cell = (Screening) getItem();
+                try {
+                    SessionService.setSelectedScreening(cell);
+                    changeScene(event,"BookMovie.fxml");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        protected void updateItem(Object item, boolean empty) {
+            /* the inherited elements of the cell are left empty */
+            super.updateItem(item, empty);
+            setText(null);
+
+            /* setting the fields specific for the custom cell */
+            if (empty) {
+                setGraphic(null);
+            } else {
+                if (item instanceof Screening) {
+                    MovieName.setText(item != null ?
+                            ((Screening) item).getMovieTitle() :
+                            "<null>");
+                    /* this method call actually sets the appearance of our custom cell */
+                    setGraphic(hbox);
+                }
+            }
+        }
+    }
 
     private class CinemaCell extends ListCell {
 
@@ -131,8 +226,17 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
         }
 
         public void buttonAction() {
-            //cand este apasat un buton afiseaza datele acelui film in dreapta.
-            System.out.println("Legit merge ");
+            title.setText(cinemaName.getText());
+            Cinema cinem = null;
+            cinem=CinemaService.findCinemaByName(cinemaName.getText());
+            ObservableList<?> Screeninglist=FXCollections
+                    .observableList(ScreeningService.findAllScreeningsForCinema(cinem));
+            //////////////
+            RMList.setFixedCellSize(CELL_SIZE);
+            RMList.setCellFactory(param -> new ScreeningCell());
+            RMList.setItems(Screeninglist);
+            RMList.setPrefHeight(Screeninglist.size() *RMList
+                    .getFixedCellSize() + 2);
         }
 
         protected void updateItem(Object item, boolean empty) {
