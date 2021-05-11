@@ -103,4 +103,49 @@ class CinemaServiceTest {
                 CinemaService.findCinemaForAdmin(admin).getName()
         );
     }
+
+    @Test
+    @DisplayName("Test if the cinema list getter works")
+    void getAllCinema() {
+        assertEquals(0, CinemaService.getAllCinema().size());
+        assertDoesNotThrow(() -> UserService.addUser(
+                "test_admin",
+                "test",
+                "test",
+                "test_test",
+                "test@test.test",
+                "Admin",
+                "test_cinema",
+                "test",
+                "10"
+        ));
+        assertEquals(1, CinemaService.getAllCinema().size());
+        assertEquals(
+                "test_cinema",
+                CinemaService.getAllCinema().get(0).getName()
+        );
+        assertDoesNotThrow(() -> UserService.addUser(
+                "test_admin2",
+                "test",
+                "test",
+                "test_test",
+                "test2@test.test",
+                "Admin",
+                "test_cinema2",
+                "test",
+                "10"
+        ));
+        assertDoesNotThrow(() -> UserService.addUser(
+                "test_admin3",
+                "test",
+                "test",
+                "test_test",
+                "test3@test.test",
+                "Admin",
+                "test_cinema3",
+                "test",
+                "10"
+        ));
+        assertEquals(3, CinemaService.getAllCinema().size());
+    }
 }
