@@ -89,17 +89,6 @@ public class RegistrationController extends AbstractController{
         }
     }
 
-//    private boolean isPasswordValid() {
-//        return passwordField.getText().length() >= MIN_PASSWORD_LENGTH;
-//    }
-
-//    private boolean isEmailValid() {
-//        Pattern emailPattern = Pattern.compile(
-//                "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$"
-//        );
-//        return emailPattern.matcher(emailField.getText()).find();
-//    }
-
     private boolean isCinemaCapacityNumeric() {
         Pattern numberPattern = Pattern.compile("^[1-9][0-9]*$");
         return numberPattern.matcher(cinemaCapacityField.getText()).find();
