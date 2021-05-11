@@ -54,7 +54,7 @@
                      <HBox.margin>
                         <Insets left="45.0" />
                      </HBox.margin></Label>
-                  <Slider fx:id="MCSlider" blockIncrement="1.0" majorTickUnit="1.0" max="1.0" minorTickCount="0" prefHeight="14.0" prefWidth="42.0" snapToTicks="true" />
+                  <Slider fx:id="MCSlider" blockIncrement="1.0" majorTickUnit="1.0" max="1.0" minorTickCount="0" prefHeight="14.0" prefWidth="42.0" snapToTicks="true" value="0.5" />
                   <Label text="Cinemas" textFill="WHITE" />
                </children>
             </HBox>
@@ -85,17 +85,17 @@
             </ListView>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="addButton" mnemonicParsing="false" text="Add" visible="false">
+                  <Button fx:id="addButton" mnemonicParsing="false" onAction="#addButtonAction" text="Add" visible="false">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="editButton" disable="true" mnemonicParsing="false" text="Edit " visible="false">
+                  <Button fx:id="editButton" disable="true" mnemonicParsing="false" onAction="#editButtonAction" text="Edit " visible="false">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" text="Delete" visible="false">
+                  <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#deleteButtonAction" text="Delete" visible="false">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>

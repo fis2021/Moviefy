@@ -22,6 +22,7 @@ import org.loose.fis.mov.services.SessionService;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainMenuMAINClientController extends AbstractMenusController implements Initializable {
@@ -65,8 +66,15 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
         subtitle.setText(" ");
         text.setText(" ");
     }
+    public void addButtonAction(){
 
+    }
+    public void editButtonAction(){
 
+    }
+    public void deleteButtonAction(){
+
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -93,6 +101,10 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
                 } else {
                     addButton.setVisible(false);
                     addButton.setDisable(true);
+                    editButton.setVisible(false);
+                    editButton.setDisable(true);
+                    deleteButton.setVisible(false);
+                    deleteButton.setDisable(true);
                     makeLabelsNull();
                     RMList.setItems(null);
                     MCList.setItems(null);
@@ -124,8 +136,14 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             });
         }
         public void buttonAction() {
+
             addButton.setVisible(true);
             addButton.setDisable(false);
+            //trebuie implementat partea de reviewuri
+//                editButton.setVisible(true);
+//                editButton.setDisable(false);
+//                deleteButton.setVisible(true);
+//                deleteButton.setDisable(false);
             title.setText(movieTitle.getText());
             Movie film = null;
             film=MovieService.getMovieByTitle(movieTitle.getText());

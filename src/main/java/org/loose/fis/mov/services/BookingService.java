@@ -10,6 +10,10 @@ import java.util.List;
 import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
 public class BookingService {
+    public static void addBooking(Booking booking){
+        DatabaseService.getBookingRepo().insert(booking);
+        DatabaseService.getScreeningRepo().update(SessionService.getSelectedScreening());
+    }
     public static List<User> findUsersWithBookingAtScreening(Screening screening) {
         List<String> usernames = new ArrayList<>();
         List<User> users = new ArrayList<>();

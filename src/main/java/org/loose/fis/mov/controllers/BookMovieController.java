@@ -2,9 +2,12 @@ package org.loose.fis.mov.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.loose.fis.mov.model.Booking;
+import org.loose.fis.mov.services.BookingService;
+import org.loose.fis.mov.services.DatabaseService;
 import org.loose.fis.mov.services.ScreeningService;
 import org.loose.fis.mov.services.SessionService;
 
@@ -24,10 +27,19 @@ public class BookMovieController  extends AbstractMenusController{
     private Label rasp;
     @FXML
     private TextField locuri;
+    @FXML
+    private Button buton;
     public void initialize() {
+        buton.setDisable(false);
         tfilm.setText(SessionService.getSelectedScreening().getMovieTitle());
         tcinema.setText(SessionService.getSelectedScreening().getCinemaName());
-        locuri.setPromptText("Mai sunt "+SessionService.getSelectedScreening().getRemainingCapacity()+" locuri");
+        if(SessionService.getSelectedScreening().getRemainingCapacity()==0){
+            locuri.setPromptText("Ne pare rau,Toate locurile sunt ocupate!");
+        }
+        else{
+        locuri.setPromptText("Mai sunt "+SessionService.getSelectedScreening().getRemainingCapacity()+" locuri.");
+        }
+
     }
     public void onBookAction(){
         if(Integer.parseInt(locuri.getText())>SessionService.getSelectedScreening().getRemainingCapacity()){
@@ -37,6 +49,8 @@ public class BookMovieController  extends AbstractMenusController{
     Booking booking=new Booking(null,SessionService.getLoggedInUser().getUsername(),SessionService.getSelectedScreening().getId(),Integer.parseInt(locuri.getText()));
             SessionService.getSelectedScreening().setRemainingCapacity(SessionService.getSelectedScreening().getRemainingCapacity()-Integer.parseInt(locuri.getText()));
             rasp.setText("Enjoy!");
+            BookingService.addBooking(booking);
+            buton.setDisable(true);
     }
     }
     public void bookingToBooking(ActionEvent e) throws IOException {
