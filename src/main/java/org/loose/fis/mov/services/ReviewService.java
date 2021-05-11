@@ -2,6 +2,7 @@ package org.loose.fis.mov.services;
 
 import org.loose.fis.mov.model.Movie;
 import org.loose.fis.mov.model.Review;
+import org.loose.fis.mov.model.User;
 
 import java.util.List;
 
@@ -19,5 +20,9 @@ public final class ReviewService {
         DatabaseService.getReviewRepo().insert(review);
         DatabaseService.getMovieRepo().update(SessionService.getSelectedMovie());
     }
-
+    public static Review getClientReview(User user){
+        return DatabaseService.getReviewRepo().find(
+                eq("clientUsername", user.getUsername())
+        ).firstOrDefault();
+    }
 }

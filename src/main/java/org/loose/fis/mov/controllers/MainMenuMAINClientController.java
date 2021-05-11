@@ -135,8 +135,7 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
         }
         public void buttonAction() {
             title.setText(movieTitle.getText());
-            addButton.setVisible(true);
-            addButton.setDisable(false);
+
             //trebuie implementat partea de reviewuri
             ObservableList<?> Reviewlist=FXCollections
                     .observableList(ReviewService.findReviewsForMovie(movieTitle.getText()));
@@ -146,15 +145,22 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             RMList.setItems(Reviewlist);
             RMList.setPrefHeight(Reviewlist.size() *RMList
                     .getFixedCellSize() + 2);
-//                editButton.setVisible(true);
-//                editButton.setDisable(false);
-//                deleteButton.setVisible(true);
-//                deleteButton.setDisable(false);
+
             title.setText(movieTitle.getText());
             Movie film = null;
 
             film=MovieService.getMovieByTitle(movieTitle.getText());
             SessionService.setSelectedString(film);
+            if(ReviewService.getClientReview(SessionService.getLoggedInUser())==null) {
+                addButton.setVisible(true);
+                addButton.setDisable(false);
+            }
+            else{
+                editButton.setVisible(true);
+            editButton.setDisable(false);
+            deleteButton.setVisible(true);
+            deleteButton.setDisable(false);
+            }
             subtitle.setText(film.getDescription());
             text.setText(String.valueOf(film.getLength()));
         }

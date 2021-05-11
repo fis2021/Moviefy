@@ -19,7 +19,7 @@ public class PopUpReviewController extends AbstractMenusController{
     private Label eroare;
     public void saveButton(ActionEvent event ) throws IOException {
 
-        if(wreview.getText()=="")
+        if(wreview.getText().isEmpty())
         {
         eroare.setText("You need to write a review before posting!");
         }
