@@ -1,5 +1,6 @@
 package org.loose.fis.mov.services;
 
+import org.dizitart.no2.NitriteId;
 import org.loose.fis.mov.model.Booking;
 import org.loose.fis.mov.model.Screening;
 import org.loose.fis.mov.model.User;
@@ -35,5 +36,13 @@ public class BookingService {
         return DatabaseService.getBookingRepo().find(
                 eq("screeningId", screening.getId())
         ).toList();
+    }
+    public static void deleteBooking(Booking booking) {
+        DatabaseService.getBookingRepo().remove(booking);
+    }
+    public static Booking findBookingByID(NitriteId id){
+        return DatabaseService.getBookingRepo().find(
+                eq("id", id) ).firstOrDefault();
+
     }
 }

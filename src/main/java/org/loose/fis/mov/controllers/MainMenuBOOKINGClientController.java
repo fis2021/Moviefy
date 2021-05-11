@@ -11,6 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import org.dizitart.no2.NitriteId;
 import org.loose.fis.mov.model.Booking;
 import org.loose.fis.mov.model.Movie;
 import org.loose.fis.mov.model.Screening;
@@ -48,16 +49,15 @@ public class MainMenuBOOKINGClientController extends AbstractMenusController{
 
 
     private class BookingCell extends ListCell {
-
+        private NitriteId Id;
         HBox hbox = new HBox();
         Label movieTitle = new Label("(empty)");
         Label nrseats = new Label("(empty)");
         Pane pane = new Pane();
         Button delete = new Button("Delete");
-
         public BookingCell() {
             super();
-            hbox.getChildren().addAll(movieTitle, pane,nrseats, delete);
+            hbox.getChildren().addAll(movieTitle,nrseats,pane, delete);
             HBox.setHgrow(pane, Priority.ALWAYS);
             delete.setOnAction(event -> {
                 this.deleteAction();
@@ -65,7 +65,9 @@ public class MainMenuBOOKINGClientController extends AbstractMenusController{
         }
 
         public void deleteAction(){
-            //Fa-ti de cap!
+            //E nevoie de un booking dar in functie de ce?ID!
+            BookingService.deleteBooking(BookingService.findBookingByID(Id));
+            delete.setDisable(true);
         }
         protected void updateItem(Object item, boolean empty) {
             /* the inherited elements of the cell are left empty */
@@ -77,8 +79,9 @@ public class MainMenuBOOKINGClientController extends AbstractMenusController{
                 setGraphic(null);
             } else {
                 if (item instanceof Booking) {
+                    Id=(((Booking) item).getId());
                     movieTitle.setText(item != null ?
-                            ScreeningService.findScreeningByID(((Booking) item).getScreeningId()).getMovieTitle():
+                            ScreeningService.findScreeningByID(((Booking) item).getScreeningId()).getMovieTitle()+"     Seats:":
                             "<null>");
                    nrseats.setText(item != null ?
                             String.valueOf(((Booking) item).getNumberOfSeats() ):
