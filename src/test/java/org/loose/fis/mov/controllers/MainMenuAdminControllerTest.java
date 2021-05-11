@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.loose.fis.mov.model.Screening;
 import org.loose.fis.mov.services.*;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
@@ -33,6 +34,8 @@ class MainMenuAdminControllerTest {
     private static final String SCREENING_HOUR = "4";
     private static final String SCREENING_MINUTE = "0";
 
+    private static Screening selectedScreening;
+
     @BeforeAll
     static void beforeAll()
     throws Exception {
@@ -51,7 +54,7 @@ class MainMenuAdminControllerTest {
                 "10"
         );
         UserService.login(USERNAME, PASSWORD);
-        ScreeningService.addScreening(
+        selectedScreening = ScreeningService.addScreening(
                 MOVIE_TITLE,
                 MOVIE_DESCRIPTION,
                 Integer.parseInt(MOVIE_LENGTH),
@@ -105,7 +108,7 @@ class MainMenuAdminControllerTest {
                 Integer.parseInt(MOVIE_LENGTH),
                 new GregorianCalendar(
                         Integer.parseInt(SCREENING_YEAR) + 1,
-                        Integer.parseInt(SCREENING_MONTH)-1,
+                        Integer.parseInt(SCREENING_MONTH) - 1,
                         Integer.parseInt(SCREENING_DAY),
                         Integer.parseInt(SCREENING_HOUR),
                         Integer.parseInt(SCREENING_MINUTE)
@@ -135,5 +138,20 @@ class MainMenuAdminControllerTest {
                 )).size()
         );
         assertNotNull(robot.lookup("Cancelled"));
+    }
+
+    @Test
+    @DisplayName("Test if the list of bookings is shown for a movie")
+    void seeBookings(FxRobot robot) {
+        robot.clickOn("Bookings");
+        assertEquals(
+                "Bookings for movie "
+                        + selectedScreening.getMovieTitle()
+                        + " on "
+                        + CommService.extractDate(selectedScreening.getDate())
+                        + " "
+                        + CommService.extractTime(selectedScreening.getDate()),
+                robot.lookup("#pageTitle").queryText().getText()
+        );
     }
 }
