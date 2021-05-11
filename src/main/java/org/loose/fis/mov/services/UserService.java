@@ -85,7 +85,11 @@ public final class UserService {
         }
         return false;
     }
-
+    public static void changeUsername(String string){
+        User user = SessionService.getLoggedInUser();
+        user.setUsername(string);
+        DatabaseService.getUserRepo().update(user);
+    }
     private static boolean emailAddressUsed(String email) {
         for (User user : DatabaseService.getUserRepo().find()) {
             if (Objects.equals(email, user.getEmail())) {

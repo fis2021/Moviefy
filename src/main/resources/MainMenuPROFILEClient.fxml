@@ -39,4 +39,177 @@
          </BorderPane.margin>
       </VBox>
    </left>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="150.0" prefWidth="276.0">
+                     <children>
+                        <Label text="UserName" textFill="#f0f0f0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Firstname" textFill="#f0f0f0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Lastname" textFill="#f0f0f0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Email" textFill="#f0f0f0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="17.0" prefWidth="102.0" text="Role" textFill="#f0f0f0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="20.0" top="30.0" />
+                     </HBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </VBox>
+                  <VBox prefHeight="150.0" prefWidth="369.0">
+                     <children>
+                        <Label fx:id="ul" text="UserName" textFill="#f0f0f0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="fl" text="Firstname" textFill="#f0f0f0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="ll" text="Lastname" textFill="#f0f0f0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="el" text="Email" textFill="#f0f0f0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="rl" prefHeight="17.0" prefWidth="102.0" text="Role" textFill="#f0f0f0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets top="30.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+            <Label text="Change Password" textFill="#f0f0f0">
+               <font>
+                  <Font name="System Bold Italic" size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="30.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <HBox prefHeight="28.0" prefWidth="535.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="127.0" text="Old Password" textFill="#872929">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <PasswordField fx:id="op" prefHeight="25.0" prefWidth="171.0" promptText="Type here the old password" />
+               </children></HBox>
+            <HBox prefHeight="32.0" prefWidth="535.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="128.0" text="New Password" textFill="#872929">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <PasswordField fx:id="np" prefHeight="25.0" prefWidth="170.0" promptText="Type here the new password" />
+                  <Button mnemonicParsing="false" onAction="#changePassword" prefHeight="25.0" prefWidth="124.0" text="Change Password">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <Label textFill="#f0f0f0">
+               <font>
+                  <Font name="System Bold Italic" size="11.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="30.0" />
+               </VBox.margin>
+            </Label>
+            <HBox prefHeight="32.0" prefWidth="535.0">
+               <children>
+                  <Label text="New Username" textFill="#872929">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="nu" prefHeight="25.0" prefWidth="169.0" promptText="Type here the new Username" />
+                  <Button mnemonicParsing="false" onAction="#changeUsername" prefHeight="25.0" prefWidth="124.0" text="Change Username">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="32.0" prefWidth="535.0" />
+            <HBox prefHeight="32.0" prefWidth="535.0" />
+         </children>
+      </VBox>
+   </center>
 </BorderPane>
