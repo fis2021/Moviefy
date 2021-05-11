@@ -268,7 +268,6 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             cinem=CinemaService.findCinemaByName(cinemaName.getText());
             ObservableList<?> Screeninglist=FXCollections
                     .observableList(ScreeningService.findAllScreeningsForCinema(cinem));
-            //////////////
             RMList.setFixedCellSize(CELL_SIZE);
             RMList.setCellFactory(param -> new ScreeningCell());
             RMList.setItems(Screeninglist);
