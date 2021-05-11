@@ -19,8 +19,6 @@ import org.loose.fis.mov.services.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainMenuMAINClientController extends AbstractMenusController implements Initializable {
@@ -149,7 +147,7 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             title.setText(movieTitle.getText());
             Movie film = null;
 
-            film=MovieService.getMovieByTitle(movieTitle.getText());
+            film=MovieService.findMovieByTitle(movieTitle.getText());
             SessionService.setSelectedString(film);
             if(ReviewService.getClientReview(SessionService.getLoggedInUser())==null) {
                 addButton.setVisible(true);

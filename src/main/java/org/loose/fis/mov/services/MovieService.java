@@ -20,7 +20,7 @@ public final class MovieService {
         ).firstOrDefault();
     }
 
-    public static Movie getMovieByTitle(String title) {
+    public static Movie findMovieByTitle(String title) {
         return DatabaseService.getMovieRepo().find(
                 eq("title", title)
         ).firstOrDefault();
