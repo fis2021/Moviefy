@@ -148,8 +148,14 @@ class RegistrationControllerTest {
                 "A required field is empty!",
                 robot.lookup("#registrationMessage").queryText().getText()
         );
-
         assertEquals(0, UserService.getAllUsers().size());
+        robot.clickOn("#passwordField").write(PASSWORD);
+        robot.clickOn("Register");
+        assertEquals(
+                "Account created successfully!",
+                robot.lookup("#registrationMessage").queryText().getText()
+        );
+        assertEquals(1, UserService.getAllUsers().size());
     }
 
     @Test
@@ -180,6 +186,13 @@ class RegistrationControllerTest {
                 robot.lookup("#registrationMessage").queryText().getText()
         );
         assertEquals(0, UserService.getAllUsers().size());
+        robot.clickOn("#cinemaCapacityField").write(CINEMA_CAPACITY_FIELD);
+        robot.clickOn("Register");
+        assertEquals(
+                "Account created successfully!",
+                robot.lookup("#registrationMessage").queryText().getText()
+        );
+        assertEquals(1, UserService.getAllUsers().size());
     }
 
     @Test
