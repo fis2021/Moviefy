@@ -40,6 +40,13 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
     @FXML
     private ListView RMList;
 
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button editButton;
+    @FXML
+    private Button deleteButton;
+
     private int curentlist;
 
     public void maintoprofile(ActionEvent event)
@@ -84,6 +91,8 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
                     MCList.setPrefHeight(movies.size() * MCList
                             .getFixedCellSize() + 2);
                 } else {
+                    addButton.setVisible(false);
+                    addButton.setDisable(true);
                     makeLabelsNull();
                     RMList.setItems(null);
                     MCList.setItems(null);
@@ -115,6 +124,8 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             });
         }
         public void buttonAction() {
+            addButton.setVisible(true);
+            addButton.setDisable(false);
             title.setText(movieTitle.getText());
             Movie film = null;
             film=MovieService.getMovieByTitle(movieTitle.getText());
@@ -151,8 +162,9 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             hbox.getChildren().addAll(MovieName, pane, bookmovie);
             HBox.setHgrow(pane, Priority.ALWAYS);
             bookmovie.setOnAction(event -> {
+                Screening cell = (Screening) getItem();
                 try {
-                    SessionService.setSelectedScreening(//aici trebuie sa fie un screening care il primesti doar in updateitem...);
+                    SessionService.setSelectedScreening(cell);
                     changeScene(event,"BookMovie.fxml");
                 } catch (IOException e) {
                     e.printStackTrace();
