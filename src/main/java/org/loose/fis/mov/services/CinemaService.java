@@ -31,6 +31,12 @@ public final class CinemaService {
                 eq("adminUsername", admin.getUsername())
         ).firstOrDefault();
     }
+    public static Cinema findCinemaByName(String name) {
+        Cinema cinema = DatabaseService.getCinemaRepo().find(
+                eq("name", name)
+        ).firstOrDefault();
+        return cinema;
+    }
 
      static boolean existsCinema(String name) {
         for (Cinema cinema : DatabaseService.getCinemaRepo().find()) {

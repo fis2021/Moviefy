@@ -12,6 +12,7 @@ public final class SessionService {
 
     }
 
+
     public static void startSession(User user) throws SessionAlreadyExistsException {
         if (checkSessionExists()) {
             throw new SessionAlreadyExistsException();
