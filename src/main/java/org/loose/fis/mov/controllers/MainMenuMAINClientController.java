@@ -13,16 +13,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.Movie;
+import org.loose.fis.mov.model.Review;
 import org.loose.fis.mov.model.Screening;
-import org.loose.fis.mov.services.CinemaService;
-import org.loose.fis.mov.services.MovieService;
-import org.loose.fis.mov.services.ScreeningService;
-import org.loose.fis.mov.services.SessionService;
+import org.loose.fis.mov.services.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainMenuMAINClientController extends AbstractMenusController implements Initializable {
@@ -66,8 +62,8 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
         subtitle.setText(" ");
         text.setText(" ");
     }
-    public void addButtonAction(){
-
+    public void addButtonAction(ActionEvent event) throws IOException {
+        changeScene(event,"PopUpReview.fxml");
     }
     public void editButtonAction(){
 
@@ -136,17 +132,33 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             });
         }
         public void buttonAction() {
+            title.setText(movieTitle.getText());
 
-            addButton.setVisible(true);
-            addButton.setDisable(false);
             //trebuie implementat partea de reviewuri
-//                editButton.setVisible(true);
-//                editButton.setDisable(false);
-//                deleteButton.setVisible(true);
-//                deleteButton.setDisable(false);
+            ObservableList<?> Reviewlist=FXCollections
+                    .observableList(ReviewService.findReviewsForMovie(movieTitle.getText()));
+            //////////////
+            RMList.setFixedCellSize(CELL_SIZE);
+            RMList.setCellFactory(param -> new ReviewCell());
+            RMList.setItems(Reviewlist);
+            RMList.setPrefHeight(Reviewlist.size() *RMList
+                    .getFixedCellSize() + 2);
+
             title.setText(movieTitle.getText());
             Movie film = null;
-            film=MovieService.getMovieByTitle(movieTitle.getText());
+
+            film=MovieService.findMovieByTitle(movieTitle.getText());
+            SessionService.setSelectedString(film);
+            if(ReviewService.getClientReview(SessionService.getLoggedInUser())==null) {
+                addButton.setVisible(true);
+                addButton.setDisable(false);
+            }
+            else{
+                editButton.setVisible(true);
+            editButton.setDisable(false);
+            deleteButton.setVisible(true);
+            deleteButton.setDisable(false);
+            }
             subtitle.setText(film.getDescription());
             text.setText(String.valueOf(film.getLength()));
         }
@@ -170,6 +182,35 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             }
         }
     }
+    private class ReviewCell extends ListCell{
+        HBox hbox = new HBox();
+        Label review = new Label("(empty)");
+        public ReviewCell() {
+            super();
+            hbox.getChildren().addAll(review);
+            HBox.setHgrow(review,Priority.ALWAYS);
+        }
+        protected void updateItem(Object item, boolean empty) {
+            /* the inherited elements of the cell are left empty */
+            super.updateItem(item, empty);
+            setText(null);
+
+            /* setting the fields specific for the custom cell */
+            if (empty) {
+                setGraphic(null);
+            } else {
+                if (item instanceof Review) {
+                    review.setText(item != null ?
+                            ((Review) item).getText() :
+                            "<null>");
+                    /* this method call actually sets the appearance of our custom cell */
+                    setGraphic(hbox);
+                }
+            }
+        }
+    }
+
+
     private class ScreeningCell extends ListCell{
         HBox hbox = new HBox();
         Label MovieName = new Label("(empty)");
@@ -231,7 +272,6 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             cinem=CinemaService.findCinemaByName(cinemaName.getText());
             ObservableList<?> Screeninglist=FXCollections
                     .observableList(ScreeningService.findAllScreeningsForCinema(cinem));
-            //////////////
             RMList.setFixedCellSize(CELL_SIZE);
             RMList.setCellFactory(param -> new ScreeningCell());
             RMList.setItems(Screeninglist);
