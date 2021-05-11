@@ -57,6 +57,7 @@ class UserProfileControllerTest {
     @AfterAll
     static void afterAll()
     throws IOException {
+        UserService.logout();
         DatabaseService.closeDatabase();
         FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath()
                                          .toFile());
