@@ -5,6 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import org.loose.fis.mov.exceptions.PasswordIncorrectException;
+import org.loose.fis.mov.model.User;
+import org.loose.fis.mov.services.CommService;
 import org.loose.fis.mov.services.SessionService;
 import org.loose.fis.mov.services.UserService;
 import org.w3c.dom.Text;
@@ -23,6 +26,8 @@ public class MainMenuPROFILEClientController extends AbstractMenusController {
     private Label rl;
     @FXML
     private Label el;
+    @FXML
+    private Label cpm;
     @FXML
     private PasswordField op;
     @FXML
@@ -55,12 +60,29 @@ public class MainMenuPROFILEClientController extends AbstractMenusController {
     {
         UserService.changeUsername(nu.getText());
         initialize();
-        nu.deleteText(0,10000);
+        nu.setText(null);
         nu.setPromptText("Type here the new Username");
     }
 }
-    public void changePassword(){
+    public void changePassword() throws PasswordIncorrectException {
+        if (op.getText().isEmpty()&& np.getText().isEmpty()) {
+            cpm.setText("A required field is empty!");
+        } else if (!CommService.isPasswordValid(np.getText())) {
+            cpm.setText("The password must be at least 8 characters long!");
+        } else {
+            try {
+                UserService.changePasswordAfterLogin(
+                        op.getText(),
+                        np.getText()
 
+                );
+                op.setText("");
+                np.setText("");
+                cpm.setText("Password change successful!");
+            } catch (Exception e) {
+                cpm.setText(e.getMessage());
+            }
+        }
     }
 
 }
