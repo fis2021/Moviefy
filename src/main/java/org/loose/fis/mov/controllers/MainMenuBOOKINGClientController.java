@@ -68,6 +68,7 @@ public class MainMenuBOOKINGClientController extends AbstractMenusController{
             //E nevoie de un booking dar in functie de ce?ID!
             BookingService.deleteBooking(BookingService.findBookingByID(Id));
             delete.setDisable(true);
+            initialize();
         }
         protected void updateItem(Object item, boolean empty) {
             /* the inherited elements of the cell are left empty */
