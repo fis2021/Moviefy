@@ -7,20 +7,18 @@ import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.loose.fis.mov.model.Movie;
 import org.loose.fis.mov.services.*;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Disabled
 @ExtendWith(ApplicationExtension.class)
 class AddScreeningControllerTest {
 
