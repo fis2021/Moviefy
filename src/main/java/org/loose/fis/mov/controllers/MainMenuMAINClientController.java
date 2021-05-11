@@ -230,7 +230,7 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             Cinema cinem = null;
             cinem=CinemaService.findCinemaByName(cinemaName.getText());
             ObservableList<?> Screeninglist=FXCollections
-                    .observableList(ScreeningService.findAllScreeningsForCinema(cinem));
+                    .observableList(ScreeningService.findAllFutureScreeningsForCinema(cinem));
             //////////////
             RMList.setFixedCellSize(CELL_SIZE);
             RMList.setCellFactory(param -> new ScreeningCell());
