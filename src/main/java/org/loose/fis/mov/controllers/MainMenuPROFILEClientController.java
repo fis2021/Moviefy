@@ -32,8 +32,6 @@ public class MainMenuPROFILEClientController extends AbstractMenusController {
     private PasswordField op;
     @FXML
     private PasswordField np;
-    @FXML
-    private TextField nu;
 
     public void initialize(){
         ul.setText(SessionService.getLoggedInUser().getUsername());
@@ -51,19 +49,7 @@ public class MainMenuPROFILEClientController extends AbstractMenusController {
 
         changeScene(event,"MainMenuMAINClient.fxml");
     }
-    public void changeUsername(){
-    if(nu.getText().isEmpty())
-    {
-        nu.setPromptText("Add a valid Username");
-    }
-    else
-    {
-        UserService.changeUsername(SessionService.getLoggedInUser(),nu.getText());
-        initialize();
-        nu.setText(null);
-        nu.setPromptText("Type here the new Username");
-    }
-}
+
     public void changePassword() throws PasswordIncorrectException {
         if (op.getText().isEmpty()&& np.getText().isEmpty()) {
             cpm.setText("A required field is empty!");
