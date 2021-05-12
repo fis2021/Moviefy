@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import org.loose.fis.mov.model.Booking;
 import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.Screening;
 import org.loose.fis.mov.model.User;
@@ -112,6 +113,9 @@ public class MainMenuAdminController extends AbstractMenusController {
                 Screening screening = getItem();
                 ScreeningService.deleteScreening(screening);
                 List<User> bookedUsers = BookingService.findUsersWithBookingAtScreening(screening);
+
+                BookingService.findBookingsAtScreening(screening).forEach(
+                        BookingService::deleteBooking);
 
                 CommService.sendMail(
                         bookedUsers,
