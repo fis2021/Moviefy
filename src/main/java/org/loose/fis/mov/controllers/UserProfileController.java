@@ -71,7 +71,7 @@ public class UserProfileController extends AbstractController{
         if (Objects.equals(user.getRole(), "Admin")) {
             changeScene(event, "mainMenuAdmin.fxml");
         } else {
-            System.out.println("Not yet implemented!");
+            System.out.println("MainMenuMAINClient.fxml");
         }
     }
 
@@ -81,9 +81,14 @@ public class UserProfileController extends AbstractController{
     }
 
     @FXML
-    public void handleMenuCommonField(ActionEvent event) {
-        // must branch into admin and client users after merging the add screening story;
-        System.out.println("Not yet implemented.");
+    public void handleMenuCommonField(ActionEvent event)
+    throws IOException {
+        User user = SessionService.getLoggedInUser();
+        if (Objects.equals(user.getRole(), "Admin")) {
+            changeScene(event, "addScreening.fxml");
+        } else {
+            System.out.println("MainMenuBOOKINGClient.fxml");
+        }
     }
 
     @FXML
