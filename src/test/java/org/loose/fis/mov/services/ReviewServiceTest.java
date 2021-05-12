@@ -44,6 +44,7 @@ class ReviewServiceTest {
         SessionService.destroySession();
     }
     @Test
+    @DisplayName("Test if we can find a review for a movie")
     void findReviewsForMovie() {
         Review review=new Review(null,"test","test","test");
         ReviewService.addReview(review);
@@ -62,7 +63,15 @@ class ReviewServiceTest {
         assertEquals("test",DatabaseService.getReviewRepo().find().firstOrDefault().getMovieTitle());
         assertEquals("test",DatabaseService.getReviewRepo().find().firstOrDefault().getText());
     }
-
+    @Test
+    @DisplayName("Test if Reviews get updated")
+    void getClientReview() {
+        Review review=new Review(null,"test","test","test");
+        ReviewService.addReview(review);
+        assertEquals("test",ReviewService.getClientReview("test","test").getClientUsername());
+        assertEquals("test",ReviewService.getClientReview("test","test").getText());
+        assertEquals("test",ReviewService.getClientReview("test","test").getMovieTitle());
+    }
 
     @Test
     @DisplayName("Test if Reviews get updated")
