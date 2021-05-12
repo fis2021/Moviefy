@@ -94,6 +94,5 @@ class ReviewServiceTest {
         ReviewService.addReview(review);
         ReviewService.deleteReview();
         assertEquals(0,DatabaseService.getReviewRepo().size());
-        assertThat( ReviewService.findReviewsForMovie("test")).isEmpty();
     }
 }
