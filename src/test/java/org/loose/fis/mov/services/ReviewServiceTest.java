@@ -5,9 +5,13 @@ import org.dizitart.no2.NitriteId;
 import org.dizitart.no2.exceptions.UniqueConstraintException;
 import org.dizitart.no2.mapper.NitriteIdModule;
 import org.junit.jupiter.api.*;
+import org.loose.fis.mov.exceptions.SessionAlreadyExistsException;
+import org.loose.fis.mov.model.Movie;
 import org.loose.fis.mov.model.Review;
+import org.loose.fis.mov.model.User;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.testfx.assertions.api.Assertions.assertThat;
@@ -31,6 +35,7 @@ class ReviewServiceTest {
         FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath()
                 .toFile());
         DatabaseService.initDatabase();
+
     }
 
     @AfterEach
@@ -40,6 +45,10 @@ class ReviewServiceTest {
     }
     @Test
     void findReviewsForMovie() {
+        Review review=new Review(null,"test","test","test");
+        ReviewService.addReview(review);
+       assertEquals("test",ReviewService.findReviewsForMovie("test").get(0).getText());
+
     }
 
     @Test
@@ -54,17 +63,28 @@ class ReviewServiceTest {
         assertEquals("test",DatabaseService.getReviewRepo().find().firstOrDefault().getText());
     }
 
-    @Test
-    void getClientReview() {
-    }
 
     @Test
+    @DisplayName("Test if Reviews get updated")
     void updateReview() {
+        Review review=new Review(null,"test","test","test");
+        ReviewService.addReview(review);
+        ReviewService.updateReview(review,"test1");
+        assertEquals("test1",review.getText());
     }
 
     @Test
-    void deleteReview() {
-        //De adaugat un user in sesiune
+    @DisplayName("Test if Reviews get deleted")
+    void deleteReview() throws SessionAlreadyExistsException {
+        User user= new User("test","test","test","test","test","Client");
+        SessionService.startSession(user);
+        MovieService.addMovie("test","test",1);
+        Movie movie=new Movie("test","test",1);
+        SessionService.setSelectedString(movie);
+        Review review=new Review(null,"test","test","test");
+        ReviewService.addReview(review);
+        ReviewService.deleteReview();
         assertEquals(0,DatabaseService.getReviewRepo().size());
+        assertThat( ReviewService.findReviewsForMovie("test")).isEmpty();
     }
 }
