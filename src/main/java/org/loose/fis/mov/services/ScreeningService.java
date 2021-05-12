@@ -49,7 +49,11 @@ public final class ScreeningService {
                 )
         ).toList();
     }
+public static void updateScreeningSeats(Screening screening,int seats){
+        screening.setRemainingCapacity(screening.getRemainingCapacity()+seats);
+        DatabaseService.getScreeningRepo().update(screening);
 
+}
 
     public static void deleteScreening(Screening screening) {
         DatabaseService.getScreeningRepo().remove(screening);
