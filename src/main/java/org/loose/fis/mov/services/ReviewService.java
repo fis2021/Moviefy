@@ -25,4 +25,9 @@ public final class ReviewService {
                 eq("clientUsername", user.getUsername())
         ).firstOrDefault();
     }
+
+    public static void updateReview(Review review, String newText) {
+        review.setText(newText);
+        DatabaseService.getReviewRepo().update(review);
+    }
 }
