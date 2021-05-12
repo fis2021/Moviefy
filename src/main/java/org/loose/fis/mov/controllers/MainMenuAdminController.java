@@ -13,12 +13,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import org.loose.fis.mov.model.Booking;
 import org.loose.fis.mov.model.Cinema;
 import org.loose.fis.mov.model.Screening;
 import org.loose.fis.mov.model.User;
 import org.loose.fis.mov.services.*;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -43,6 +45,14 @@ public class MainMenuAdminController extends AbstractMenusController {
                         ScreeningService
                                 .findAllFutureScreeningsForCinema(cinema)
                 );
+
+        observableList.sort(new Comparator<Screening>() {
+            @Override
+            public int compare(Screening o1, Screening o2) {
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        });
+
         list.setFixedCellSize(CELL_SIZE);
 
         /* changing the ListView to use our custom List Cells instead of the default ones */
@@ -95,7 +105,7 @@ public class MainMenuAdminController extends AbstractMenusController {
         public ScreeningListCell() {
             super();
             screeningTime.setTextFill(Color.GREY);
-            hbox.getChildren().addAll(movieTitle, screeningTime, pane, bookingsButton, deleteScreeningButton);
+            hbox.getChildren().addAll(movieTitle, pane, screeningTime, bookingsButton, deleteScreeningButton);
             HBox.setHgrow(pane, Priority.ALWAYS);
 
             bookingsButton.setOnAction(event -> {
@@ -112,6 +122,9 @@ public class MainMenuAdminController extends AbstractMenusController {
                 Screening screening = getItem();
                 ScreeningService.deleteScreening(screening);
                 List<User> bookedUsers = BookingService.findUsersWithBookingAtScreening(screening);
+
+                BookingService.findBookingsAtScreening(screening).forEach(
+                        BookingService::deleteBooking);
 
                 CommService.sendMail(
                         bookedUsers,

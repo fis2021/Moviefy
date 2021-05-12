@@ -66,7 +66,10 @@ public class MainMenuBOOKINGClientController extends AbstractMenusController{
 
         public void deleteAction(){
             //E nevoie de un booking dar in functie de ce?ID!
-            BookingService.deleteBooking(BookingService.findBookingByID(Id));
+            Booking booking=BookingService.findBookingByID(Id);
+            Screening screening =ScreeningService.findScreeningByID(booking.getScreeningId());
+            ScreeningService.updateScreeningSeats(screening,booking.getNumberOfSeats());
+            BookingService.deleteBooking(booking);
             delete.setDisable(true);
             initialize();
         }
@@ -80,7 +83,7 @@ public class MainMenuBOOKINGClientController extends AbstractMenusController{
                 setGraphic(null);
             } else {
                 if (item instanceof Booking) {
-                    Id=(((Booking) item).getId());
+                    Id=(((Booking) item).getId())   ;
                     movieTitle.setText(item != null ?
                             ScreeningService.findScreeningByID(((Booking) item).getScreeningId()).getMovieTitle()+"     Seats:":
                             "<null>");
