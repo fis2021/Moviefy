@@ -63,10 +63,13 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
         text.setText(" ");
     }
     public void addButtonAction(ActionEvent event) throws IOException {
+        PopUpReviewController.currentMode = ReviewMode.ADD;
         changeScene(event,"PopUpReview.fxml");
     }
-    public void editButtonAction(){
-
+    public void editButtonAction(ActionEvent event)
+    throws IOException {
+        PopUpReviewController.currentMode = ReviewMode.EDIT;
+        changeScene(event,"PopUpReview.fxml");
     }
     public void deleteButtonAction(){
 
