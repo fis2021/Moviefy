@@ -155,7 +155,7 @@ class CommServiceTest {
     @Test
     @DisplayName("Test if single recipient mail works")
     void sendMail() {
-        assertDoesNotThrow(() -> CommService.sendMail("ihedes13@gmail.com",
+        assertDoesNotThrow(() -> CommService.sendMail("ihedes@yahoo.com",
                                                       "Test e-mail",
                                                       "This is a test e-mail"
         ));
@@ -170,7 +170,7 @@ class CommServiceTest {
                 "test",
                 "test",
                 "test_test",
-                "ihedes13@gmail.com",
+                "ihedes@yahoo.com",
                 "client"
         );
         User user2 = new User(
@@ -178,7 +178,7 @@ class CommServiceTest {
                 "test",
                 "test",
                 "test_test",
-                "ioan.hedes@student.upt.ro",
+                "geani.gibilan@gmail.com",
                 "client"
         );
         List<User> list = new ArrayList<>();
