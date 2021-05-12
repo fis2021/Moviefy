@@ -148,4 +148,22 @@ class CinemaServiceTest {
         ));
         assertEquals(3, CinemaService.getAllCinema().size());
     }
+
+    @Test
+    @DisplayName("Test if the getter for cinemas based on name works")
+    void findCinemaByName() {
+        assertDoesNotThrow(() -> UserService.addUser(
+                "test_admin",
+                "test",
+                "test",
+                "test_test",
+                "test@test.test",
+                "Admin",
+                "test_cinema",
+                "test",
+                "10"
+        ));
+        assertEquals("test_cinema", CinemaService.findCinemaByName("test_cinema").getName());
+        assertNull(CinemaService.findCinemaByName("nonexistent_cinema"));
+    }
 }
