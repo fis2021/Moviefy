@@ -71,8 +71,10 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
         PopUpReviewController.currentMode = ReviewMode.EDIT;
         changeScene(event,"PopUpReview.fxml");
     }
-    public void deleteButtonAction(){
-
+    public void deleteButtonAction(ActionEvent event)
+    throws IOException {
+        ReviewService.deleteReview();
+        changeScene(event,"MainMenuMAINClient.fxml");
     }
 
     @Override
