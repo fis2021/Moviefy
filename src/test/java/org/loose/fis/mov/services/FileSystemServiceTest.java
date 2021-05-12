@@ -1,6 +1,7 @@
 package org.loose.fis.mov.services;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Disabled
 class FileSystemServiceTest {
 
     @Test

@@ -2,6 +2,7 @@ package org.loose.fis.mov.services;
 
 
 import javafx.util.Pair;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.loose.fis.mov.model.User;
@@ -10,6 +11,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Disabled
 class CommServiceTest {
 
     @Test
