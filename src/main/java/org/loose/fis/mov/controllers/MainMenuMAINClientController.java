@@ -11,10 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import org.loose.fis.mov.model.Cinema;
-import org.loose.fis.mov.model.Movie;
-import org.loose.fis.mov.model.Review;
-import org.loose.fis.mov.model.Screening;
+import org.loose.fis.mov.model.*;
 import org.loose.fis.mov.services.*;
 
 import java.io.IOException;
@@ -150,19 +147,26 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
                     .getFixedCellSize() + 2);
 
             title.setText(movieTitle.getText());
-            Movie film = null;
 
-            film=MovieService.findMovieByTitle(movieTitle.getText());
+            Movie film = MovieService.findMovieByTitle(movieTitle.getText());
+            User loggedInUser = SessionService.getLoggedInUser();
             SessionService.setSelectedString(film);
-            if(ReviewService.getClientReview(SessionService.getLoggedInUser())==null) {
+            if(ReviewService.getClientReview(loggedInUser.getUsername(),
+                                             film.getTitle()) == null) {
                 addButton.setVisible(true);
                 addButton.setDisable(false);
+                editButton.setVisible(false);
+                editButton.setDisable(true);
+                deleteButton.setVisible(false);
+                deleteButton.setDisable(true);
             }
             else{
+                addButton.setVisible(false);
+                addButton.setDisable(true);
                 editButton.setVisible(true);
-            editButton.setDisable(false);
-            deleteButton.setVisible(true);
-            deleteButton.setDisable(false);
+                editButton.setDisable(false);
+                deleteButton.setVisible(true);
+                deleteButton.setDisable(false);
             }
             subtitle.setText(film.getDescription());
             text.setText(String.valueOf(film.getLength()));

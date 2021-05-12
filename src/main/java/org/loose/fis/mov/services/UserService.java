@@ -88,7 +88,6 @@ public final class UserService {
         }
         return false;
     }
-
     private static boolean emailAddressUsed(String email) {
         for (User user : DatabaseService.getUserRepo().find()) {
             if (Objects.equals(email, user.getEmail())) {

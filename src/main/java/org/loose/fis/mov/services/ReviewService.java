@@ -7,6 +7,7 @@ import org.loose.fis.mov.model.User;
 import javax.xml.crypto.Data;
 import java.util.List;
 
+import static org.dizitart.no2.objects.filters.ObjectFilters.and;
 import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
 public final class ReviewService {
@@ -21,9 +22,13 @@ public final class ReviewService {
         DatabaseService.getReviewRepo().insert(review);
         DatabaseService.getMovieRepo().update(SessionService.getSelectedMovie());
     }
-    public static Review getClientReview(User user){
+
+    public static Review getClientReview(String username, String movieTitle){
         return DatabaseService.getReviewRepo().find(
-                eq("clientUsername", user.getUsername())
+                and(
+                        eq("clientUsername", username),
+                        eq("movieTitle", movieTitle)
+                )
         ).firstOrDefault();
     }
 

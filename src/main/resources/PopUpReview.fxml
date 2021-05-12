@@ -13,7 +13,7 @@
       <Label text="Review" BorderPane.alignment="CENTER" />
    </top>
    <center>
-      <VBox prefHeight="182.0" prefWidth="397.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="182.0" prefWidth="397.0" style="-fx-background-color: #470000FF;" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="error" alignment="CENTER">
                <VBox.margin>
@@ -25,7 +25,7 @@
                   <Insets left="10.0" right="10.0" />
                </VBox.margin>
             </TextArea>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #470000FF;">
                <children>
                   <Button mnemonicParsing="false" onAction="#saveButton" text="Save">
                      <HBox.margin>
