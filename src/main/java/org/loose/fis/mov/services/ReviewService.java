@@ -38,7 +38,7 @@ public final class ReviewService {
     }
 
     public static void deleteReview() {
-        Review review = ReviewService.getClientReview(SessionService.getLoggedInUser());
+        Review review = ReviewService.getClientReview(SessionService.getLoggedInUser().getUsername(), SessionService.getSelectedMovie().getTitle());
         DatabaseService.getReviewRepo().remove(review);
     }
 }

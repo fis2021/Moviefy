@@ -28,7 +28,7 @@ public class PopUpReviewController extends AbstractMenusController{
     @FXML
     void initialize() {
         if (currentMode == ReviewMode.EDIT) {
-            wreview.setText(ReviewService.getClientReview(SessionService.getLoggedInUser()).getText());
+            wreview.setText(ReviewService.getClientReview(SessionService.getLoggedInUser().getUsername(), SessionService.getSelectedMovie().getTitle()).getText());
         }
     }
 
@@ -42,7 +42,7 @@ public class PopUpReviewController extends AbstractMenusController{
                     ReviewService.addReview(newReview);
                     break;
                 case EDIT:
-                    Review existingReview = ReviewService.getClientReview(SessionService.getLoggedInUser());
+                    Review existingReview = ReviewService.getClientReview(SessionService.getLoggedInUser().getUsername(), SessionService.getSelectedMovie().getTitle());
                     ReviewService.updateReview(existingReview, wreview.getText());
                     break;
             }
