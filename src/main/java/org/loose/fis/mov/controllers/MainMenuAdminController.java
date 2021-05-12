@@ -19,6 +19,7 @@ import org.loose.fis.mov.model.User;
 import org.loose.fis.mov.services.*;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -43,6 +44,14 @@ public class MainMenuAdminController extends AbstractMenusController {
                         ScreeningService
                                 .findAllFutureScreeningsForCinema(cinema)
                 );
+
+        observableList.sort(new Comparator<Screening>() {
+            @Override
+            public int compare(Screening o1, Screening o2) {
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        });
+
         list.setFixedCellSize(CELL_SIZE);
 
         /* changing the ListView to use our custom List Cells instead of the default ones */
@@ -95,7 +104,7 @@ public class MainMenuAdminController extends AbstractMenusController {
         public ScreeningListCell() {
             super();
             screeningTime.setTextFill(Color.GREY);
-            hbox.getChildren().addAll(movieTitle, screeningTime, pane, bookingsButton, deleteScreeningButton);
+            hbox.getChildren().addAll(movieTitle, pane, screeningTime, bookingsButton, deleteScreeningButton);
             HBox.setHgrow(pane, Priority.ALWAYS);
 
             bookingsButton.setOnAction(event -> {
