@@ -71,7 +71,7 @@ public class UserProfileController extends AbstractController{
         if (Objects.equals(user.getRole(), "Admin")) {
             changeScene(event, "mainMenuAdmin.fxml");
         } else {
-            System.out.println("MainMenuMAINClient.fxml");
+            changeScene(event, "MainMenuMAINClient.fxml");
         }
     }
 
@@ -87,7 +87,7 @@ public class UserProfileController extends AbstractController{
         if (Objects.equals(user.getRole(), "Admin")) {
             changeScene(event, "addScreening.fxml");
         } else {
-            System.out.println("MainMenuBOOKINGClient.fxml");
+            changeScene(event, "MainMenuBOOKINGClient.fxml");
         }
     }
 
