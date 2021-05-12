@@ -120,11 +120,7 @@ public class AddScreeningController extends AbstractController{
     @FXML
     public void handleMenuHome(ActionEvent event) throws IOException {
         User user = SessionService.getLoggedInUser();
-        if (Objects.equals(user.getRole(), "Admin")) {
-            changeScene(event, "mainMenuAdmin.fxml");
-        } else {
-            System.out.println("Not yet implemented!");
-        }
+        changeScene(event, "mainMenuAdmin.fxml");
     }
 
     @FXML

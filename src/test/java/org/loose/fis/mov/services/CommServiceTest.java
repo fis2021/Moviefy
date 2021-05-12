@@ -2,9 +2,8 @@ package org.loose.fis.mov.services;
 
 
 import javafx.util.Pair;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.loose.fis.mov.model.User;
 
@@ -15,63 +14,125 @@ import static org.junit.jupiter.api.Assertions.*;
 @Disabled
 class CommServiceTest {
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
+    @Test
+    @DisplayName("Check if the password format validator works")
+    void isPasswordValid() {
+        assertFalse(CommService.isPasswordValid("short"));
+        assertTrue(CommService.isPasswordValid("long_pas"));
     }
 
     @Test
-    void areIntervalsOverlappingTest() {
+    @DisplayName("Check if the email format validator works")
+    void isEmailValid() {
+        assertFalse(CommService.isEmailValid("test"));
+        assertFalse(CommService.isEmailValid("test@"));
+        assertFalse(CommService.isEmailValid("@test"));
+        assertFalse(CommService.isEmailValid("test@test"));
+        assertFalse(CommService.isEmailValid("test@test."));
+        assertFalse(CommService.isEmailValid("test.test"));
+        assertTrue(CommService.isEmailValid("test@test.test"));
+        assertTrue(CommService.isEmailValid("test@test.test.test"));
+    }
+
+    @Test
+    @DisplayName("Test if the word generator can produce different words")
+    void wordGenerator() {
+        String a = CommService.WordGenerator((int) (100 * Math.random()));
+        String b = CommService.WordGenerator((int) (100 * Math.random()));
+        String c = CommService.WordGenerator((int) (100 * Math.random()));
+        assertNotEquals(a, b);
+        assertNotEquals(b, c);
+    }
+
+    @Test
+    @DisplayName("Test if the checker for interval overlapping works")
+    void areIntervalsOverlapping() {
         Pair<Date, Date> intervalA = new Pair<>(
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 10, 30).getTime(),
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 14, 45).getTime()
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 10, 0)
+                        .getTime(),
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 14, 0)
+                        .getTime()
         );
         Pair<Date, Date> intervalB = new Pair<>(
-                new GregorianCalendar(2020, Calendar.MARCH, 25, 9, 21).getTime(),
-                new GregorianCalendar(2020, Calendar.MARCH, 25, 10, 29).getTime()
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 9, 0)
+                        .getTime(),
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 11, 0)
+                        .getTime()
         );
         Pair<Date, Date> intervalC = new Pair<>(
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 9, 59).getTime(),
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 17, 24).getTime()
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 13, 0)
+                        .getTime(),
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 15, 0)
+                        .getTime()
         );
         Pair<Date, Date> intervalD = new Pair<>(
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 12, 31).getTime(),
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 14, 46).getTime()
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 11, 0)
+                        .getTime(),
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 13, 0)
+                        .getTime()
         );
         Pair<Date, Date> intervalE = new Pair<>(
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 10, 30).getTime(),
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 14, 45).getTime()
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 9, 0)
+                        .getTime(),
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 15, 0)
+                        .getTime()
         );
         Pair<Date, Date> intervalF = new Pair<>(
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 9, 30).getTime(),
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 11, 45).getTime()
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 10, 0)
+                        .getTime(),
+                new GregorianCalendar(2021, Calendar.MARCH, 25, 14, 0)
+                        .getTime()
         );
         Pair<Date, Date> intervalG = new Pair<>(
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 11, 30).getTime(),
-                new GregorianCalendar(2021, Calendar.MARCH, 25, 13, 45).getTime()
+                new GregorianCalendar(2021, Calendar.MARCH, 26, 10, 0)
+                        .getTime(),
+                new GregorianCalendar(2021, Calendar.MARCH, 26, 14, 0)
+                        .getTime()
         );
 
-        assertFalse(CommService.areIntervalsOverlapping(intervalA, intervalB)); // not overlapping;
-        assertTrue(CommService.areIntervalsOverlapping(intervalA, intervalC)); // C contains A;
-        assertTrue(CommService.areIntervalsOverlapping(intervalA, intervalD)); // D contains end of A;
-        assertTrue(CommService.areIntervalsOverlapping(intervalA, intervalE)); // E equals A;
-        assertTrue(CommService.areIntervalsOverlapping(intervalA, intervalF)); // F contains start of A;
-        assertTrue(CommService.areIntervalsOverlapping(intervalA, intervalG)); // A contains G;
+        assertTrue(CommService.areIntervalsOverlapping(
+                intervalA,
+                intervalB
+        )); // overlapping on beginning of A;
+        assertTrue(CommService.areIntervalsOverlapping(
+                intervalA,
+                intervalC
+        )); // overlapping on end of A;
+        assertTrue(CommService.areIntervalsOverlapping(
+                intervalA,
+                intervalD
+        )); // overlapping A contains D
+        assertTrue(CommService.areIntervalsOverlapping(
+                intervalA,
+                intervalE
+        )); // overlapping A is contained by E
+        assertTrue(CommService.areIntervalsOverlapping(
+                intervalA,
+                intervalF
+        )); // A contains G;
+        assertFalse(CommService.areIntervalsOverlapping(
+                intervalA,
+                intervalG
+        )); // not overlapping
     }
 
     @Test
-    void isDateInThePastTest() {
-        Date inTheFuture = new GregorianCalendar(2099, Calendar.DECEMBER, 25, 13, 37).getTime();
-        Date inThePast = new GregorianCalendar(2009, Calendar.MAY, 3, 17,58).getTime();
+    void isDateInThePast() {
+        Date inTheFuture = new GregorianCalendar(
+                2099,
+                Calendar.DECEMBER,
+                25,
+                13,
+                37
+        ).getTime();
+        Date inThePast = new GregorianCalendar(2009, Calendar.MAY, 3, 17, 58)
+                .getTime();
         assertTrue(CommService.isDateInThePast(inThePast));
         assertFalse(CommService.isDateInThePast(inTheFuture));
     }
 
     @Test
-    void extractTimeTest() {
+    void extractTime() {
         Date date = new GregorianCalendar(
                 2099,
                 Calendar.DECEMBER,
@@ -83,7 +144,7 @@ class CommServiceTest {
     }
 
     @Test
-    void extractDateDate() {
+    void extractDate() {
         Date date = new GregorianCalendar(
                 2099,
                 Calendar.DECEMBER,
@@ -93,14 +154,42 @@ class CommServiceTest {
     }
 
     @Test
+    @DisplayName("Test if single recipient mail works")
     void sendMail() {
+        assertDoesNotThrow(() -> CommService.sendMail("ihedes13@gmail.com",
+                                                      "Test e-mail",
+                                                      "This is a test e-mail"
+        ));
+
+    }
+
+    @Test
+    @DisplayName("Test if it is possible to send mails to multiple users")
+    void sendMailMultiple() {
         User user1 = new User(
-                "test", "test", "test", "test_test", "ihedes13@gmail.com", "client");
+                "test",
+                "test",
+                "test",
+                "test_test",
+                "ihedes13@gmail.com",
+                "client"
+        );
         User user2 = new User(
-                "test", "test", "test", "test_test", "ioan.hedes@student.upt.ro", "client");
+                "test",
+                "test",
+                "test",
+                "test_test",
+                "ioan.hedes@student.upt.ro",
+                "client"
+        );
         List<User> list = new ArrayList<>();
+        assertDoesNotThrow(() -> CommService
+                .sendMail(list, "Test e-mail", "This is a test e-mail"));
         list.add(user1);
+        assertDoesNotThrow(() -> CommService
+                .sendMail(list, "Test e-mail", "This is a test e-mail"));
         list.add(user2);
-        assertDoesNotThrow(() -> CommService.sendMail(list, "Test e-mail", "This is a test e-mail"));
+        assertDoesNotThrow(() -> CommService
+                .sendMail(list, "Test e-mail", "This is a test e-mail"));
     }
 }

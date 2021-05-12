@@ -5,22 +5,26 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public final class FileSystemService {
-    private static final String APPLICATION_FOLDER = ".moviefy";
+
     private static final String USER_FOLDER = System.getProperty("user.home");
-    private static final Path APPLICATION_HOME_PATH = Paths.get(USER_FOLDER, APPLICATION_FOLDER);
+    private static String APPLICATION_FOLDER = ".moviefy";
 
     public static Path getApplicationHomePath() {
-        return APPLICATION_HOME_PATH;
+        return Paths.get(USER_FOLDER, APPLICATION_FOLDER);
+    }
+
+    public static void setApplicationFolder(String applicationFolder) {
+        APPLICATION_FOLDER = applicationFolder;
     }
 
     public static void initDirectory() {
-        Path applicationHomePath = FileSystemService.APPLICATION_HOME_PATH;
+        Path applicationHomePath = FileSystemService.getApplicationHomePath();
         if (!Files.exists(applicationHomePath)) {
             applicationHomePath.toFile().mkdirs();
         }
     }
 
     public static Path getPathToFile(String... path) {
-        return APPLICATION_HOME_PATH.resolve(Paths.get(".", path));
+        return getApplicationHomePath().resolve(Paths.get(".", path));
     }
 }

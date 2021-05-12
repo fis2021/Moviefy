@@ -15,17 +15,7 @@ import java.util.List;
 import static org.dizitart.no2.objects.filters.ObjectFilters.*;
 
 public final class ScreeningService {
-    public static List<Screening> findAllScreeningsForCinema(String cinemaName) {
-        return DatabaseService.getScreeningRepo().find(
-                eq("cinemaName", cinemaName)
-        ).toList();
-    }
 
-    public static List<Screening> findAllScreeningsForCinema(Cinema cinema) {
-        return DatabaseService.getScreeningRepo().find(
-                eq("cinemaName", cinema.getName())
-        ).toList();
-    }
     public static Screening findScreeningByID(NitriteId id){
         return DatabaseService.getScreeningRepo().find(
                 eq("id", id) ).firstOrDefault();
@@ -62,15 +52,15 @@ public final class ScreeningService {
         //Cinema cinema = DatabaseService.getCinemaRepo().find(eq("adminUsername", user.getUsername())).firstOrDefault();
         Cinema cinema = CinemaService.findCinemaForAdmin(user);
 
-        // verific data;
-        if (checkIntervalOccupied(cinema, screeningDate, movieLength)) {
-            throw new TimeIntervalOccupiedException();
-        }
-
         // verific film duplicat;
         Movie movie = MovieService.findMovieByTitle(movieTitle);
         if (movie == null) {
             movie = MovieService.addMovie(movieTitle, movieDescription, movieLength);
+        }
+
+        // verific data;
+        if (checkIntervalOccupied(cinema, screeningDate, movie.getLength())) {
+            throw new TimeIntervalOccupiedException();
         }
 
         // adaug proiectia;

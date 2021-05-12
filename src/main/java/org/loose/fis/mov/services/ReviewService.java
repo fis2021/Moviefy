@@ -4,6 +4,7 @@ import org.loose.fis.mov.model.Movie;
 import org.loose.fis.mov.model.Review;
 import org.loose.fis.mov.model.User;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 
 import static org.dizitart.no2.objects.filters.ObjectFilters.and;
@@ -29,5 +30,15 @@ public final class ReviewService {
                         eq("movieTitle", movieTitle)
                 )
         ).firstOrDefault();
+    }
+
+    public static void updateReview(Review review, String newText) {
+        review.setText(newText);
+        DatabaseService.getReviewRepo().update(review);
+    }
+
+    public static void deleteReview() {
+        Review review = ReviewService.getClientReview(SessionService.getLoggedInUser().getUsername(), SessionService.getSelectedMovie().getTitle());
+        DatabaseService.getReviewRepo().remove(review);
     }
 }

@@ -113,21 +113,20 @@ public class MainMenuAdminController extends AbstractMenusController {
                 ScreeningService.deleteScreening(screening);
                 List<User> bookedUsers = BookingService.findUsersWithBookingAtScreening(screening);
 
-                if (!bookedUsers.isEmpty()) {
-                    CommService.sendMail(
-                            bookedUsers,
-                            "Booking cancelled.",
-                            "Your booking for "
-                                    + screening.getMovieTitle()
-                                    + " at "
-                                    + screening.getCinemaName()
-                                    + " on "
-                                    + CommService.extractDate(screening.getDate())
-                                    + " "
-                                    + CommService.extractTime(screening.getDate())
-                                    + " was cancelled.\nWe are sorry!"
-                    );
-                }
+                CommService.sendMail(
+                        bookedUsers,
+                        "Booking cancelled.",
+                        "Your booking for "
+                                + screening.getMovieTitle()
+                                + " at "
+                                + screening.getCinemaName()
+                                + " on "
+                                + CommService.extractDate(screening.getDate())
+                                + " " + CommService
+                                .extractTime(screening.getDate())
+                                + " was cancelled.\nWe are sorry!"
+                );
+
 
                 isCancelled = true;
                 screeningTime.setTextFill(Color.CRIMSON);

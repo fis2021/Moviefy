@@ -2,7 +2,6 @@ package org.loose.fis.mov.services;
 
 import org.loose.fis.mov.exceptions.CinemaAlreadyExistsException;
 import org.loose.fis.mov.model.Cinema;
-import org.loose.fis.mov.model.Movie;
 import org.loose.fis.mov.model.User;
 
 import java.util.List;
@@ -22,17 +21,15 @@ public final class CinemaService {
     }
 
     public static Cinema findCinemaForAdmin(String username)  {
-        Cinema cinema = DatabaseService.getCinemaRepo().find(
+        return DatabaseService.getCinemaRepo().find(
                 eq("adminUsername", username)
         ).firstOrDefault();
-        return cinema;
     }
 
     public static Cinema findCinemaForAdmin(User admin) {
-        Cinema cinema = DatabaseService.getCinemaRepo().find(
+        return DatabaseService.getCinemaRepo().find(
                 eq("adminUsername", admin.getUsername())
         ).firstOrDefault();
-        return cinema;
     }
     public static Cinema findCinemaByName(String name) {
         Cinema cinema = DatabaseService.getCinemaRepo().find(
@@ -41,7 +38,7 @@ public final class CinemaService {
         return cinema;
     }
 
-    private static boolean existsCinema(String name) {
+     static boolean existsCinema(String name) {
         for (Cinema cinema : DatabaseService.getCinemaRepo().find()) {
             if (Objects.equals(name, cinema.getName())) {
                 return true;
@@ -49,6 +46,7 @@ public final class CinemaService {
         }
         return false;
     }
+
     public static List<Cinema> getAllCinema() {
         return DatabaseService.getCinemaRepo().find().toList();
     }

@@ -60,13 +60,18 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
         text.setText(" ");
     }
     public void addButtonAction(ActionEvent event) throws IOException {
+        PopUpReviewController.currentMode = ReviewMode.ADD;
         changeScene(event,"PopUpReview.fxml");
     }
-    public void editButtonAction(){
-
+    public void editButtonAction(ActionEvent event)
+    throws IOException {
+        PopUpReviewController.currentMode = ReviewMode.EDIT;
+        changeScene(event,"PopUpReview.fxml");
     }
-    public void deleteButtonAction(){
-
+    public void deleteButtonAction(ActionEvent event)
+    throws IOException {
+        ReviewService.deleteReview();
+        changeScene(event,"MainMenuMAINClient.fxml");
     }
 
     @Override
@@ -275,7 +280,7 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
             Cinema cinem = null;
             cinem=CinemaService.findCinemaByName(cinemaName.getText());
             ObservableList<?> Screeninglist=FXCollections
-                    .observableList(ScreeningService.findAllScreeningsForCinema(cinem));
+                    .observableList(ScreeningService.findAllFutureScreeningsForCinema(cinem));
             RMList.setFixedCellSize(CELL_SIZE);
             RMList.setCellFactory(param -> new ScreeningCell());
             RMList.setItems(Screeninglist);
