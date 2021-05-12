@@ -20,7 +20,6 @@ public final class ReviewService {
     }
     public static void addReview(Review review){
         DatabaseService.getReviewRepo().insert(review);
-        DatabaseService.getMovieRepo().update(SessionService.getSelectedMovie());
     }
 
     public static Review getClientReview(String username, String movieTitle){
