@@ -3,6 +3,7 @@ package org.loose.fis.mov.services;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.*;
 import org.loose.fis.mov.exceptions.TimeIntervalOccupiedException;
+import org.loose.fis.mov.model.Screening;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -371,6 +372,53 @@ class ScreeningServiceTest {
                         ).getName()
                 ).size()
         );
+    }
+
+    @Test
+    @DisplayName("Test the Screening getter based on screening ID")
+    void findScreeningById()
+    throws TimeIntervalOccupiedException {
+        Screening screening = ScreeningService.addScreening(
+                "existing_movie",
+                "empty",
+                30,
+                new GregorianCalendar(
+                        2099,
+                        Calendar.DECEMBER,
+                        25,
+                        13,
+                        37
+                ).getTime()
+        );
+        assertEquals(
+                screening.getId(),
+                ScreeningService.findScreeningByID(screening.getId()).getId()
+        );
+    }
+
+    @Test
+    @DisplayName("Test the method updating the available seats in the screening database after a booking")
+    void updateScreeningSeats()
+    throws TimeIntervalOccupiedException {
+        Screening screening = ScreeningService.addScreening(
+                "existing_movie",
+                "empty",
+                30,
+                new GregorianCalendar(
+                        2099,
+                        Calendar.DECEMBER,
+                        25,
+                        13,
+                        37
+                ).getTime()
+        );
+        assertEquals(
+                screening.getId(),
+                ScreeningService.findScreeningByID(screening.getId()).getId()
+        );
+
+        ScreeningService.updateScreeningSeats(screening, -3);
+        assertEquals(7, screening.getRemainingCapacity());
     }
 }
 
