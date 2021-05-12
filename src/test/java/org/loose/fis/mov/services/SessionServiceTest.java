@@ -10,7 +10,6 @@ import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
 class SessionServiceTest {
 
     @BeforeEach
