@@ -74,6 +74,15 @@ class RegistrationControllerTest {
     }
 
     @Test
+    @DisplayName("Test going through buttons")
+    void goThroughButtons(FxRobot robot) {
+        robot.clickOn("Register");
+        robot.clickOn("Login");
+        robot.clickOn("Change Password");
+        robot.clickOn("Cancel");
+    }
+
+    @Test
     @DisplayName("Test a successful registration for a client user")
     void registerClient(FxRobot robot) {
         robot.clickOn("Register");

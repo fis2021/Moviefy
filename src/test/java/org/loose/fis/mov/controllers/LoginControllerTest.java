@@ -165,6 +165,7 @@ class LoginControllerTest {
         robot.clickOn("Login");
 
         /* test buttons on home screen */
+        robot.clickOn("Home");
         robot.clickOn("Logout");
         robot.clickOn("#usernameField").write(USERNAME_ADMIN);
         robot.clickOn("#passwordField").write(PASSWORD);
@@ -181,6 +182,7 @@ class LoginControllerTest {
 
         /* test buttons on my profile screen */
         robot.clickOn("My Profile");
+        robot.clickOn("My Profile");
         robot.clickOn("Logout");
         robot.clickOn("#usernameField").write(USERNAME_ADMIN);
         robot.clickOn("#passwordField").write(PASSWORD);
@@ -196,6 +198,7 @@ class LoginControllerTest {
         );
 
         /* test buttons on add screening screen */
+        robot.clickOn("Add Screening");
         robot.clickOn("Add Screening");
         robot.clickOn("Logout");
         robot.clickOn("#usernameField").write(USERNAME_ADMIN);
