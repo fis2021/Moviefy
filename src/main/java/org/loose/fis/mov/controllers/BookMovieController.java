@@ -34,24 +34,37 @@ public class BookMovieController  extends AbstractMenusController{
         tfilm.setText(SessionService.getSelectedScreening().getMovieTitle());
         tcinema.setText(SessionService.getSelectedScreening().getCinemaName());
         if(SessionService.getSelectedScreening().getRemainingCapacity()==0){
-            locuri.setPromptText("Ne pare rau,Toate locurile sunt ocupate!");
+            locuri.setPromptText("We are sorry,All seats have been booked!");
         }
         else{
-        locuri.setPromptText("Mai sunt "+SessionService.getSelectedScreening().getRemainingCapacity()+" locuri.");
+        locuri.setPromptText(" There are"+SessionService.getSelectedScreening().getRemainingCapacity()+" seats.");
         }
 
     }
     public void onBookAction(){
-        if(Integer.parseInt(locuri.getText())>SessionService.getSelectedScreening().getRemainingCapacity()){
+try{
+        if(locuri.getText().isEmpty()){
+            rasp.setText("You need to book seats first!");
+
+        }
+        if((Integer.parseInt(locuri.getText())>SessionService.getSelectedScreening().getRemainingCapacity())&&(Integer.parseInt(locuri.getText())>=1)){
         rasp.setText("The number of booked seats is to large!");
         }
         else{
+            if((Integer.parseInt(locuri.getText())<1)){
+                rasp.setText("You need to book at least 1 seat!");
+            }else{
     Booking booking=new Booking(null,SessionService.getLoggedInUser().getUsername(),SessionService.getSelectedScreening().getId(),Integer.parseInt(locuri.getText()));
             SessionService.getSelectedScreening().setRemainingCapacity(SessionService.getSelectedScreening().getRemainingCapacity()-Integer.parseInt(locuri.getText()));
             rasp.setText("Enjoy!");
             BookingService.addBooking(booking);
             buton.setDisable(true);
+            }
+        }
     }
+catch(Exception e){
+
+}
     }
     public void bookingToBooking(ActionEvent e) throws IOException {
 

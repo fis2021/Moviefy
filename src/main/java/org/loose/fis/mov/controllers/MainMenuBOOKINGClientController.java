@@ -80,7 +80,7 @@ public class MainMenuBOOKINGClientController extends AbstractMenusController{
                 setGraphic(null);
             } else {
                 if (item instanceof Booking) {
-                    Id=(((Booking) item).getId());
+                    Id=(((Booking) item).getId())   ;
                     movieTitle.setText(item != null ?
                             ScreeningService.findScreeningByID(((Booking) item).getScreeningId()).getMovieTitle()+"     Seats:":
                             "<null>");
