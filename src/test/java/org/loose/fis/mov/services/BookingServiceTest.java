@@ -64,7 +64,19 @@ class BookingServiceTest {
     }
 
     @Test
-    void findBookingofUser() {
+    void findBookingofUser() throws SessionAlreadyExistsException, CinemaAlreadyExistsException, TimeIntervalOccupiedException {
+        Date date=new Date(12,12,2001);
+        User user= new User("test","test","test","test","test","admin");
+        SessionService.startSession(user);
+        CinemaService.addCinema("test","test","test",4);
+        MovieService.addMovie("test","test",3);
+        ScreeningService.addScreening("test","test",3,date);
+        Screening screening=ScreeningService.findScreeningByID(DatabaseService.getScreeningRepo().find().toList().get(0).getId());
+        SessionService.setSelectedScreening(screening);
+        Booking booking=new Booking(null,"test",SessionService.getSelectedScreening().getId(),2);
+        BookingService.addBooking(booking);
+
+        assertEquals(booking,BookingService.findBookingofUser(user).get(0));
     }
 
     @Test
