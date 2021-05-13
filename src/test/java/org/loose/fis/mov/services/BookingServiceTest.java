@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@Disabled
 class BookingServiceTest {
 
     @BeforeAll
