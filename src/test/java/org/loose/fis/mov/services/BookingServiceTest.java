@@ -43,6 +43,7 @@ class BookingServiceTest {
     }
 
     @Test
+    @DisplayName("Testing if we can add bookings")
     void addBooking() throws TimeIntervalOccupiedException, CinemaAlreadyExistsException, SessionAlreadyExistsException {
         Date date=new Date(12,12,2001);
         User user= new User("test","test","test","test","test","admin");
@@ -59,6 +60,7 @@ class BookingServiceTest {
     }
 
     @Test
+    @DisplayName("Testing if we can add find users by screening")
     void findUsersWithBookingAtScreening() throws Exception {
         Date date=new Date(12,12,2001);
         UserService.addUser("test","test","test","test","test","client","test","test","test");
@@ -80,6 +82,7 @@ class BookingServiceTest {
     }
 
     @Test
+    @DisplayName("Testing if we can add find bookings by users")
     void findBookingofUser() throws SessionAlreadyExistsException, CinemaAlreadyExistsException, TimeIntervalOccupiedException {
         Date date=new Date(12,12,2001);
         User user= new User("test","test","test","test","test","admin");
@@ -96,6 +99,7 @@ class BookingServiceTest {
     }
 
     @Test
+    @DisplayName("Testing if we can add find booking by screening")
     void findBookingsAtScreening() throws SessionAlreadyExistsException, CinemaAlreadyExistsException, TimeIntervalOccupiedException {
         Date date=new Date(12,12,2001);
         User user= new User("test","test","test","test","test","admin");
@@ -113,6 +117,7 @@ class BookingServiceTest {
     }
 
     @Test
+    @DisplayName("Testing if we can delete bookings")
     void deleteBooking() throws Exception{
         Date date=new Date(12,12,2001);
         User user= new User("test","test","test","test","test","admin");
@@ -129,6 +134,7 @@ class BookingServiceTest {
     }
 
     @Test
+    @DisplayName("Testing if we can add find bookings by id")
     void findBookingByID() throws Exception{
 
         Date date=new Date(12,12,2001);
@@ -140,7 +146,6 @@ class BookingServiceTest {
         SessionService.setSelectedScreening(screening);
         Booking booking=new Booking(null,"test",SessionService.getSelectedScreening().getId(),2);
         BookingService.addBooking(booking);
-        booking =BookingService.findBookingofUser(user).get(0);
         assertEquals(BookingService.findBookingByID(DatabaseService.getBookingRepo().find().toList().get(0).getId()).getId(),DatabaseService.getBookingRepo().find().toList().get(0).getId());
     }
 }
