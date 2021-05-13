@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 @Disabled
 @ExtendWith(ApplicationExtension.class)
 class LoginControllerTest {
@@ -155,5 +154,67 @@ class LoginControllerTest {
         robot.clickOn("#passwordField").write(PASSWORD);
         robot.clickOn("Login");
         assertEquals(USERNAME_CLIENT, SessionService.getLoggedInUser().getUsername());
+    }
+
+    @Test
+    @DisplayName("Tests all the buttons in the menus which are not covered by other tests")
+    void testMenuButtonsAdmin(FxRobot robot) {
+        robot.clickOn("#usernameField").write(USERNAME_ADMIN);
+        robot.clickOn("#passwordField").write(PASSWORD);
+        robot.clickOn("Login");
+
+        /* test buttons on home screen */
+        robot.clickOn("Home");
+        robot.clickOn("Logout");
+        robot.clickOn("#usernameField").write(USERNAME_ADMIN);
+        robot.clickOn("#passwordField").write(PASSWORD);
+        robot.clickOn("Login");
+        robot.clickOn("Add Screening");
+        assertDoesNotThrow(() -> robot.clickOn("#screeningDayField"));
+        robot.clickOn("Home");
+        robot.clickOn("My Profile");
+        assertEquals(
+                USERNAME_ADMIN,
+                robot.lookup("#usernameField").queryText().getText()
+        );
+        robot.clickOn("Home");
+
+        /* test buttons on my profile screen */
+        robot.clickOn("My Profile");
+        robot.clickOn("My Profile");
+        robot.clickOn("Logout");
+        robot.clickOn("#usernameField").write(USERNAME_ADMIN);
+        robot.clickOn("#passwordField").write(PASSWORD);
+        robot.clickOn("Login");
+        robot.clickOn("My Profile");
+        robot.clickOn("Add Screening");
+        assertDoesNotThrow(() -> robot.clickOn("#screeningDayField"));
+        robot.clickOn("My Profile");
+        robot.clickOn("Home");
+        assertEquals(
+                "Future screenings for " + CINEMA_NAME,
+                robot.lookup("#pageTitle").queryText().getText()
+        );
+
+        /* test buttons on add screening screen */
+        robot.clickOn("Add Screening");
+        robot.clickOn("Add Screening");
+        robot.clickOn("Logout");
+        robot.clickOn("#usernameField").write(USERNAME_ADMIN);
+        robot.clickOn("#passwordField").write(PASSWORD);
+        robot.clickOn("Login");
+        robot.clickOn("Add Screening");
+        robot.clickOn("My Profile");
+        assertEquals(
+                USERNAME_ADMIN,
+                robot.lookup("#usernameField").queryText().getText()
+        );
+        robot.clickOn("Add Screening");
+        robot.clickOn("Home");
+        assertEquals(
+                "Future screenings for " + CINEMA_NAME,
+                robot.lookup("#pageTitle").queryText().getText()
+        );
+        robot.clickOn("Logout");
     }
 }

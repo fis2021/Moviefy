@@ -18,7 +18,6 @@ import java.util.GregorianCalendar;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 @Disabled
 @ExtendWith(ApplicationExtension.class)
 class MainMenuAdminControllerTest {

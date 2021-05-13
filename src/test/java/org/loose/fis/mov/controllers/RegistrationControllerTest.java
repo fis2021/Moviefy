@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 @Disabled
 @ExtendWith(ApplicationExtension.class)
 class RegistrationControllerTest {
@@ -71,6 +70,15 @@ class RegistrationControllerTest {
         primaryStage.setTitle("Moviefy - Testing");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+    }
+
+    @Test
+    @DisplayName("Test going through buttons")
+    void goThroughButtons(FxRobot robot) {
+        robot.clickOn("Register");
+        robot.clickOn("Login");
+        robot.clickOn("Change Password");
+        robot.clickOn("Cancel");
     }
 
     @Test
