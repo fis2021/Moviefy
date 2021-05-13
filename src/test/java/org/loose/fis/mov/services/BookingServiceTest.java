@@ -59,8 +59,24 @@ class BookingServiceTest {
     }
 
     @Test
-    void findUsersWithBookingAtScreening() {
+    void findUsersWithBookingAtScreening() throws Exception {
+        Date date=new Date(12,12,2001);
+        UserService.addUser("test","test","test","test","test","client","test","test","test");
+        User user= UserService.findUser("test");
+        SessionService.startSession(user);
+        CinemaService.addCinema("test","test","test",4);
+        MovieService.addMovie("test","test",3);
+        ScreeningService.addScreening("test","test",3,date);
+        Screening screening=ScreeningService.findScreeningByID(DatabaseService.getScreeningRepo().find().toList().get(0).getId());
+        SessionService.setSelectedScreening(screening);
+        Booking booking=new Booking(null,"test",SessionService.getSelectedScreening().getId(),2);
+        BookingService.addBooking(booking);
 
+        assertEquals("test",BookingService.findUsersWithBookingAtScreening(screening).get(0).getUsername());
+        assertEquals("test",BookingService.findUsersWithBookingAtScreening(screening).get(0).getEmail());
+        assertEquals("test",BookingService.findUsersWithBookingAtScreening(screening).get(0).getFirstname());
+        assertEquals("test",BookingService.findUsersWithBookingAtScreening(screening).get(0).getLastname());
+        assertEquals("client",BookingService.findUsersWithBookingAtScreening(screening).get(0).getRole());
     }
 
     @Test
@@ -98,9 +114,11 @@ class BookingServiceTest {
 
     @Test
     void deleteBooking() {
+
     }
 
     @Test
     void findBookingByID() {
+
     }
 }
