@@ -17,7 +17,6 @@ import java.util.GregorianCalendar;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 @Disabled
 @ExtendWith(ApplicationExtension.class)
 class AddScreeningControllerTest {

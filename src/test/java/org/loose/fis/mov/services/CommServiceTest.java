@@ -11,6 +11,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Disabled
 class CommServiceTest {
 
     @Test

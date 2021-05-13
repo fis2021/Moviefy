@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Disabled
 class CinemaServiceTest {
 
     @BeforeAll
