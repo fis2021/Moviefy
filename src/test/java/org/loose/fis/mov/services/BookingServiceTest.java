@@ -2,9 +2,15 @@ package org.loose.fis.mov.services;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.*;
+import org.loose.fis.mov.exceptions.CinemaAlreadyExistsException;
+import org.loose.fis.mov.exceptions.SessionAlreadyExistsException;
+import org.loose.fis.mov.exceptions.TimeIntervalOccupiedException;
 import org.loose.fis.mov.model.Booking;
+import org.loose.fis.mov.model.Screening;
+import org.loose.fis.mov.model.User;
 
 import java.io.IOException;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,12 +43,18 @@ class BookingServiceTest {
     }
 
     @Test
-    void addBooking() {
-        Booking booking=new Booking(null,"test",null,2);
+    void addBooking() throws TimeIntervalOccupiedException, CinemaAlreadyExistsException, SessionAlreadyExistsException {
 
+        Date date=new Date(12,12,2001);
+        User user= new User("test","test","test","test","test","admin");
+        SessionService.startSession(user);
+        CinemaService.addCinema("test","test","test",4);
+        ScreeningService.addScreening("test","test",3,date);
+        Screening screening=ScreeningService.findScreeningByID(DatabaseService.getScreeningRepo().find().toList().get(0).getId());
+        SessionService.setSelectedScreening(screening);
+        Booking booking=new Booking(null,"test",SessionService.getSelectedScreening().getId(),2);
         BookingService.addBooking(booking);
         assertEquals(1,DatabaseService.getBookingRepo().size());
-        assertEquals("test",DatabaseService.getBookingRepo().find().toList().get(0).getClientName());
         assertEquals(2,DatabaseService.getBookingRepo().find().toList().get(0).getNumberOfSeats());
     }
 
@@ -52,6 +64,7 @@ class BookingServiceTest {
 
     @Test
     void findBookingofUser() {
+
     }
 
     @Test
