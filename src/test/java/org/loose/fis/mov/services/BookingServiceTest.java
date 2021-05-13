@@ -129,7 +129,18 @@ class BookingServiceTest {
     }
 
     @Test
-    void findBookingByID() {
+    void findBookingByID() throws Exception{
 
+        Date date=new Date(12,12,2001);
+        User user= new User("test","test","test","test","test","admin");
+        SessionService.startSession(user);
+        CinemaService.addCinema("test","test","test",4);
+        ScreeningService.addScreening("test","test",3,date);
+        Screening screening=ScreeningService.findScreeningByID(DatabaseService.getScreeningRepo().find().toList().get(0).getId());
+        SessionService.setSelectedScreening(screening);
+        Booking booking=new Booking(null,"test",SessionService.getSelectedScreening().getId(),2);
+        BookingService.addBooking(booking);
+        booking =BookingService.findBookingofUser(user).get(0);
+        assertEquals(BookingService.findBookingByID(DatabaseService.getBookingRepo().find().toList().get(0).getId()).getId(),DatabaseService.getBookingRepo().find().toList().get(0).getId());
     }
 }
