@@ -10,9 +10,12 @@ import org.loose.fis.mov.model.Screening;
 import org.loose.fis.mov.model.User;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 @Disabled
 class BookingServiceTest {
 
@@ -45,7 +48,7 @@ class BookingServiceTest {
     @Test
     @DisplayName("Testing if we can add bookings")
     void addBooking() throws TimeIntervalOccupiedException, CinemaAlreadyExistsException, SessionAlreadyExistsException {
-        Date date=new Date(12,12,2001);
+        Date date = new GregorianCalendar(2001, Calendar.DECEMBER, 12, 13, 37).getTime();
         User user= new User("test","test","test","test","test","admin");
         SessionService.startSession(user);
         CinemaService.addCinema("test","test","test",4);
@@ -62,7 +65,7 @@ class BookingServiceTest {
     @Test
     @DisplayName("Testing if we can add find users by screening")
     void findUsersWithBookingAtScreening() throws Exception {
-        Date date=new Date(12,12,2001);
+        Date date = new GregorianCalendar(2001, Calendar.DECEMBER, 12, 13, 37).getTime();
         UserService.addUser("test","test","test","test","test","client","test","test","test");
         User user= UserService.findUser("test");
         SessionService.startSession(user);
@@ -84,7 +87,7 @@ class BookingServiceTest {
     @Test
     @DisplayName("Testing if we can add find bookings by users")
     void findBookingofUser() throws SessionAlreadyExistsException, CinemaAlreadyExistsException, TimeIntervalOccupiedException {
-        Date date=new Date(12,12,2001);
+        Date date = new GregorianCalendar(2001, Calendar.DECEMBER, 12, 13, 37).getTime();
         User user= new User("test","test","test","test","test","admin");
         SessionService.startSession(user);
         CinemaService.addCinema("test","test","test",4);
@@ -101,7 +104,7 @@ class BookingServiceTest {
     @Test
     @DisplayName("Testing if we can add find booking by screening")
     void findBookingsAtScreening() throws SessionAlreadyExistsException, CinemaAlreadyExistsException, TimeIntervalOccupiedException {
-        Date date=new Date(12,12,2001);
+        Date date = new GregorianCalendar(2001, Calendar.DECEMBER, 12, 13, 37).getTime();
         User user= new User("test","test","test","test","test","admin");
         SessionService.startSession(user);
         CinemaService.addCinema("test","test","test",4);
@@ -119,7 +122,7 @@ class BookingServiceTest {
     @Test
     @DisplayName("Testing if we can delete bookings")
     void deleteBooking() throws Exception{
-        Date date=new Date(12,12,2001);
+        Date date = new GregorianCalendar(2001, Calendar.DECEMBER, 12, 13, 37).getTime();
         User user= new User("test","test","test","test","test","admin");
         SessionService.startSession(user);
         CinemaService.addCinema("test","test","test",4);
@@ -136,8 +139,7 @@ class BookingServiceTest {
     @Test
     @DisplayName("Testing if we can add find bookings by id")
     void findBookingByID() throws Exception{
-
-        Date date=new Date(12,12,2001);
+        Date date = new GregorianCalendar(2001, Calendar.DECEMBER, 12, 13, 37).getTime();
         User user= new User("test","test","test","test","test","admin");
         SessionService.startSession(user);
         CinemaService.addCinema("test","test","test",4);
