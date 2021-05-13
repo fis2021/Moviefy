@@ -29,7 +29,7 @@ class BookingServiceTest {
     }
     @BeforeEach
     void setUp()
-            throws IOException {
+            throws TimeIntervalOccupiedException, CinemaAlreadyExistsException, SessionAlreadyExistsException, IOException {
         FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath()
                 .toFile());
         DatabaseService.initDatabase();
@@ -44,12 +44,12 @@ class BookingServiceTest {
 
     @Test
     void addBooking() throws TimeIntervalOccupiedException, CinemaAlreadyExistsException, SessionAlreadyExistsException {
-
         Date date=new Date(12,12,2001);
         User user= new User("test","test","test","test","test","admin");
         SessionService.startSession(user);
         CinemaService.addCinema("test","test","test",4);
         ScreeningService.addScreening("test","test",3,date);
+
         Screening screening=ScreeningService.findScreeningByID(DatabaseService.getScreeningRepo().find().toList().get(0).getId());
         SessionService.setSelectedScreening(screening);
         Booking booking=new Booking(null,"test",SessionService.getSelectedScreening().getId(),2);
@@ -60,15 +60,28 @@ class BookingServiceTest {
 
     @Test
     void findUsersWithBookingAtScreening() {
+
     }
 
     @Test
     void findBookingofUser() {
-
     }
 
     @Test
-    void findBookingsAtScreening() {
+    void findBookingsAtScreening() throws SessionAlreadyExistsException, CinemaAlreadyExistsException, TimeIntervalOccupiedException {
+        Date date=new Date(12,12,2001);
+        User user= new User("test","test","test","test","test","admin");
+        SessionService.startSession(user);
+        CinemaService.addCinema("test","test","test",4);
+        MovieService.addMovie("test","test",3);
+        ScreeningService.addScreening("test","test",3,date);
+
+        Screening screening=ScreeningService.findScreeningByID(DatabaseService.getScreeningRepo().find().toList().get(0).getId());
+        SessionService.setSelectedScreening(screening);
+        Booking booking=new Booking(null,"test",DatabaseService.getScreeningRepo().find().toList().get(0).getId(),2);
+        BookingService.addBooking(booking);
+
+        assertEquals(booking,BookingService.findBookingsAtScreening(screening).get(0));
     }
 
     @Test
