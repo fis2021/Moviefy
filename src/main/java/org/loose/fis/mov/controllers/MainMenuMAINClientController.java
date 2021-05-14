@@ -223,11 +223,12 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
     private class ScreeningCell extends ListCell{
         HBox hbox = new HBox();
         Label MovieName = new Label("(empty)");
+        Label Date = new Label("(empty)");
         Pane pane = new Pane();
         Button bookmovie = new Button("Book seats");
         public ScreeningCell() {
             super();
-            hbox.getChildren().addAll(MovieName, pane, bookmovie);
+            hbox.getChildren().addAll(MovieName,Date, pane, bookmovie);
             HBox.setHgrow(pane, Priority.ALWAYS);
             bookmovie.setOnAction(event -> {
                 Screening cell = (Screening) getItem();
@@ -252,6 +253,11 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
                     MovieName.setText(item != null ?
                             ((Screening) item).getMovieTitle() :
                             "<null>");
+                    Date.setText(item != null ?
+                            " "+CommService.extractTime(((Screening) item).getDate())+" "+CommService.extractDate(((Screening) item).getDate()) :
+                            "<null>");
+
+
                     /* this method call actually sets the appearance of our custom cell */
                     setGraphic(hbox);
                 }
