@@ -86,7 +86,7 @@ public static void updateScreeningSeats(Screening screening,int seats){
         Date upperMarginInterval = calendar.getTime();
 
         // checking if there are any screenings going on in that interval;
-        for (Screening screening : DatabaseService.getScreeningRepo().find().toList()) {
+        for (Screening screening : ScreeningService.findAllFutureScreeningsForCinema(cinema)) {
             Movie movie = MovieService.getMovieForScreening(screening);
 
             // setting the bounds for the found screening interval;
