@@ -91,5 +91,7 @@ class MainMenuBOOKINGClientControllerTest {
     @Test
     void initialize(FxRobot robot) {
         robot.clickOn("Delete");
+        robot.clickOn("Main");
+        robot.clickOn("Booking");
     }
 }
