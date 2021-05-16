@@ -59,7 +59,6 @@ class BookMovieControllerTest {
         FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath()
                 .toFile());
         DatabaseService.initDatabase();
-
     }
 
     @Start

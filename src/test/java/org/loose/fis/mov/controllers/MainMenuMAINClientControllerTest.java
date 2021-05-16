@@ -25,11 +25,15 @@ import java.util.GregorianCalendar;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
-//@Disabled
+@Disabled
 @ExtendWith(ApplicationExtension.class)
 class MainMenuMAINClientControllerTest {
-    private static final String TEST = "test";
-    private static final int SEATS = 1;
+    private static final String USERNAME = "test_user";
+    private static final String PASSWORD = "test_test";
+    private static final String CINEMA_NAME = "test_cinema";
+    private static final String MOVIE_TITLE = "test_movie";
+    private static final String INITIAL_REVIEW = "test_review";
+    private static final String NEW = "new_";
 
     @AfterAll
     static void afterAll()
@@ -41,35 +45,62 @@ class MainMenuMAINClientControllerTest {
     }
 
     @BeforeAll
-    static void beforeAll()
-            throws Exception {
+    static void beforeAll() {
         FileSystemService.setApplicationFolder("moviefy_test");
-
         FileSystemService.initDirectory();
-        DatabaseService.initDatabase();
-
-
-
     }
+
     @AfterEach
     void tearDown() throws Exception {
+        UserService.logout();
         DatabaseService.closeDatabase();
         FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath()
                 .toFile());
-        DatabaseService.initDatabase();
-        SessionService.destroySession();
-
     }
-@BeforeEach
-void something() throws Exception {
-    UserService.addUser(TEST,TEST,TEST,TEST,TEST,"Admin",TEST,TEST,"1");
-    User user= UserService.findUser(TEST);
-    SessionService.startSession(user);
-    Date date=new GregorianCalendar(2027, Calendar.JANUARY, 1, 13, 37).getTime();
-    Date date2=new GregorianCalendar(2025, Calendar.JANUARY, 1, 12, 37).getTime();
-   // SessionService.setSelectedScreening(ScreeningService.addScreening(TEST,TEST,3,date));
-    ScreeningService.addScreening("test2","test2",4,date2);
-}
+
+    @BeforeEach
+    void beforeEach() throws Exception {
+        DatabaseService.initDatabase();
+
+        UserService.addUser(
+                USERNAME,
+                "test",
+                "test",
+                PASSWORD,
+                "test@test.test",
+                "Client",
+                "",
+                "",
+                ""
+        );
+        UserService.addUser(
+                "test_admin",
+                "test",
+                "test",
+                PASSWORD,
+                "test2@test.test",
+                "Admin",
+                "test_cinema",
+                "test",
+                "10"
+        );
+        UserService.login("test_admin", PASSWORD);
+        ScreeningService.addScreening(
+                MOVIE_TITLE,
+                "test_description",
+                Integer.parseInt("10"),
+                new GregorianCalendar(
+                        2099,
+                        Calendar.JANUARY,
+                        1,
+                        0,
+                        1
+                ).getTime()
+        );
+        UserService.logout();
+        UserService.login(USERNAME, PASSWORD);
+    }
+
     @Start
     void start(Stage primaryStage)
             throws Exception {
@@ -97,25 +128,37 @@ void something() throws Exception {
         Point2D point =new Point2D.Double(30,0);
         robot.moveTo("#MCSlider");
         robot.moveBy(-12,0).clickOn();
-        robot.moveTo("test2");
-        robot.moveBy(200,0).clickOn();
+        robot.clickOn("more");
         robot.clickOn("Add");
     }
 
     @Test
-    void BookASeat(FxRobot robot) throws Exception {
-        UserService.addUser("TEST","TEST","TEST","TEST","TEST","Admin","TEST","TEST","1");
-        User use1r= UserService.findUser(TEST);
-        Date date=new GregorianCalendar(2028, Calendar.JANUARY, 1, 12, 37).getTime();
-        ScreeningService.addScreening("testulet","testulet",56,date);
-       // Screening scre= ScreeningService.findAllFutureScreeningsForCinema("test").get(0);
-       // System.out.println(scre.getMovieTitle());
-        UserService.addUser("test1","test1","test1","test1","test1","Client","test1","test1","test1");
-        User user= UserService.findUser("test1");
+    @DisplayName("Test a successful review edit")
+    void editReview(FxRobot robot) {
+        robot.moveTo("#MCSlider").moveBy(-15, 0).clickOn();
+        robot.clickOn("more").clickOn("#addButton");
+        robot.write(INITIAL_REVIEW).clickOn("Save");
+        robot.moveTo("#MCSlider").moveBy(-15, 0).clickOn();
+        robot.clickOn("more").clickOn("#editButton");
+        robot.write(NEW).clickOn("Save");
+        assertEquals((NEW + INITIAL_REVIEW), ReviewService.getClientReview(USERNAME, MOVIE_TITLE).getText());
+    }
 
+    @Test
+    @DisplayName("Test a successful review deletion")
+    void deleteReview(FxRobot robot) {
+        robot.moveTo("#MCSlider").moveBy(-15, 0).clickOn();
+        robot.clickOn("more").clickOn("#addButton");
+        robot.write(INITIAL_REVIEW).clickOn("Save");
+        robot.moveTo("#MCSlider").moveBy(-15, 0).clickOn();
+        robot.clickOn("more").clickOn("#deleteButton");
+        assertNull(ReviewService.getClientReview(USERNAME, MOVIE_TITLE));
+    }
+
+    @Test
+    void BookASeat(FxRobot robot) throws Exception {
         robot.clickOn("#MCSlider");
-        robot.moveTo("test").moveBy(200,0).clickOn();
-        //robot.doubleClickOn("Browse Movie");
+        robot.clickOn("Browse Movie");
         robot.clickOn("Book seats");
     }
 }

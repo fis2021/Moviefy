@@ -123,7 +123,7 @@ public class MainMenuMAINClientController extends AbstractMenusController implem
         HBox hbox = new HBox();
         Label movieTitle = new Label("(empty)");
         Pane pane = new Pane();
-        Button more = new Button("...");
+        Button more = new Button("more");
 
         public MovieCell() {
             super();
