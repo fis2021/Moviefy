@@ -19,7 +19,7 @@ import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Disabled
+//@Disabled
 @ExtendWith(ApplicationExtension.class)
 class UserProfileControllerTest {
 
