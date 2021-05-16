@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
+//@Disabled
 class ScreeningServiceTest {
 
     @BeforeAll
