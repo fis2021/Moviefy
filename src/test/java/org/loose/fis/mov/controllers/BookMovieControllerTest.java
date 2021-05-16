@@ -23,7 +23,7 @@ import java.util.GregorianCalendar;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
-@Disabled
+//@Disabled
 @ExtendWith(ApplicationExtension.class)
 class BookMovieControllerTest {
     private static final String TEST = "test";
@@ -59,7 +59,6 @@ class BookMovieControllerTest {
         FileUtils.cleanDirectory(FileSystemService.getApplicationHomePath()
                 .toFile());
         DatabaseService.initDatabase();
-
     }
 
     @Start
