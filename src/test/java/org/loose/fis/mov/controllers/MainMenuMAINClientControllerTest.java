@@ -25,7 +25,7 @@ import java.util.GregorianCalendar;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
-@Disabled
+//@Disabled
 @ExtendWith(ApplicationExtension.class)
 class MainMenuMAINClientControllerTest {
     private static final String TEST = "test";
@@ -63,11 +63,10 @@ class MainMenuMAINClientControllerTest {
 @BeforeEach
 void something() throws Exception {
     UserService.addUser(TEST,TEST,TEST,TEST,TEST,"Admin",TEST,TEST,"1");
-
     User user= UserService.findUser(TEST);
     SessionService.startSession(user);
-    Date date=new GregorianCalendar(2021, Calendar.JANUARY, 1, 13, 37).getTime();
-    Date date2=new GregorianCalendar(2020, Calendar.JANUARY, 1, 12, 37).getTime();
+    Date date=new GregorianCalendar(2027, Calendar.JANUARY, 1, 13, 37).getTime();
+    Date date2=new GregorianCalendar(2025, Calendar.JANUARY, 1, 12, 37).getTime();
    // SessionService.setSelectedScreening(ScreeningService.addScreening(TEST,TEST,3,date));
     ScreeningService.addScreening("test2","test2",4,date2);
 }
@@ -98,22 +97,25 @@ void something() throws Exception {
         Point2D point =new Point2D.Double(30,0);
         robot.moveTo("#MCSlider");
         robot.moveBy(-12,0).clickOn();
-        robot.moveTo("test");
+        robot.moveTo("test2");
         robot.moveBy(200,0).clickOn();
         robot.clickOn("Add");
     }
 
     @Test
     void BookASeat(FxRobot robot) throws Exception {
-        Date date=new GregorianCalendar(2021, Calendar.JANUARY, 1, 12, 37).getTime();
+        UserService.addUser("TEST","TEST","TEST","TEST","TEST","Admin","TEST","TEST","1");
+        User use1r= UserService.findUser(TEST);
+        Date date=new GregorianCalendar(2028, Calendar.JANUARY, 1, 12, 37).getTime();
         ScreeningService.addScreening("testulet","testulet",56,date);
-        Screening scre= ScreeningService.findAllFutureScreeningsForCinema("test").get(0);
-        System.out.println(scre.getMovieTitle());
+       // Screening scre= ScreeningService.findAllFutureScreeningsForCinema("test").get(0);
+       // System.out.println(scre.getMovieTitle());
         UserService.addUser("test1","test1","test1","test1","test1","Client","test1","test1","test1");
         User user= UserService.findUser("test1");
-        SessionService.startSession(user);
+
         robot.clickOn("#MCSlider");
-        robot.doubleClickOn("Browse Movie");
+        robot.moveTo("test").moveBy(200,0).clickOn();
+        //robot.doubleClickOn("Browse Movie");
         robot.clickOn("Book seats");
     }
 }
