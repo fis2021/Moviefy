@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.loose.fis.mov.model.Review;
 import org.loose.fis.mov.model.Screening;
 import org.loose.fis.mov.model.User;
 import org.loose.fis.mov.services.*;
@@ -21,7 +22,7 @@ import java.util.GregorianCalendar;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
-@Disabled
+//@Disabled
 @ExtendWith(ApplicationExtension.class)
 class PopUpReviewControllerTest {
 
@@ -65,6 +66,7 @@ class PopUpReviewControllerTest {
     @Start
     void start(Stage primaryStage)
             throws Exception {
+        PopUpReviewController.currentMode = ReviewMode.ADD;
         Parent root = FXMLLoader
                 .load(Objects.requireNonNull(getClass().getClassLoader()
                         .getResource(
